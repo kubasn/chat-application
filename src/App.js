@@ -8,8 +8,9 @@ const App = () => {
   return (
     <ThemeProvider theme={themes}>
       <CssBaseline />
-      <LoginPage />
+      {/* <LoginPage /> */}
       <RoomPage/>
     </ThemeProvider>
   );
+}
 export default App;
