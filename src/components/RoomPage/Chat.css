@@ -1,0 +1,8 @@
+.textfield{
+    color:'white';
+    outline-color: azure;
+}
+
+.textfield__label{
+    color:rgba(255,255,255,0.6) !important;
+}
