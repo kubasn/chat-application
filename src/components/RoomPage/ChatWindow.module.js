@@ -18,7 +18,7 @@ display:flex;
 justify-content:center;
 background-color:'red';
 z-index:100;
-width:50%;
+width:100%;
 `
 
 export const TextF = styled(TextField)`

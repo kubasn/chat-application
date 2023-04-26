@@ -1,6 +1,6 @@
 
-import { Box, Button, Card, Divider, Drawer, Hidden, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper, Toolbar, Typography } from '@mui/material'
-import React from 'react'
+import { Box, Button, Card, Divider, Drawer, Hidden, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper, Toolbar, Typography, createStyles } from '@mui/material'
+import React, { useState } from 'react'
 import { Side } from './SideBar.module';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -8,6 +8,8 @@ import ListItemDecorator from '@mui/joy/ListItemDecorator';
 import { Home } from '@mui/icons-material';
 import { ButtonSettings, PrimaryText, SecondaryText } from '../RightBar.module';
 import SettingsIcon from '@mui/icons-material/Settings';
+import MenuIcon from '@mui/icons-material/Menu';
+import {makeStyles} from '@mui/styles'
 const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -35,10 +37,50 @@ const rooms = [{'id':1},{'id':2},{'id':3},{'id':4},{'id':5}]
 
 
 
+  const useStyles = makeStyles((theme) =>
+  createStyles({
+    backdrop: {
+      zIndex: 1,
+      color: '#fff',
+    },
+    root: {
+      positon:'fixed'
+    },
+    speedDial: {
+      position: 'fixed',
+      bottom: theme.spacing(2),
+      left: theme.spacing(2),
+    },
+  })
+);
+
+
+
 const RightBar = () => {
-    const drawerWidth = '30%';
+    const drawerWidth = '50%';
+    const classes = useStyles();
+
+    let anchor ='right';
+
+    const [state, setState] = useState({
+      top: false,
+      left: false,
+      bottom: false,
+      right: false,
+    });
+
+    const toggleDrawer = (anchor, open) => (event) => {
+      if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+        return;
+      }
+  
+      setState({ ...state, [anchor]: open });
+    };
+
   return (
-    <Side>
+    <Side sx={{width:'10%'}}>
+          <Button onClick={toggleDrawer(anchor, true)}><MenuIcon className={classes.root} sx={{color:'white',positon:'sticky'}}/></Button>
+
     <Drawer
     sx={{
       width: drawerWidth,
@@ -49,11 +91,13 @@ const RightBar = () => {
         boxSizing: 'border-box',
         background:"#1C1D22",
         color:'white',
-        borderLeftColor:'#37393C'
+        borderLeftColor:'#37393C',
+        positon:'absolute'
 
       },
     }}
-    variant="permanent"
+    open={state[anchor]}
+    onClose={toggleDrawer(anchor, false)}
     anchor="right"
   >
     <Toolbar />

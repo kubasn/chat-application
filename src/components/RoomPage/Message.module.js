@@ -5,10 +5,17 @@ export const MessageComponent = styled.div`
     border-radius: 20px;
     padding: 10px;
     margin-bottom: 10px;
-    width:30vw;
+    width:40vw;
     margin-left:-15%
+
+    @media (max-width: 900px) {
+        width:80vw;
+    }
+
   `
   
+
+
   export const MessageHeader = styled.div`
     display: flex;
     justify-content: space-between;

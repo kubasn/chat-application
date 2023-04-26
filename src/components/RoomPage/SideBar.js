@@ -1,11 +1,12 @@
 
 import { Box, Button, Card, Divider, Drawer, Hidden, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper, Toolbar, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import { Side } from './SideBar.module';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import ListItemDecorator from '@mui/joy/ListItemDecorator';
 import { Home } from '@mui/icons-material';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const responsive = {
     superLargeDesktop: {
@@ -35,9 +36,30 @@ const rooms = [{'id':1},{'id':2},{'id':3},{'id':4},{'id':5}]
 
 
 const SideBar = () => {
-    const drawerWidth = '20%';
+    const drawerWidth = '40%';
+    let anchor ='left';
+
+    const [state, setState] = useState({
+      top: false,
+      left: false,
+      bottom: false,
+      right: false,
+    });
+
+    const toggleDrawer = (anchor, open) => (event) => {
+      if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+        return;
+      }
+  
+      setState({ ...state, [anchor]: open });
+    };
+
   return (
-    <Side>
+    <Side sx={{
+      position:'absolute'
+      
+    }}>
+          <Button onClick={toggleDrawer(anchor, true)}><MenuIcon sx={{color:'white'}}/></Button>
     <Drawer
     sx={{
       width: drawerWidth,
@@ -51,7 +73,8 @@ const SideBar = () => {
         borderRightColor:'#37393C'
       },
     }}
-    variant="permanent"
+    open={state[anchor]}
+    onClose={toggleDrawer(anchor, false)}
     anchor="left"
   >
     <Toolbar />
@@ -89,7 +112,7 @@ const SideBar = () => {
         <ListItem key={text} disablePadding style={{marginLeft:'0.5rem',marginBottom:'1.5rem'}}>
                <ListItemDecorator style={{}}>
                <img
-               style={{width:"3rem",hieght:"3rem",borderRadius:'100%'}}
+               style={{width:"4rem",height:"4rem",borderRadius:'100%'}}
         src='https://picsum.photos/200/300'
       />
                 </ListItemDecorator>
