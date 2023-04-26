@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Typography, Box } from "@mui/material";
+import { Box } from "@mui/material";
 
 export const StyledBigBox = styled(Box)`
   background-color: rgba(28, 29, 34, 0.95);
@@ -8,13 +8,4 @@ export const StyledBigBox = styled(Box)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`;
-
-export const StyledTypographyH2 = styled(Typography)`
-  color: white;
-  padding-bottom: 25px;
-`;
-
-export const StyledTypographyH6 = styled(Typography)`
-  color: white;
 `;
