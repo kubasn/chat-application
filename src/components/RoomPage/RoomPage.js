@@ -12,7 +12,7 @@ const RoomPage = () => {
 
 
   return (
-    <ThemeProvider theme={theme}>
+    // <ThemeProvider theme={theme}>
     <Page>
     <CssBaseline />
     <AppBar sx={{background:'#1C1D22'}} position="relative">
@@ -27,7 +27,7 @@ const RoomPage = () => {
       <RightBar/>
       </div>
       </Page>
-      </ThemeProvider>
+      // </ThemeProvider>
 
   )
 }

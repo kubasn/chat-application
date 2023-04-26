@@ -10,6 +10,9 @@ import { ButtonSettings, PrimaryText, SecondaryText } from '../RightBar.module';
 import SettingsIcon from '@mui/icons-material/Settings';
 import MenuIcon from '@mui/icons-material/Menu';
 import {makeStyles} from '@mui/styles'
+import InfoIcon from '@mui/icons-material/Info';
+
+
 const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -37,28 +40,28 @@ const rooms = [{'id':1},{'id':2},{'id':3},{'id':4},{'id':5}]
 
 
 
-  const useStyles = makeStyles((theme) =>
-  createStyles({
-    backdrop: {
-      zIndex: 1,
-      color: '#fff',
-    },
-    root: {
-      positon:'fixed'
-    },
-    speedDial: {
-      position: 'fixed',
-      bottom: theme.spacing(2),
-      left: theme.spacing(2),
-    },
-  })
-);
+//   const useStyles = makeStyles((theme) =>
+//   createStyles({
+//     backdrop: {
+//       zIndex: 1,
+//       color: '#fff',
+//     },
+//     root: {
+//       positon:'fixed'
+//     },
+//     speedDial: {
+//       position: 'fixed',
+//       bottom: theme.spacing(2),
+//       left: theme.spacing(2),
+//     },
+//   })
+// );
 
 
 
 const RightBar = () => {
     const drawerWidth = '50%';
-    const classes = useStyles();
+    // const classes = useStyles();
 
     let anchor ='right';
 
@@ -79,7 +82,7 @@ const RightBar = () => {
 
   return (
     <Side sx={{width:'10%'}}>
-          <Button onClick={toggleDrawer(anchor, true)}><MenuIcon className={classes.root} sx={{color:'white',positon:'sticky'}}/></Button>
+          <Button onClick={toggleDrawer(anchor, true)}><InfoIcon  sx={{color:'white',positon:'sticky'}}/></Button>
 
     <Drawer
     sx={{
