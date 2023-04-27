@@ -9,3 +9,10 @@ export const StyledBigBox = styled(Box)`
   align-items: center;
   justify-content: center;
 `;
+
+export const StyledBox = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  margin: 30px;
+`;

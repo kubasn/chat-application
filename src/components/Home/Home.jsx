@@ -1,8 +1,8 @@
 import React from "react";
 import { CssBaseline, Container } from "@mui/material";
-import { StyledBigBox } from "./Home.module";
-
-import { Links } from "../LoginPage/Links";
+import { StyledBigBox, StyledBox } from "./Home.styles";
+import { Link } from "react-router-dom";
+import { StyledButton } from "../LoginPage/StyledButton";
 import { Welcome } from "../utils/Welcome";
 
 export const Home = () => {
@@ -11,7 +11,14 @@ export const Home = () => {
       <CssBaseline />
       <StyledBigBox>
         <Welcome />
-        <Links />
+        <StyledBox>
+          <Link to="login">
+            <StyledButton>LOG IN</StyledButton>
+          </Link>
+          <Link to="register">
+            <StyledButton>REGISTER</StyledButton>
+          </Link>
+        </StyledBox>
       </StyledBigBox>
     </Container>
   );
