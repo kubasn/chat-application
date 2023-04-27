@@ -20,27 +20,21 @@ import {
 } from '@mui/material'
 import Message from './Message';
 import { BottomNav, Chat, TextF } from './ChatWindow.module';
-import RestoreIcon from '@mui/icons-material/Restore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
 import './Chat.css'
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 
 
 
 
-function ownOrAuthor() {
-  // Generate a random number between 0 and 1
-  const randomNumber = Math.random();
 
-  // If the random number is less than 0.5, return 'own'
-  if (randomNumber < 0.5) {
-    return 'my';
-  } 
-  // Otherwise, return 'author'
-  else {
-    return 'other';
-  }
+
+const initialMessage = {
+  id:'',
+  senderID:'',
+  content:'',
+  timestamp:'',
+  type:''
 }
 
 
@@ -48,7 +42,7 @@ function ChatWindow() {
   const [value, setValue] = useState(0);
   const ref = useRef(null);
   const [messages, setMessages] = useState([]);
-  const [newMessage,setNewMessage] = useState('')
+  const [newMessage,setNewMessage] = useState(initialMessage)
 
 
   useEffect(() => {
@@ -57,17 +51,26 @@ function ChatWindow() {
 
 
 const onWriteMessage = (e) => {
-  setNewMessage(e.target.value)
+setNewMessage({...newMessage,content:e.target.value})
+
 console.log(newMessage)
 }
 
 const sendMessage = () => {
   console.log('awdawd')
   const  messagesList = messages;
-  setMessages([...messagesList,newMessage])
+  let message = {...newMessage,id:Math.floor(Math.random()*10000),type:'my'}
+  setMessages([...messagesList,message])
   console.log(messages)
-  setNewMessage('')
+  setNewMessage({...newMessage,content:''})
+  console.log(newMessage)
+}
 
+const onDelete = (id) => {
+  console.log(id)
+  const messagesList = messages;
+  const filteredMessages = messagesList.filter((message)=>message.id !== id)
+  setMessages(filteredMessages);
 }
 
 
@@ -75,9 +78,9 @@ const sendMessage = () => {
     <Box  sx={{ pb: 7, background:'#141416' }} ref={ref}>
       <CssBaseline />
       <List>
-        {messages.map(( text, index) => (
+        {messages.map(( message, index) => (
           <ListItem  button key={index}>
-           <Message message={text} type={ownOrAuthor()}/>
+           <Message onDelete={onDelete} message={message} type={message.type}/>
           </ListItem>
         ))}
       </List>
@@ -100,7 +103,7 @@ const sendMessage = () => {
     >
       <AddReactionIcon sx={{color:'#F1F0F0', marginTop:'12px'}}/>
         <TextF
-          value={newMessage}
+          value={newMessage.content}
           id="outlined-multiline-flexible"
           label="Write a message"
           onKeyUp={(event) => {
