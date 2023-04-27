@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   roomID: "",
+  roomName:'',
+  roomDescription:'',
   messageHistoryID: "",
   users:[],
   creationDate:''
@@ -17,7 +19,9 @@ const roomSlice = createSlice({
     createRoom: (state, {payload}) => {
       state.roomID = payload.roomID;
       state.creationDate = payload.creationDate;
-      state.messageHistoryID = payload.messageHistoryID
+      state.messageHistoryID = payload.messageHistoryID;
+      state.roomName=payload.roomName;
+      state.roomDescription=payload.roomDescription
     },
 
     deleteRoom: (state, {payload}) => {
@@ -25,6 +29,8 @@ const roomSlice = createSlice({
         state.messageHistoryID = null
         state.users = null
         state.creationDate = null
+        state.roomName=null
+        state.roomDescription=null
       },
       addUser: (state,{payload}) =>{
         const users = state.users;

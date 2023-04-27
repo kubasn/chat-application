@@ -7,7 +7,7 @@ import messageHistory from './reducers/messageHistory';
 const reducer = combineReducers({
   user: userReducer,
   room:roomSlice,
-  messages:MessageHistory
+  messages:messageHistory
   // Add other reducers as needed
 });
 

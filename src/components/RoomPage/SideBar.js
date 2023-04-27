@@ -27,7 +27,7 @@ const responsive = {
       items: 1
     }
   };
-const rooms = [{'id':1},{'id':2},{'id':3},{'id':4},{'id':5}]
+// const rooms = [{'id':1},{'id':2},{'id':3},{'id':4},{'id':5}]
 
   const RoomBox = (props) => {
     return(<div style={{background:'#D9D9D9',height:'4rem',width:'4rem',display:'flex', justifyContent:'center', alignItems:'center'}}>{props.id}</div>)
@@ -35,7 +35,7 @@ const rooms = [{'id':1},{'id':2},{'id':3},{'id':4},{'id':5}]
 
 
 
-const SideBar = () => {
+const SideBar = ({users,rooms}) => {
     const drawerWidth = '40%';
     let anchor ='left';
 
@@ -96,7 +96,7 @@ const SideBar = () => {
   itemClass="carousel-item-padding-40-px"
 >
     <RoomBox id='+' />
-  {rooms.map((room)=>  <RoomBox id={room.id}/>)}
+  {rooms.map((room)=>  <RoomBox id={room}/>)}
 </Carousel>
   </div>
     </List>   
@@ -108,8 +108,8 @@ const SideBar = () => {
     <List>
     <Typography sx={{marginLeft:'2vw',marginBottom:'1rem'}} align="left" variant="h5" color="inherit" noWrap>Users</Typography>
     <List>
-      {['Sara Maw', 'Cameron Wiliams', 'Andrzej Nowak'].map((text, index) => (
-        <ListItem key={text} disablePadding style={{marginLeft:'0.5rem',marginBottom:'1.5rem'}}>
+      {users.map((user, index) => (
+        <ListItem key={user.userID} disablePadding style={{marginLeft:'0.5rem',marginBottom:'1.5rem'}}>
                <ListItemDecorator style={{}}>
                <img
                style={{width:"4rem",height:"4rem",borderRadius:'100%'}}
@@ -119,7 +119,7 @@ const SideBar = () => {
           <ListItemButton>
           <Hidden  mdDown>
 
-            <ListItemText  sx={{fontSize:'2rem'}} primary={text} />
+            <ListItemText  sx={{fontSize:'2rem'}} primary={user.login} />
             </Hidden>
 
           </ListItemButton>

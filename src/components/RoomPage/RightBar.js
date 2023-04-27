@@ -59,7 +59,7 @@ const rooms = [{'id':1},{'id':2},{'id':3},{'id':4},{'id':5}]
 
 
 
-const RightBar = () => {
+const RightBar = (props) => {
     const drawerWidth = '50%';
     // const classes = useStyles();
 
@@ -95,7 +95,6 @@ const RightBar = () => {
         background:"#1C1D22",
         color:'white',
         borderLeftColor:'#37393C',
-        positon:'absolute'
 
       },
     }}
@@ -110,22 +109,22 @@ const RightBar = () => {
     <List>
         <List style={{display:'flex', flexDirection:'column',alignItems:'center', gap:'2rem', marginTop:'1rem'}}>
         <div style={{background:'#D9D9D9',height:'8rem',width:'8rem',display:'flex', justifyContent:'center', alignItems:'center'}}></div>
-        <Typography   variant="h5" color="inherit" noWrap>Nazwa pokoju</Typography>
+        <Typography   variant="h5" color="inherit" noWrap>{props.roomName}</Typography>
         </List>
     </List>
     <Divider sx={{background:'#37393C'}} />
 <List style={{display:'flex',flexDirection:'column',alignItems:'start', marginLeft:'2rem'}}>
     <>
     <PrimaryText>Info</PrimaryText>
-<SecondaryText>This is room for football lovers</SecondaryText>
+<SecondaryText>{props.roomDescription}</SecondaryText>
 
 </>
 <>
 <PrimaryText>Active users</PrimaryText>
-<SecondaryText>10</SecondaryText>
+<SecondaryText>{props.users.length}</SecondaryText>
 </>
 </List>
-<ButtonSettings  sx={{borderColor: 'white',color:'white', ":hover":{borderColor:'whitesmoke'},gap:'5px' }}
+<ButtonSettings  sx={{borderColor: 'white',color:'white', ":hover":{borderColor:'whitesmoke'},gap:'5px',mx: 'auto',display:'flex',justifyContent:'center', }}
   variant="outlined"><SettingsIcon/>Settings</ButtonSettings>
     </List>
   </Drawer>
