@@ -23,7 +23,9 @@ import { BottomNav, Chat, TextF } from './ChatWindow.module';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import './Chat.css'
 import AddReactionIcon from '@mui/icons-material/AddReaction';
-
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteMessage, sendMessage } from '../../store/reducers/roomSlice';
+import date from '../utils/date';
 
 
 
@@ -38,30 +40,40 @@ const initialMessage = {
 }
 
 
-function ChatWindow() {
+function ChatWindow({room}) {
   const [value, setValue] = useState(0);
   const ref = useRef(null);
   const [messages, setMessages] = useState([]);
   const [newMessage,setNewMessage] = useState(initialMessage)
+  const dispatch = useDispatch()
+
+  const chatHistory = useSelector(state=>state.room)
+  const user = useSelector(state=>state.user)
 
 
   useEffect(() => {
     ref.current.ownerDocument.body.scrollTop = 0;
   }, [value, setMessages]);
 
+  useEffect(()=>{
+    setMessages(chatHistory.messages)
+  },[])
+
+  useEffect(()=>{
+    setMessages(chatHistory.messages)
+  },[chatHistory])
 
 const onWriteMessage = (e) => {
 setNewMessage({...newMessage,content:e.target.value})
 
-console.log(newMessage)
 }
 
-const sendMessage = () => {
-  console.log('awdawd')
+const onSubmit = () => {
   const  messagesList = messages;
-  let message = {...newMessage,id:Math.floor(Math.random()*10000),type:'my'}
+  let message = {...newMessage,id:Math.floor(Math.random()*10000),type:'my',senderID:user.userID,senderName:user.login,timestamp:date()}
   setMessages([...messagesList,message])
   console.log(messages)
+  dispatch(sendMessage({message,roomId:room.roomID}))
   setNewMessage({...newMessage,content:''})
   console.log(newMessage)
 }
@@ -69,6 +81,7 @@ const sendMessage = () => {
 const onDelete = (id) => {
   console.log(id)
   const messagesList = messages;
+  dispatch(deleteMessage({id:id,roomId:room.roomID}))
   const filteredMessages = messagesList.filter((message)=>message.id !== id)
   setMessages(filteredMessages);
 }
@@ -108,7 +121,7 @@ const onDelete = (id) => {
           label="Write a message"
           onKeyUp={(event) => {
             if (event.key== 'Enter')
-                sendMessage();
+            onSubmit();
         }}
           onChange = {onWriteMessage}
           size="small"
@@ -144,20 +157,6 @@ const onDelete = (id) => {
   );
 }
 
-const messageExamples = [
-  {
-    primary: 'Brunch this week?',
-    secondary: "I'll be in the neighbourhood this week. Let's grab a bite to eat",
-    person: '/static/images/avatar/5.jpg',
-  },
-  {
-    primary: 'Birthday Gift',
-    secondary: `Do you have a suggestion for a good present for John on his work
-      anniversary. I am really confused & would love your thoughts on it.`,
-    person: '/static/images/avatar/1.jpg',
-  },
-
-];
 
 
 

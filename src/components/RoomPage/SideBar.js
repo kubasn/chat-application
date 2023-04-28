@@ -7,6 +7,8 @@ import "react-multi-carousel/lib/styles.css";
 import ListItemDecorator from '@mui/joy/ListItemDecorator';
 import { Home } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useDispatch } from 'react-redux';
+import { changeRoom } from '../../store/reducers/roomSlice';
 
 const responsive = {
     superLargeDesktop: {
@@ -27,17 +29,19 @@ const responsive = {
       items: 1
     }
   };
-// const rooms = [{'id':1},{'id':2},{'id':3},{'id':4},{'id':5}]
 
-  const RoomBox = (props) => {
-    return(<div style={{background:'#D9D9D9',height:'4rem',width:'4rem',display:'flex', justifyContent:'center', alignItems:'center'}}>{props.id}</div>)
-  }
+  
 
 
 
-const SideBar = ({users,rooms}) => {
+
+
+
+const SideBar = ({users,rooms,currentRoom}) => {
     const drawerWidth = '40%';
     let anchor ='left';
+    console.log(rooms)
+    const dispatch = useDispatch()
 
     const [state, setState] = useState({
       top: false,
@@ -45,6 +49,18 @@ const SideBar = ({users,rooms}) => {
       bottom: false,
       right: false,
     });
+
+
+    const onClickHandler = (roomID) => {
+      console.log(roomID)
+    dispatch(changeRoom(roomID))
+    }
+
+    
+  const RoomBox = ({id,currentRoomId}) => {
+    // console.log(props)
+    return(<div onClick={()=>onClickHandler(id)} onChange style={{background:currentRoomId == id ?  'red' :'#D9D9D9',height:'4rem',width:'4rem',display:'flex', justifyContent:'center', alignItems:'center'}}>{id}</div>)
+  }
 
     const toggleDrawer = (anchor, open) => (event) => {
       if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -55,9 +71,7 @@ const SideBar = ({users,rooms}) => {
     };
 
   return (
-    <Side sx={{
-      position:'absolute'
-      
+    <Side sx={{      
     }}>
           <Button onClick={toggleDrawer(anchor, true)}><MenuIcon sx={{color:'white'}}/></Button>
     <Drawer
@@ -96,7 +110,7 @@ const SideBar = ({users,rooms}) => {
   itemClass="carousel-item-padding-40-px"
 >
     <RoomBox id='+' />
-  {rooms.map((room)=>  <RoomBox id={room}/>)}
+  {rooms.map((room)=>  <RoomBox  id={room} currentRoomId={currentRoom.roomID}/>)}
 </Carousel>
   </div>
     </List>   
