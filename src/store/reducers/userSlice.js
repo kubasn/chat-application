@@ -14,6 +14,8 @@ const userInitialState = {
 
 //const userInitialState = users;
 
+const initialState = users[0]
+
 //kiedy aplikacja rozpoczyna swoje działanie, wszystko jest jeszcze puste
 
 const userSlice = createSlice({
