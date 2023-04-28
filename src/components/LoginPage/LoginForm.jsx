@@ -10,13 +10,45 @@ import { BasicInput } from "./BasicInput";
 import { PasswordInput } from "./PasswordInput";
 import { StyledButton } from "./StyledButton";
 
+import { useDispatch } from "react-redux";
+
+import { setUserIsLogged } from "../../store/reducers/userSlice";
+
+import { users } from "../../db";
+
 export const LoginForm = () => {
+  const dispatch = useDispatch();
+
   let navigate = useNavigate();
   const handleClick = (e) => {
     e.preventDefault();
     navigate("/register");
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const loginValue = form.elements.login.value;
+    const passwordValue = form.elements.password.value;
+    const usersInDB = users;
+
+    const isUserInDB = usersInDB.find(
+      (user) => user.login === loginValue && user.password === passwordValue
+    );
+
+    if (isUserInDB !== undefined) {
+      dispatch(
+        setUserIsLogged({
+          login: loginValue,
+          password: passwordValue,
+        })
+      );
+      form.reset();
+      navigate("/rooms");
+    } else {
+      alert("Please fill all the required fields");
+    }
+  };
   return (
     <ThemeProvider theme={themes}>
       <Container maxWidth="sm">
@@ -24,11 +56,19 @@ export const LoginForm = () => {
         <StyledBigBox>
           <Welcome />
           <StyledSmallBox>
-            <StyledForm component="form" noValidate autoComplete="on">
-              <BasicInput>Login</BasicInput>
+            <StyledForm
+              component="form"
+              noValidate
+              autoComplete="on"
+              onSubmit={handleSubmit}
+            >
+              <BasicInput inputType="text" inputName="login">
+                Login
+              </BasicInput>
               <PasswordInput>Password</PasswordInput>
-              <StyledButton>SUBMIT</StyledButton>
+              <StyledButton btnType="submit">SUBMIT</StyledButton>
             </StyledForm>
+
             <StyledTypoSub variant="subtitle2" align="center">
               Don't have an acount?
               <Button color="secondary" onClick={handleClick}>

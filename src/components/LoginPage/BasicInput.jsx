@@ -1,7 +1,7 @@
 import React from "react";
 import { FormControl, FilledInput, InputLabel } from "@mui/material";
 
-export const BasicInput = ({ children }) => {
+export const BasicInput = ({ children, inputName, inputType }) => {
   return (
     <FormControl
       variant="filled"
@@ -16,10 +16,11 @@ export const BasicInput = ({ children }) => {
         {children}
       </InputLabel>
       <FilledInput
-        id="filled-basic"
         required
         color="secondary"
-        fullWidth="true"
+        fullWidth
+        type={inputType}
+        name={inputName}
       />
     </FormControl>
   );

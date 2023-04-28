@@ -55,11 +55,6 @@ let rooms = [{
         content:'awdaw ad awd awd ',
         timestamp:'2023-04-18T12:00',
         }
-  
-  
-  
-  
-  
   ]
   },
   {
@@ -95,68 +90,7 @@ let rooms = [{
       timestamp:'2023-04-27T12:00',
   }]
   }
-
-
 ]
 
-
-
-// let messageHistoryDB = [{
-//     roomID:1,
-//     messages:[{
-//         id:1,
-//         senderID:1,
-//         senderName:"olgap",
-//         content:'awdaw ad awd awd ',
-//         timestamp:'27/04/2023',
-//         id:2},{
-//         senderID:1,
-//         senderName:"olgap",
-
-//         content:' bxsdfgsf ',
-//         timestamp:'17/04/2023',
-//         id:3},{
-//         senderID:1,
-//         senderName:"olgap",
-
-//         content:'qweery awdawd',
-//         timestamp:'07/04/2023',
-//         id:4},{
-//         senderID:2,
-//         senderName:"kubasn",
-//         content:'vcvbg rwe we',
-//         timestamp:'27/05/2023',
-//     }]
-    
-    
-//     },
-//     {
-//         roomID:2,
-//         messages:[{
-//             id:1,
-//             senderID:1,
-//             senderName:"olgap",
-//             content:'awdaw ad awd awd ',
-//             timestamp:'27/04/2023',
-//             id:2},{
-//             senderID:1,
-//             senderName:"olgap",
-//             content:' bxsdfgsf ',
-//             timestamp:'17/04/2023',
-//             id:3},{
-//             senderID:1,
-//             senderName:"olgap",
-//             content:'qweery awdawd',
-//             timestamp:'07/04/2023',
-//             id:4},{
-//             senderID:2,
-//             content:'vcvbg rwe we',
-//             timestamp:'27/05/2023',
-//         }]
-        
-        
-//         }
-// ]
-
-
 export {users,rooms}
+

@@ -34,6 +34,7 @@ export const PasswordInput = ({ children }) => {
       <FilledInput
         id="filled-adornment-password"
         type={showPassword ? "text" : "password"}
+        name="password"
         required
         color="secondary"
         endAdornment={
