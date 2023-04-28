@@ -1,16 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { users } from "../../db";
 
-const initialState = {
-  userID: "",
-  login: "",
-  email:"",
-  password: "",
-  avatarID:"",
-  lastRoom:"",
-  status:"",
-  rooms:[]
-};
+// const initialState = {
+//   userID: "",
+//   login: "",
+//   email:"",
+//   password: "",
+//   avatarID:"",
+//   lastRoom:"",
+//   status:"",
+//   rooms:[]
+// };
 
+
+
+const initialState = users[0]
 //kiedy aplikacja rozpoczyna swoje działanie, wszystko jest jeszcze puste
 
 const userSlice = createSlice({

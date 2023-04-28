@@ -6,47 +6,50 @@ import SideBar from './SideBar'
 import RightBar from './RightBar'
 import ChatWindow from './ChatWindow'
 import { createTheme } from '@mui/material/styles';
+import { useSelector } from 'react-redux'
 
 const RoomPage = () => {
 
-const room = {
-  roomID: "2442",
-  roomName:'CSS lovers',
-  roomDescription:'canal for css enthuisiast, since 2023',
-  messageHistoryID: "",
-  users:[{  userID: "",
-  login: "marek nowak",
-  email:"mareknowak@gmail.com",
-  password: "12345",
-  avatarID:"",
-  lastRoom:"3",
-  status:"online"},{  userID: "234523",
-  login: "darek kowalski",
-  email:"dkowal@gmail.com",
-  password: "12345",
-  avatarID:"",
-  lastRoom:"3",
-  status:"online"},{  userID: "235232323",
-  login: "andrzej nowakowski",
-  email:"a.nowak@gmail.com",
-  password: "12345",
-  avatarID:"",
-  lastRoom:"3",
-  status:"online"}],
-  creationDate:'04/05/2023'
-}
+// const room = {
+//   roomID: "2442",
+//   roomName:'CSS lovers',
+//   roomDescription:'canal for css enthuisiast, since 2023',
+//   messageHistoryID: "",
+//   users:[{  userID: "",
+//   login: "marek nowak",
+//   email:"mareknowak@gmail.com",
+//   password: "12345",
+//   avatarID:"",
+//   lastRoom:"3",
+//   status:"online"},{  userID: "234523",
+//   login: "darek kowalski",
+//   email:"dkowal@gmail.com",
+//   password: "12345",
+//   avatarID:"",
+//   lastRoom:"3",
+//   status:"online"},{  userID: "235232323",
+//   login: "andrzej nowakowski",
+//   email:"a.nowak@gmail.com",
+//   password: "12345",
+//   avatarID:"",
+//   lastRoom:"3",
+//   status:"online"}],
+//   creationDate:'04/05/2023'
+// }
 
-const user = {
-  userID: "5235",
-  login: "kubasn",
-  email:"kubasn@gmail.com",
-  password: "6534",
-  avatarID:"",
-  lastRoom:"5",
-  status:"active",
-  rooms:[6,5,4,3,6]
-}
+// const user = {
+//   userID: "5235",
+//   login: "kubasn",
+//   email:"kubasn@gmail.com",
+//   password: "6534",
+//   avatarID:"",
+//   lastRoom:"5",
+//   status:"active",
+//   rooms:[6,5,1,2]
+// }
 
+const user = useSelector(state=> state.user)
+const room = useSelector(state=>state.room)
 
 
   return (
@@ -60,8 +63,8 @@ const user = {
         </Toolbar>
       </AppBar>
       <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
-      <SideBar rooms={user.rooms} users={room.users}/>
-      <ChatWindow/>
+      <SideBar currentRoom={room} rooms={user.rooms} users={room.users}/>
+      <ChatWindow room={room}/>
       <RightBar {...room}/>
       </div>
       </Page>
