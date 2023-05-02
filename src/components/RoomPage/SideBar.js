@@ -7,7 +7,7 @@ import "react-multi-carousel/lib/styles.css";
 import ListItemDecorator from '@mui/joy/ListItemDecorator';
 import { Home } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { changeRoom } from '../../store/reducers/roomSlice';
 
 const responsive = {
@@ -30,18 +30,13 @@ const responsive = {
     }
   };
 
-  
-
-
-
-
-
 
 const SideBar = ({users,rooms,currentRoom}) => {
     const drawerWidth = '40%';
     let anchor ='left';
-    console.log(rooms)
     const dispatch = useDispatch()
+    const [currentUser,setCurrentUser] = useState('')
+    const current = useSelector(state=>state.user)
 
     const [state, setState] = useState({
       top: false,
@@ -52,10 +47,12 @@ const SideBar = ({users,rooms,currentRoom}) => {
 
 
     const onClickHandler = (roomID) => {
-      console.log(roomID)
-    dispatch(changeRoom(roomID))
+    dispatch(changeRoom({id:roomID,type:'public'}))
     }
 
+    const onUserClick = (user) => {
+      dispatch(changeRoom({id:[user.userID,current.userID],type:'private'}))
+    }
     
   const RoomBox = ({id,currentRoomId}) => {
     // console.log(props)
@@ -123,7 +120,7 @@ const SideBar = ({users,rooms,currentRoom}) => {
     <Typography sx={{marginLeft:'2vw',marginBottom:'1rem'}} align="left" variant="h5" color="inherit" noWrap>Users</Typography>
     <List>
       {users.map((user, index) => (
-        <ListItem key={user.userID} disablePadding style={{marginLeft:'0.5rem',marginBottom:'1.5rem'}}>
+        <ListItem onClick={()=>onUserClick(user)} key={user.userID} disablePadding style={{marginLeft:'0.5rem',marginBottom:'1.5rem'}}>
                <ListItemDecorator style={{}}>
                <img
                style={{width:"4rem",height:"4rem",borderRadius:'100%'}}

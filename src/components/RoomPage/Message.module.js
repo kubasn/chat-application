@@ -3,11 +3,13 @@ import styled from "styled-components";
 export const MessageComponent = styled.div`
     background-color: ${props=>props.color};
     border-radius: 20px;
+    position:relative;
+    left:${props=>props.left};
     padding: 10px;
     margin-bottom: 10px;
     width:40vw;
     margin-left:-15%
-
+    marginLeft:20px
     @media (max-width: 900px) {
         width:80vw;
     }

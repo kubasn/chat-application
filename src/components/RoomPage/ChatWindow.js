@@ -39,6 +39,16 @@ const initialMessage = {
   type:''
 }
 
+function addTagToMessages(history, specificId, type) {
+  history = history.map((message) => {
+    if (message.senderID === specificId) {
+      return Object.assign({}, message, { type });
+    }
+    return message; })
+  return history
+
+}
+
 
 function ChatWindow({room}) {
   const [value, setValue] = useState(0);
@@ -56,11 +66,17 @@ function ChatWindow({room}) {
   }, [value, setMessages]);
 
   useEffect(()=>{
-    setMessages(chatHistory.messages)
+    let newHistory = chatHistory.messages
+    newHistory = addTagToMessages(newHistory,user.userID,'my')
+    setMessages(newHistory)
   },[])
 
+  //nie wiadomo do czego to służy, trza oi
   useEffect(()=>{
-    setMessages(chatHistory.messages)
+    let newHistory = chatHistory.messages
+    newHistory = addTagToMessages(newHistory,user.userID,'my')
+
+    setMessages(newHistory)
   },[chatHistory])
 
 const onWriteMessage = (e) => {
@@ -72,14 +88,11 @@ const onSubmit = () => {
   const  messagesList = messages;
   let message = {...newMessage,id:Math.floor(Math.random()*10000),type:'my',senderID:user.userID,senderName:user.login,timestamp:date()}
   setMessages([...messagesList,message])
-  console.log(messages)
   dispatch(sendMessage({message,roomId:room.roomID}))
   setNewMessage({...newMessage,content:''})
-  console.log(newMessage)
 }
 
 const onDelete = (id) => {
-  console.log(id)
   const messagesList = messages;
   dispatch(deleteMessage({id:id,roomId:room.roomID}))
   const filteredMessages = messagesList.filter((message)=>message.id !== id)

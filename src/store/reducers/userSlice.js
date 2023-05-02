@@ -20,7 +20,7 @@ const initialState = users[0]
 
 const userSlice = createSlice({
   name: "user",
-  initialState: userInitialState,
+  initialState: initialState,
   reducers: {
     //kiedy uzytkownik loguje się -> zapamiętaj poniższe rzeczy
     setUserIsLogged: (state, { payload }) => {
@@ -52,7 +52,6 @@ const userSlice = createSlice({
         status: "",
         rooms: [],
       });
-      console.log(users);
     },
     //kiedy użytkownik wylogowuje się -> zapomnij
     setSignOut: (state) => {

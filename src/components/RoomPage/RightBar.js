@@ -11,6 +11,9 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import MenuIcon from '@mui/icons-material/Menu';
 import {makeStyles} from '@mui/styles'
 import InfoIcon from '@mui/icons-material/Info';
+import { useDispatch } from 'react-redux';
+import { leaveRoom } from '../../store/reducers/userSlice';
+import { removeUser } from '../../store/reducers/roomSlice';
 
 
 const responsive = {
@@ -39,30 +42,10 @@ const rooms = [{'id':1},{'id':2},{'id':3},{'id':4},{'id':5}]
   }
 
 
-
-//   const useStyles = makeStyles((theme) =>
-//   createStyles({
-//     backdrop: {
-//       zIndex: 1,
-//       color: '#fff',
-//     },
-//     root: {
-//       positon:'fixed'
-//     },
-//     speedDial: {
-//       position: 'fixed',
-//       bottom: theme.spacing(2),
-//       left: theme.spacing(2),
-//     },
-//   })
-// );
-
-
-
 const RightBar = (props) => {
     const drawerWidth = '50%';
     // const classes = useStyles();
-
+    const dispatch = useDispatch();
     let anchor ='right';
 
     const [state, setState] = useState({
@@ -79,6 +62,11 @@ const RightBar = (props) => {
   
       setState({ ...state, [anchor]: open });
     };
+
+    const onLeave = () => {
+      dispatch(leaveRoom(props.roomID))
+      dispatch(removeUser(props.userID))
+    }
 
   return (
     <Side sx={{width:'10%'}}>
@@ -124,8 +112,12 @@ const RightBar = (props) => {
 <SecondaryText>{props.users.length}</SecondaryText>
 </>
 </List>
+<Box sx={{display:'flex'}}>
 <ButtonSettings  sx={{borderColor: 'white',color:'white', ":hover":{borderColor:'whitesmoke'},gap:'5px',mx: 'auto',display:'flex',justifyContent:'center', }}
   variant="outlined"><SettingsIcon/>Settings</ButtonSettings>
+    <ButtonSettings onClick={onLeave}  sx={{borderColor: 'red',color:'red', ":hover":{borderColor:'#843030',color:'#843030'},gap:'5px',mx: 'auto',display:'flex',justifyContent:'center', }}
+  variant="outlined"><SettingsIcon/>Leave room</ButtonSettings>
+    </Box>
     </List>
   </Drawer>
   </Side>

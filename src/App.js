@@ -7,6 +7,7 @@ import { LoginForm } from "./components/LoginPage/LoginForm";
 import { RegisterForm } from "./components/LoginPage/RegisterForm";
 import { Home } from "./components/Home/Home";
 import { NotFound } from "./components/utils/NotFound";
+import SelectRoom from "./components/SelectRoomPage/SelectRoom";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/rooms" element={<RoomPage />} />
+        <Route path="/test" element={<SelectRoom />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </ThemeProvider>

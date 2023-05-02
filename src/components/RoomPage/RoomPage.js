@@ -65,7 +65,7 @@ const room = useSelector(state=>state.room)
       <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
       <SideBar currentRoom={room} rooms={user.rooms} users={room.users}/>
       <ChatWindow room={room}/>
-      <RightBar {...room}/>
+      <RightBar {...room} {...user}/>
       </div>
       </Page>
       // </ThemeProvider>
