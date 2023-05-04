@@ -10,11 +10,10 @@ const userInitialState = {
   avatarID: "",
   lastRoom: "",
   rooms: [],
+  role: "user",
 };
 
-//const userInitialState = users;
-
-const initialState = users[0]
+const initialState = users[0];
 
 //kiedy aplikacja rozpoczyna swoje działanie, wszystko jest jeszcze puste
 
@@ -33,6 +32,7 @@ const userSlice = createSlice({
       state.lastRoom = payload.lastRoom;
       state.status = payload.status;
       state.rooms = payload.rooms;
+      state.role = payload.role;
     },
     setUserRegisterDetails: (state, { payload }) => {
       state.userID = payload.userID;
@@ -42,6 +42,7 @@ const userSlice = createSlice({
       state.avatarID = "";
       state.lastRoom = [];
       state.status = "";
+      state.role = payload.role;
       users.push({
         userID: payload.userID,
         login: payload.login,
@@ -51,6 +52,7 @@ const userSlice = createSlice({
         lastRoom: [],
         status: "",
         rooms: [],
+        role: payload.role,
       });
     },
     //kiedy użytkownik wylogowuje się -> zapomnij
