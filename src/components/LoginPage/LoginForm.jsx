@@ -30,19 +30,13 @@ export const LoginForm = () => {
     const form = e.currentTarget;
     const loginValue = form.elements.login.value;
     const passwordValue = form.elements.password.value;
-    const usersInDB = users;
 
-    const isUserInDB = usersInDB.find(
+    const isUserInDB = users.find(
       (user) => user.login === loginValue && user.password === passwordValue
     );
 
     if (isUserInDB !== undefined) {
-      dispatch(
-        setUserIsLogged({
-          login: loginValue,
-          password: passwordValue,
-        })
-      );
+      dispatch(setUserIsLogged({ ...isUserInDB }));
       form.reset();
       navigate("/rooms");
     } else {
