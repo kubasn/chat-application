@@ -4,21 +4,11 @@ let users = [
     login: "olgap",
     email: "olgap@gmail.com",
     password: "qwerty",
-<<<<<<< HEAD
     avatarID:"https://api.multiavatar.com/Binx Bond.png",
     lastRoom:2,
     status:"active",
     rooms:[2]
   },{
-=======
-    avatarID: "https://api.multiavatar.com/Binx Bond.png",
-    lastRoom: 2,
-    status: "active",
-    rooms: [1, 2],
-    role: "user",
-  },
-  {
->>>>>>> 80088d1cd973c3f026b2d90c843b9103acdaa752
     userID: 2,
     login: "kubasn",
     email: "kubasn@gmail.com",
@@ -59,7 +49,6 @@ let rooms = [
     roomName: "CSS lovers",
     roomDescription: "Room made specialify for CSS lvoers group. Since 2023.",
     messageHistoryID: 1,
-<<<<<<< HEAD
     users:[2],
     creationDate:'2023-03-28T12:00',
     messages:[{
@@ -83,11 +72,6 @@ let rooms = [
       timestamp:'2023-04-14T12:00',
       id:3},
   
-=======
-    users: [1, 2],
-    creationDate: "2023-03-28T12:00",
-    messages: [
->>>>>>> 80088d1cd973c3f026b2d90c843b9103acdaa752
       {
         senderID: 2,
         senderName: "kubasn",
