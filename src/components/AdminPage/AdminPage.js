@@ -1,10 +1,12 @@
-import { Box, Button, Checkbox, FormControlLabel, Modal, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { Avatar, Box, Button, Checkbox, FormControlLabel, List, ListItem, ListItemText, Modal, TextField, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { rooms } from '../../db'
-import { joinRoom } from '../../store/reducers/userSlice'
-import { BasicInput } from '../LoginPage/BasicInput'
+import { rooms, users } from '../../db'
 import { AdminInput } from './AdminInput'
+import { StyledBigBox } from '../Home/Home.styles'
+import AddRoomForm from './AddRoomForm'
+import date from '../utils/date'
+import removeUserFromRoom from '../../helpers/removeUserFromRoom'
 
 const AdminPage = () => {
   const [text,setText] = useState('')
@@ -16,6 +18,20 @@ const AdminPage = () => {
 
   const user = useSelector(state=>state.user)
   const dispatch = useDispatch();
+
+  //filter rooms public 
+const filterRooms = () => {
+    const newRooms = rooms.filter(room => 
+        {
+       const newRooms = room.roomName.toLowerCase().includes(text.toLowerCase())
+       const publicRooms = room.type != 'private'
+       return newRooms && publicRooms
+    });
+    return newRooms
+}
+
+
+
   const onSearch = () => {
     const newRooms = rooms.filter(room => 
       {
@@ -31,23 +47,78 @@ const AdminPage = () => {
     setText(e.target.value)
   }
 
+//   useEffect(setFindRooms(),[clickedRoom])
 
-  const onRoomJoin = (roomID) => {
-  dispatch(joinRoom(roomID))
-  }
 
 
 const onRoomDelete = (roomID) => {
     console.log(roomID)
+    // let arooms = rooms.filter(room => room.roomID !== roomID);
+    // rooms = [...arooms]
+    const id = rooms.findIndex((room) => room.roomID === roomID);
+    // console.log(id,rooms)
+    // delete rooms[id]
+    if (id !== -1) {
+        rooms.splice(id, 1);
+      }
+    console.log(rooms)
+    const newRooms = filterRooms()
+    setFindRooms(newRooms)
+
     // rooms
 }
 
 const onRoomEdit = (room) => {
     setClickedRoom(room)
-    console.log(clickedRoom)
+    console.log(room)
     handleOpen()
 }
 
+const onChange = (value,field) => {
+    console.log(value,field)
+    let room = clickedRoom;
+    room = { ...room, [field]: value};
+console.log(room)
+setClickedRoom(room)
+}
+
+const onSave = () => {
+    console.log(clickedRoom)
+    const roomIndex = rooms.findIndex(room => room.roomID === clickedRoom.roomID);
+    console.log(roomIndex)
+    rooms[roomIndex] = {...rooms[roomIndex],...clickedRoom};
+    console.log(rooms)
+    const newRooms = filterRooms()
+    setFindRooms(newRooms)
+
+}
+
+const onDeleteUser = (e,userID,roomID) => {
+    e.preventDefault();
+    let room = removeUserFromRoom(userID,roomID)
+    // console.log(room)
+    setClickedRoom(room)
+    console.log()
+    let newRooms = findRooms
+    let roomIndex = newRooms.findIndex((el) => el.roomID === room.roomID);
+    console.log(roomIndex)
+    newRooms[roomIndex] = room
+     console.log(newRooms)
+}
+
+const handleAddRoom = (roomName, roomDescription) => {
+    // Add the new room to your rooms array or state here.
+    let newRoom = {
+    roomID : '',
+    creationDate : date(),
+    roomName:roomName,
+    roomDescription:roomDescription,
+    messageHistoryID : '',
+    messages : []
+    }
+    rooms.push(newRoom)
+    console.log(rooms);
+  };
 
 const style = {
     position: 'absolute',
@@ -62,14 +133,15 @@ const style = {
   };
 
   return (
-    <Box
+    <StyledBigBox
     bgcolor="#1C1D22"
     color="white"
     p={10}
     textAlign="center"
+    min-height="100vh"
+
     width="50%"
     margin="auto"
-    marginTop='300px'
     display="flex"
     flexDirection="column"
     alignItems="center"
@@ -83,14 +155,31 @@ const style = {
             Edit room
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          <AdminInput value={clickedRoom.roomName} inputType="text" inputName="login">
+          <AdminInput field='roomName' onChange={onChange} value={clickedRoom.roomName} inputType="text" inputName="login">
                 Room name
               </AdminInput>
-              <AdminInput value={clickedRoom.roomDescription} inputType="text" inputName="login">
+              <AdminInput field='roomDescription' onChange={onChange} value={clickedRoom.roomDescription} inputType="text" inputName="login">
                 Room description
               </AdminInput>
           </Typography>
-          <Button  sx={{marginBottom:'1rem'}} variant="contained" color="success">SAVE</Button>
+          <Button onClick={onSave}  sx={{marginBottom:'1rem'}} variant="contained" color="success">SAVE</Button>
+          <Box>
+      <Typography variant="h4" gutterBottom>
+        Users
+      </Typography>
+      <List>
+        {clickedRoom.users && clickedRoom.users.map((user) => (
+          <ListItem sx={{display:'flex', gap:'5px'}} key={user}>
+            <Avatar src={user.avatarID} />
+            <ListItemText sx={{textAlign:'center'}} primary={`ID: ${user.userID}`} />
+            <ListItemText sx={{textAlign:'center'}} primary={`login: ${user.login}`} />
+            <Button onClick={(e)=>onDeleteUser(e,user.userID,clickedRoom.roomID)}  variant="contained" color="error">DELETE</Button>
+
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+
 
         </Box>
     </Modal>
@@ -154,9 +243,10 @@ const style = {
         ))}
         
       </ul>
-
+<Box></Box>
       </Box>}
-  </Box>
+      <AddRoomForm onSubmit={handleAddRoom} />
+  </StyledBigBox>
   )
 }
 

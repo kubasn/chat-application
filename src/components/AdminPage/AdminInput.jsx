@@ -1,7 +1,7 @@
 import React from "react";
 import { FormControl, FilledInput, InputLabel, Typography } from "@mui/material";
 
-export const AdminInput = ({ children, inputName, inputType,value }) => {
+export const AdminInput = ({ children, inputName, inputType,value,onChange,field }) => {
   return (
     <FormControl
       variant="filled"
@@ -20,6 +20,7 @@ export const AdminInput = ({ children, inputName, inputType,value }) => {
       </Typography>
       <FilledInput
         required
+        onChange={e=>onChange(e.target.value,field)}
         color="secondary"
         fullWidth
         value={value}

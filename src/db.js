@@ -7,7 +7,7 @@ let users = [
     avatarID:"https://api.multiavatar.com/Binx Bond.png",
     lastRoom:2,
     status:"active",
-    rooms:[2]
+    rooms:[1,2]
   },{
     userID: 2,
     login: "kubasn",
