@@ -8,6 +8,7 @@ import { RegisterForm } from "./components/LoginPage/RegisterForm";
 import { Home } from "./components/Home/Home";
 import { NotFound } from "./components/utils/NotFound";
 import SelectRoom from "./components/SelectRoomPage/SelectRoom";
+import AdminPage from "./components/AdminPage/AdminPage";
 
 const App = () => {
   return (
@@ -19,6 +20,8 @@ const App = () => {
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/rooms" element={<RoomPage />} />
         <Route path="/test" element={<SelectRoom />} />
+        <Route path="/admin" element={<AdminPage />} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </ThemeProvider>

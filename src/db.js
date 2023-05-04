@@ -6,7 +6,7 @@ let users = [{
     avatarID:"https://api.multiavatar.com/Binx Bond.png",
     lastRoom:2,
     status:"active",
-    rooms:[1,2]
+    rooms:[2]
   },{
     userID: 2,
     login: "kubasn",
@@ -37,7 +37,7 @@ let rooms = [{
     roomName:'CSS lovers',
     roomDescription:'Room made specialify for CSS lvoers group. Since 2023.',
     messageHistoryID: 1,
-    users:[1,2],
+    users:[2],
     creationDate:'2023-03-28T12:00',
     messages:[{
       senderID:2,

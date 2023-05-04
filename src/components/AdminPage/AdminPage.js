@@ -1,12 +1,19 @@
-import { Box, Button, Checkbox, FormControlLabel, TextField } from '@mui/material'
+import { Box, Button, Checkbox, FormControlLabel, Modal, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { rooms } from '../../db'
 import { joinRoom } from '../../store/reducers/userSlice'
+import { BasicInput } from '../LoginPage/BasicInput'
+import { AdminInput } from './AdminInput'
 
-const SelectRoom = () => {
+const AdminPage = () => {
   const [text,setText] = useState('')
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const [findRooms,setFindRooms] = useState([])
+  const [clickedRoom,setClickedRoom] = useState({})
+
   const user = useSelector(state=>state.user)
   const dispatch = useDispatch();
   const onSearch = () => {
@@ -25,32 +32,34 @@ const SelectRoom = () => {
   }
 
 
-  const onCheckboxChange = (event) => {
-    console.log(`Checkbox clicked: ${event.target.checked}`);
-   let myUserRooms = true;
-   let myRooms = findRooms;
-    const newRooms = rooms.filter(room => {
-    const roomNameMatches=  room.roomName.toLowerCase().includes(text.toLowerCase());
-    const publicRooms = room.type != 'private'
-
-    console.log(myUserRooms)
-    if(event.target.checked === true){
-     myUserRooms = room.users.some(obj => obj.hasOwnProperty("userID") && obj.userID === user.userID   )
-    return roomNameMatches && myUserRooms && publicRooms;
-
-    }
-    return roomNameMatches && publicRooms;
-
-  })
-  console.log(newRooms)
-    // do something else based on checkbox value
-    setFindRooms(newRooms)
-
-  };
-
   const onRoomJoin = (roomID) => {
   dispatch(joinRoom(roomID))
   }
+
+
+const onRoomDelete = (roomID) => {
+    console.log(roomID)
+    // rooms
+}
+
+const onRoomEdit = (room) => {
+    setClickedRoom(room)
+    console.log(clickedRoom)
+    handleOpen()
+}
+
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
 
   return (
     <Box
@@ -65,10 +74,27 @@ const SelectRoom = () => {
     flexDirection="column"
     alignItems="center"
     justifyContent="center"
-
-
-
   >
+         <Modal
+        open={open}
+        onClose={handleClose}> 
+   <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Edit room
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          <AdminInput value={clickedRoom.roomName} inputType="text" inputName="login">
+                Room name
+              </AdminInput>
+              <AdminInput value={clickedRoom.roomDescription} inputType="text" inputName="login">
+                Room description
+              </AdminInput>
+          </Typography>
+          <Button  sx={{marginBottom:'1rem'}} variant="contained" color="success">SAVE</Button>
+
+        </Box>
+    </Modal>
+    <Typography variant='h1' mb={4}>Admin panel</Typography>
      <Box mb={2}>
         Fill below field to search for room
       </Box>
@@ -96,11 +122,7 @@ const SelectRoom = () => {
         <Box ml={2} mr={2}>
           <Button onClick={onSearch} variant="contained" color="primary">Search</Button>
         </Box>
-        <FormControlLabel
-      control={<Checkbox  name="moje-pokoje" color="primary" onChange={onCheckboxChange}  />}
-      labelPlacement="end"
-      label="Moje pokoje"
-    />
+   
       </Box>
       {findRooms.length != 0 &&  <Box mb={2}    display="flex"
     flexDirection="column"
@@ -122,10 +144,10 @@ const SelectRoom = () => {
             >
               <h3>{room.roomName}</h3>
               <p>{room.roomDescription}</p>
-              {
-                room.users.some(obj => obj.hasOwnProperty("userID") && obj.userID === user.userID) ? <Button onClick={()=>onRoomJoin(room.roomID)} sx={{marginBottom:'1rem'}} variant="contained" color="primary">GO TO</Button> :
-              <Button onClick={()=>onRoomJoin(room.roomID)} sx={{marginBottom:'1rem'}} variant="contained" color="success">JOIN</Button>
-              }
+              <div style={{display:'flex', justifyContent:'center',gap:'1rem'}}>
+              <Button onClick={()=>onRoomEdit(room)} sx={{marginBottom:'1rem'}} variant="contained" color="warning">EDIT</Button>
+              <Button onClick={()=>onRoomDelete(room.roomID)} sx={{marginBottom:'1rem'}} variant="contained" color="error">DELETE</Button>
+              </div>
               </div>
             
           </li>
@@ -138,4 +160,4 @@ const SelectRoom = () => {
   )
 }
 
-export default SelectRoom
+export default AdminPage
