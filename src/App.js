@@ -18,8 +18,8 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
-        <Route path="/rooms" element={<RoomPage />} />
-        <Route path="/test" element={<SelectRoom />} />
+        <Route path="/room" element={<RoomPage />} />
+        <Route path="/selection" element={<SelectRoom />} />
         <Route path="/admin" element={<AdminPage />} />
 
         <Route path="*" element={<NotFound />} />
