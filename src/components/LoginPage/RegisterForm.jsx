@@ -31,17 +31,23 @@ export const RegisterForm = () => {
     const emailValue = form.elements.email.value;
     const passwordValue = form.elements.password.value;
 
-    const isUserInDB = users.find((user) => {
-      user.login === loginValue && alert(`${loginValue} is already taken`);
+    const isMailInDB = users.find((user) => user.email === emailValue);
 
-      user.email === emailValue && alert(`${emailValue} is already taken`);
-    });
+    const isLoginInDB = users.find((user) => user.login === loginValue);
+
+    const isAdminIncluded = loginValue.toUpperCase().includes("admin");
 
     if (loginValue === "" || emailValue === "" || passwordValue === "") {
-      console.log(loginValue, emailValue, passwordValue);
       alert("Please fill all the required fields");
-    } else if (isUserInDB !== undefined) {
+    } else if (isMailInDB) {
+      alert(
+        `${emailValue} is already in base. Please use another email adress.`
+      );
+    } else if (isLoginInDB || isAdminIncluded) {
+      alert(`${loginValue} is already in base. Please use another login`);
+    } else {
       form.reset();
+      alert("Congratulations! Welcome");
       navigate("/rooms");
       dispatch(
         setUserRegisterDetails({
@@ -51,13 +57,6 @@ export const RegisterForm = () => {
         })
       );
     }
-
-    // if (loginValue && emailValue && passwordValue !== "") {
-    //   form.reset();
-    //   navigate("/rooms");
-    // } else {
-    //   alert("Please fill all the required fields");
-    // }
   };
 
   return (
@@ -80,7 +79,7 @@ export const RegisterForm = () => {
                 Login
               </BasicInput>
               <PasswordInput>Password</PasswordInput>
-              <StyledButton btnType="submit">SUBMIT</StyledButton>
+              <StyledButton btnType="submit">REGISTER</StyledButton>
             </StyledForm>
 
             <StyledTypoSub variant="subtitle2" align="center">
