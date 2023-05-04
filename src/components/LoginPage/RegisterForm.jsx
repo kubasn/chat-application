@@ -48,7 +48,7 @@ export const RegisterForm = () => {
     } else {
       form.reset();
       alert("Congratulations! Welcome");
-      navigate("/rooms");
+      navigate("/selection");
       dispatch(
         setUserRegisterDetails({
           login: loginValue,
