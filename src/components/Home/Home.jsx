@@ -5,21 +5,20 @@ import { Link } from "react-router-dom";
 import { StyledButton } from "../LoginPage/StyledButton";
 import { Welcome } from "../utils/Welcome";
 
+import { StyledBackground } from "../utils/StyledBackground";
+
 export const Home = () => {
   return (
-    <Container maxWidth="sm">
-      <CssBaseline />
-      <StyledBigBox>
-        <Welcome />
-        <StyledBox>
-          <Link to="login">
-            <StyledButton>LOG IN</StyledButton>
-          </Link>
-          <Link to="register">
-            <StyledButton>REGISTER</StyledButton>
-          </Link>
-        </StyledBox>
-      </StyledBigBox>
-    </Container>
+    <StyledBackground>
+      <Welcome />
+      <StyledBox>
+        <Link to="login">
+          <StyledButton>LOG IN</StyledButton>
+        </Link>
+        <Link to="register">
+          <StyledButton>REGISTER</StyledButton>
+        </Link>
+      </StyledBox>
+    </StyledBackground>
   );
 };
