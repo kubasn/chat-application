@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { nanoid } from "@reduxjs/toolkit";
 import { users } from "../../db";
-
+const avatar = nanoid();
 const userInitialState = {
-  userID: nanoid(),
+  userID: "",
   login: "",
   email: "",
   password: "",
@@ -13,13 +13,13 @@ const userInitialState = {
   role: "user",
 };
 
-const initialState = users[0];
+//const initialState = users[0];
 
 //kiedy aplikacja rozpoczyna swoje działanie, wszystko jest jeszcze puste
 
 const userSlice = createSlice({
   name: "user",
-  initialState: initialState,
+  initialState: userInitialState,
   reducers: {
     //kiedy uzytkownik loguje się -> zapamiętaj poniższe rzeczy
     setUserIsLogged: (state, { payload }) => {
@@ -35,11 +35,11 @@ const userSlice = createSlice({
       state.role = payload.role;
     },
     setUserRegisterDetails: (state, { payload }) => {
-      state.userID = payload.userID;
+      state.userID = nanoid();
       state.login = payload.login;
       state.email = payload.email;
       state.password = payload.password;
-      state.avatarID = "";
+      state.avatarID = `https://api.multiavatar.com/${avatar} Bond.png`;
       state.lastRoom = [];
       state.status = "";
       state.role = payload.role;

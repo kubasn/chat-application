@@ -14,4 +14,14 @@ export const themes = createTheme({
       "BlinkMacSystemFont",
     ].join(","),
   },
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          background: "#5359ea",
+          position: "relative",
+        },
+      },
+    },
+  },
 });

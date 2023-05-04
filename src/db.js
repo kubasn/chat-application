@@ -1,19 +1,23 @@
+import { nanoid } from "@reduxjs/toolkit";
+const avatar = nanoid();
+
 let users = [
   {
     userID: 1,
     login: "olgap",
     email: "olgap@gmail.com",
     password: "qwerty",
-    avatarID:"https://api.multiavatar.com/Binx Bond.png",
-    lastRoom:2,
-    status:"active",
-    rooms:[2]
-  },{
+    avatarID: `https://api.multiavatar.com/${avatar} Bond.png`,
+    lastRoom: 2,
+    status: "active",
+    rooms: [2],
+  },
+  {
     userID: 2,
     login: "kubasn",
     email: "kubasn@gmail.com",
     password: "12523",
-    avatarID: "https://api.multiavatar.com/Binx Bond.png",
+    avatarID: `https://api.multiavatar.com/${avatar} Bond.png`,
     lastRoom: 2,
     status: "active",
     rooms: [1, 2],
@@ -24,7 +28,7 @@ let users = [
     login: "marekw",
     email: "marekw@gmail.com",
     password: "batman123",
-    avatarID: "https://api.multiavatar.com/Binx Bond.png",
+    avatarID: `https://api.multiavatar.com/${avatar} Bond.png`,
     lastRoom: 1,
     status: "active",
     rooms: [1],
@@ -35,7 +39,7 @@ let users = [
     login: "admin",
     email: "admin@gmail.com",
     password: "adminadmin",
-    avatarID: "https://api.multiavatar.com/Binx Bond.png",
+    avatarID: `https://api.multiavatar.com/${avatar} Bond.png`,
     lastRoom: 1,
     status: "active",
     rooms: [1],
@@ -49,29 +53,33 @@ let rooms = [
     roomName: "CSS lovers",
     roomDescription: "Room made specialify for CSS lvoers group. Since 2023.",
     messageHistoryID: 1,
-    users:[2],
-    creationDate:'2023-03-28T12:00',
-    messages:[{
-      senderID:2,
-      senderName:"kubasn",
-      content:'vcvbg rwe we',
-      timestamp:'2023-01-28T12:00',
-      id:1
-  },{
-    senderID:1,
-    senderName:"olgap",
+    users: [2],
+    creationDate: "2023-03-28T12:00",
+    messages: [
+      {
+        senderID: 2,
+        senderName: "kubasn",
+        content: "vcvbg rwe we",
+        timestamp: "2023-01-28T12:00",
+        id: 1,
+      },
+      {
+        senderID: 1,
+        senderName: "olgap",
 
-    content:'qweery awdawd',
-    timestamp:'2023-02-28T12:00',
-    id:2},
-    {
-      senderID:1,
-      senderName:"olgap",
+        content: "qweery awdawd",
+        timestamp: "2023-02-28T12:00",
+        id: 2,
+      },
+      {
+        senderID: 1,
+        senderName: "olgap",
 
-      content:' bxsdfgsf ',
-      timestamp:'2023-04-14T12:00',
-      id:3},
-  
+        content: " bxsdfgsf ",
+        timestamp: "2023-04-14T12:00",
+        id: 3,
+      },
+
       {
         senderID: 2,
         senderName: "kubasn",
