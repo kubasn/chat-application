@@ -1,16 +1,5 @@
 import styled from "styled-components";
-import {
-  AppBar,
-  Avatar,
-  BottomNavigation,
-  BottomNavigationAction,
-  Box,
-  IconButton,
-  InputBase,
-  TextField,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { BottomNavigation, TextField } from "@mui/material";
 
 export const Chat = styled.div`
   margin-top: 2rem;
@@ -19,10 +8,6 @@ export const Chat = styled.div`
   background-color: "red";
   z-index: 100;
   width: 100%;
-`;
-
-export const TextF = styled(TextField)`
-  color: "white";
 `;
 
 export const BottomNav = styled(BottomNavigation)`

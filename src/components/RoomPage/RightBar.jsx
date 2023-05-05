@@ -1,30 +1,17 @@
 import {
   Box,
   Button,
-  Card,
   Divider,
   Drawer,
-  Hidden,
   List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Paper,
   Toolbar,
   Typography,
-  createStyles,
 } from "@mui/material";
 import React, { useState } from "react";
 import { Side } from "./SideBar.styles";
-import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import ListItemDecorator from "@mui/joy/ListItemDecorator";
-import { Home } from "@mui/icons-material";
-import { ButtonSettings, PrimaryText, SecondaryText } from "../RightBar.styles";
+import { ButtonSettings, PrimaryText, SecondaryText } from "./RightBar.styles";
 import SettingsIcon from "@mui/icons-material/Settings";
-import MenuIcon from "@mui/icons-material/Menu";
-import { makeStyles } from "@mui/styles";
 import InfoIcon from "@mui/icons-material/Info";
 import { useDispatch } from "react-redux";
 import { leaveRoom } from "../../store/reducers/userSlice";

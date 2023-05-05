@@ -5,7 +5,8 @@ import { Box, Container, CssBaseline } from "@mui/material";
 export const StyledSmallBox = styled(Box)`
   background-color: #343434;
   border-radius: 20px;
-  margin: 60px 60px;
+  margin: 60px;
+  padding: 30px;
   width: 95%;
 `;
 

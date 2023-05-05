@@ -1,12 +1,12 @@
 import React from "react";
 import { Button } from "@mui/material";
-import { StyledSmallBox, StyledForm, StyledTypoSub } from "./Forms.styles";
+import { StyledForm, StyledTypoSub } from "./Forms.styles";
 import { useNavigate } from "react-router-dom";
 import { Welcome } from "../utils/Welcome";
 import { BasicInput } from "./BasicInput";
 import { PasswordInput } from "./PasswordInput";
 import { StyledButton } from "./StyledButton";
-import { StyledBackground } from "../utils/StyledBackground";
+import { StyledBackground, StyledSmallBox } from "../utils/StyledBackground";
 
 import { useDispatch } from "react-redux";
 import { setUserRegisterDetails } from "../../store/reducers/userSlice";
