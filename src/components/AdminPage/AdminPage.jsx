@@ -102,6 +102,7 @@ const AdminPage = () => {
     newRooms[roomIndex] = room;
   };
 
+
   const handleAddRoom = (roomName, roomDescription) => {
     // Add the new room to your rooms array or state here.
     let newRoom = {
