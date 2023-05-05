@@ -9,7 +9,6 @@ export const MessageComponent = styled.div`
     margin-bottom: 10px;
     width:40vw;
     margin-left:-15%
-    marginLeft:20px
     @media (max-width: 900px) {
         width:80vw;
     }
