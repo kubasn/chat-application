@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { Side } from "./SideBar.styles";
+import { Side } from "./LeftBar.styles";
 import "react-multi-carousel/lib/styles.css";
 import { ButtonSettings, PrimaryText, SecondaryText } from "./RightBar.styles";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -82,9 +82,9 @@ const RightBar = (props) => {
   };
 
   const onLeave = () => {
-    dispatch(leaveRoom({roomID:props.roomID,userID:props.userID}));
+    dispatch(leaveRoom({ roomID: props.roomID, userID: props.userID }));
     dispatch(deleteRoom());
-    navigate('/selection')
+    navigate("/selection");
   };
 
   return (

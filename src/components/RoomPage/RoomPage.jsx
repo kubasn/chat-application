@@ -1,7 +1,7 @@
 import { AppBar, CssBaseline, Toolbar, Typography } from "@mui/material";
 import React from "react";
 import { Page } from "./RoomPage.styles";
-import SideBar from "./SideBar";
+import SideBar from "./LeftBar";
 import RightBar from "./RightBar";
 import ChatWindow from "./ChatWindow.jsx";
 import { useSelector } from "react-redux";

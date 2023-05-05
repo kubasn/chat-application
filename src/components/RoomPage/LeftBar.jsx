@@ -1,30 +1,27 @@
 import {
-  Box,
   Button,
-  Card,
   Divider,
   Drawer,
   Hidden,
   List,
   ListItem,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
-  Paper,
   Toolbar,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { Side } from "./SideBar.styles";
+import { Side } from "./LeftBar.styles";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import ListItemDecorator from "@mui/joy/ListItemDecorator";
-import { Home } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useDispatch, useSelector } from "react-redux";
 import { changeRoom } from "../../store/reducers/roomSlice";
 import { useNavigate } from "react-router-dom";
 import UserSearch from "./UserSearch";
+import Avatar from "@mui/material/Avatar";
+import { selectAvatar } from "../../store/selectors";
 
 const responsive = {
   superLargeDesktop: {
@@ -47,6 +44,7 @@ const responsive = {
 };
 
 const SideBar = ({ users, rooms, currentRoom }) => {
+  //const avatar = useSelector(selectAvatar);
   const drawerWidth = "40%";
   let anchor = "left";
   const dispatch = useDispatch();
@@ -71,8 +69,9 @@ const SideBar = ({ users, rooms, currentRoom }) => {
     );
   };
 
-  const RoomBox = ({ id, currentRoomId }) => {
-    // console.log(props)
+  const RoomBox = ({ id, currentRoomId, picture }) => {
+    console.log(picture);
+    console.log(id);
     return (
       <div
         onClick={() =>
@@ -80,7 +79,7 @@ const SideBar = ({ users, rooms, currentRoom }) => {
         }
         onChange
         style={{
-          background: currentRoomId == id ? "red" : "#D9D9D9",
+          background: currentRoomId === id ? "red" : "#D9D9D9",
           height: "4rem",
           width: "4rem",
           display: "flex",
@@ -164,7 +163,13 @@ const SideBar = ({ users, rooms, currentRoom }) => {
             >
               <RoomBox id="+" />
               {rooms.map((room) => (
-                <RoomBox id={room} currentRoomId={currentRoom.roomID} />
+                <RoomBox
+                  id={room}
+                  currentRoomId={currentRoom.roomID}
+                  picture={room.picture}
+                >
+                  {" "}
+                </RoomBox>
               ))}
             </Carousel>
           </div>
@@ -180,7 +185,7 @@ const SideBar = ({ users, rooms, currentRoom }) => {
             color="inherit"
             noWrap
           >
-            Users
+            Users in room
           </Typography>
           <List>
             {users.map((user, index) => (
@@ -191,14 +196,15 @@ const SideBar = ({ users, rooms, currentRoom }) => {
                 style={{ marginLeft: "0.5rem", marginBottom: "1.5rem" }}
               >
                 <ListItemDecorator style={{}}>
-                  <img
+                  <Avatar alt="User picture" src={user.avatarID} />
+                  {/* <img
                     style={{
                       width: "4rem",
                       height: "4rem",
                       borderRadius: "100%",
                     }}
                     src="https://picsum.photos/200/300"
-                  />
+                  /> */}
                 </ListItemDecorator>
                 <ListItemButton>
                   <Hidden mdDown>
@@ -212,7 +218,7 @@ const SideBar = ({ users, rooms, currentRoom }) => {
             ))}
           </List>
         </List>
-      <UserSearch onUserClick={onUserClick}/>
+        <UserSearch onUserClick={onUserClick} />
       </Drawer>
     </Side>
   );
