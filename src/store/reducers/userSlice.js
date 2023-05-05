@@ -36,7 +36,8 @@ const userSlice = createSlice({
       state.role = payload.role;
     },
     setUserRegisterDetails: (state, { payload }) => {
-      state.userID = nanoid();
+      let id = nanoid()
+      state.userID = id;
       state.login = payload.login;
       state.email = payload.email;
       state.password = payload.password;
@@ -45,7 +46,7 @@ const userSlice = createSlice({
       state.status = "";
       state.role = payload.role;
       users.push({
-        userID: payload.userID,
+        userID: id,
         login: payload.login,
         email: payload.email,
         password: payload.password,
