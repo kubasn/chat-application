@@ -15,6 +15,7 @@ import AddReactionIcon from "@mui/icons-material/AddReaction";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteMessage, sendMessage } from "../../store/reducers/roomSlice";
 import date from "../utils/date";
+import sortByDate from "../utils/sortByDate";
 
 const initialMessage = {
   id: "",
@@ -50,15 +51,20 @@ const ChatWindow = ({ room }) => {
 
   useEffect(() => {
     let newHistory = chatHistory.messages;
-    newHistory = addTagToMessages(newHistory, user.userID);
-    setMessages(newHistory);
+    newHistory = sortByDate(newHistory)
+    console.log(newHistory)
+    let sortedMessages = addTagToMessages(newHistory, user.userID);
+    console.log(sortedMessages)
+    setMessages(sortedMessages);
   }, []);
 
   useEffect(() => {
     let newHistory = chatHistory.messages;
-    newHistory = addTagToMessages(newHistory, user.userID);
+    newHistory = sortByDate(newHistory)
 
-    setMessages(newHistory);
+    let sortedMessages = addTagToMessages(newHistory, user.userID);
+    console.log(sortedMessages)
+    setMessages(sortedMessages);
   }, [chatHistory]);
 
   const onWriteMessage = (e) => {

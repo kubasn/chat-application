@@ -16,9 +16,14 @@ import { AdminInput } from "./AdminInput";
 import AddRoomForm from "./AddRoomForm";
 import date from "../utils/date";
 import removeUserFromRoom from "../../helpers/removeUserFromRoom";
-import { StyledBigBox } from "../utils/StyledBackground";
+import { StyledBackground, StyledBigBox } from "../utils/StyledBackground";
+import { Topbar } from "../RoomPage/TopBar";
+import { nanoid } from "@reduxjs/toolkit";
 
 const AdminPage = () => {
+
+
+  console.log('ello')
   const [text, setText] = useState("");
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -88,6 +93,8 @@ const AdminPage = () => {
     const newRooms = filterRooms();
     setFindRooms(newRooms);
 
+    console.log(rooms)
+  };
     const onDeleteUser = (e, userID, roomID) => {
       e.preventDefault();
       let room = removeUserFromRoom(userID, roomID);
@@ -100,14 +107,16 @@ const AdminPage = () => {
     const handleAddRoom = (roomName, roomDescription) => {
       // Add the new room to your rooms array or state here.
       let newRoom = {
-        roomID: "",
+        roomID: nanoid(),
         creationDate: date(),
         roomName: roomName,
         roomDescription: roomDescription,
         messageHistoryID: "",
         messages: [],
+        users:[]
       };
-      rooms.push(newRoom);
+      rooms.push(newRoom)
+      console.log(rooms)
     };
 
     const style = {
@@ -123,18 +132,10 @@ const AdminPage = () => {
     };
 
     return (
-      <StyledBigBox
-        bgcolor="#1C1D22"
-        color="white"
-        p={10}
-        textAlign="center"
-        min-height="100vh"
-        width="50%"
-        margin="auto"
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
+<>
+      <Topbar/>
+
+      <StyledBackground
       >
         <Modal open={open} onClose={handleClose}>
           <Box sx={style}>
@@ -297,8 +298,9 @@ const AdminPage = () => {
           </Box>
         )}
         <AddRoomForm onSubmit={handleAddRoom} />
-      </StyledBigBox>
+      </StyledBackground>
+      </>
     );
-  };
+  
 };
 export default AdminPage;

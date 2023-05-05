@@ -11,7 +11,6 @@ import getTimeSince from "../utils/getTimeSince";
 import { Typography } from "@mui/material";
 const Message = ({ user, message, onDelete }) => {
 
-  console.log(message)
   let myMessage = {
     bgColor: "#BDD2B6",
     color: "#ffff",

@@ -34,7 +34,8 @@ console.log(isUserInDB)
     if (isUserInDB !== undefined) {
       dispatch(setUserIsLogged({ ...isUserInDB }));
       form.reset();
-      navigate("/selection");
+      if(isUserInDB.role !== 'admin') navigate("/selection");
+      else if(isUserInDB.role === 'admin') navigate("/admin")
     } else {
       alert("Please fill all the required fields");
     }

@@ -5,7 +5,7 @@ import {
   FormControlLabel,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { rooms } from "../../db";
 import { changeRoom } from "../../store/reducers/roomSlice";
@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { StyledBackground, StyledSmallBox } from "../utils/StyledBackground";
 import { BasicInput } from "../LoginPage/BasicInput";
 import { joinRoom } from "../../store/reducers/userSlice";
+import { SearchInput } from "../utils/SearchInput";
 
 const SelectRoom = () => {
   const [text, setText] = useState("");
@@ -21,18 +22,31 @@ const SelectRoom = () => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
-  const onSearch = () => {
+
+
+  useEffect(()=> {
+    
+    let newRooms = rooms.filter((room) => {
+      return room.type != "private";
+      
+    });
+    newRooms = newRooms.splice(0,5)
+    console.log(newRooms)
+    setFindRooms(newRooms)
+    console.log(findRooms)
+
+  },[])
+
+
+  const onTextChange = (e) => {
+
     const newRooms = rooms.filter((room) => {
-      const newRooms = room.roomName.toLowerCase().includes(text.toLowerCase());
+      const newRooms = room.roomName.toLowerCase().includes(e.target.value.toLowerCase());
       const publicRooms = room.type != "private";
       return newRooms && publicRooms;
     });
     setFindRooms(newRooms);
-  };
-
-  const onTextChange = (e) => {
-    setFindRooms([]);
-    setText(e.target.value);
+    console.log(newRooms,text)
   };
 
   const onCheckboxChange = (event) => {
@@ -80,21 +94,21 @@ const SelectRoom = () => {
           flexDirection="column"
           gap="18px"
         >
-          <BasicInput
+          <SearchInput
             inputType="text"
             inputName="search"
             onChange={onTextChange}
           >
             Search for rooms
-          </BasicInput>
-          <Button
+          </SearchInput>
+          {/* <Button
             onClick={onSearch}
             variant="contained"
             color="secondary"
             fullWidth
           >
             Search
-          </Button>
+          </Button> */}
 
           <FormControlLabel
             control={
@@ -120,8 +134,8 @@ const SelectRoom = () => {
               Rooms found
             </Typography>
             <ul style={{ listStyleType: "none", paddingLeft: "0px" }}>
-              {findRooms.map((room) => (
-                <li key={room.roomID} style={{ marginBottom: "10px" }}>
+              {findRooms && findRooms.map((room) => (
+                <li style={{ marginBottom: "10px" }}>
                   <Box
                     display="flex"
                     flexDirection="column"
@@ -164,7 +178,8 @@ const SelectRoom = () => {
                     )}
                   </Box>
                 </li>
-              ))}
+              )
+              )}
             </ul>
           </Box>
         )}
