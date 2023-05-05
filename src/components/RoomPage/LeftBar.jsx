@@ -21,7 +21,7 @@ import { changeRoom } from "../../store/reducers/roomSlice";
 import { useNavigate } from "react-router-dom";
 import UserSearch from "./UserSearch";
 import Avatar from "@mui/material/Avatar";
-import { selectAvatar } from "../../store/selectors";
+import AddBoxIcon from "@mui/icons-material/AddBox";
 import returnRoomPicture from "../../helpers/returnRoomPicture";
 
 const responsive = {
@@ -71,8 +71,6 @@ const SideBar = ({ users, rooms, currentRoom }) => {
   };
 
   const RoomBox = ({ id, currentRoomId, picture }) => {
-    console.log(picture);
-    console.log(id);
     return (
       <div
         onClick={() =>
@@ -80,7 +78,8 @@ const SideBar = ({ users, rooms, currentRoom }) => {
         }
         onChange
         style={{
-          background: currentRoomId === id ? "red" : "#D9D9D9",
+          border: "2px solid",
+          borderColor: currentRoomId === id ? "red" : "#D9D9D9",
           height: "4rem",
           width: "4rem",
           display: "flex",
@@ -88,7 +87,16 @@ const SideBar = ({ users, rooms, currentRoom }) => {
           alignItems: "center",
         }}
       >
-        <img src={returnRoomPicture(id)} width='100%'/>
+        {id === "+" ? (
+          <AddBoxIcon />
+        ) : (
+          <img
+            src={returnRoomPicture(id)}
+            width="100%"
+            height="100%"
+            style={{ objectFit: "fill" }}
+          />
+        )}
       </div>
     );
   };
@@ -132,7 +140,6 @@ const SideBar = ({ users, rooms, currentRoom }) => {
             sx={{ marginLeft: "2vw" }}
             align="left"
             variant="h5"
-            color="inherit"
             noWrap
           >
             Rooms
