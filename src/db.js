@@ -7,6 +7,7 @@ let users = [
     login: "olgap",
     email: "olgap@gmail.com",
     password: "qwerty",
+
     avatarID: `https://api.multiavatar.com/${avatar} Bond.png`,
     lastRoom: 2,
     status: "active",
