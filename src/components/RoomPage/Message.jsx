@@ -8,7 +8,10 @@ import {
 } from "./Message.styles";
 import DeleteIcon from "@mui/icons-material/Delete";
 import getTimeSince from "../utils/getTimeSince";
-const Message = ({ type, message, onDelete }) => {
+import { Typography } from "@mui/material";
+const Message = ({ user, message, onDelete }) => {
+
+  console.log(message)
   let myMessage = {
     bgColor: "#BDD2B6",
     color: "#ffff",
@@ -18,22 +21,22 @@ const Message = ({ type, message, onDelete }) => {
   let anotherMessage = { bgColor: "#f1f0f0", color: "#1D1E22", left: "-20px" };
   return (
     <MessageComponent
-      left={type === "my" ? myMessage.left : anotherMessage.left}
-      color={type === "my" ? myMessage.bgColor : anotherMessage.bgColor}
+      left={ user.login === message.senderName ? myMessage.left : anotherMessage.left}
+      color={message.content === 'Message has ben deleted' ? "transparent"  : user.login === message.senderName ? myMessage.bgColor : anotherMessage.bgColor}
     >
       <MessageHeader>
         <MessageSender
-          color={type === "my" ? myMessage.color : anotherMessage.color}
+          color={user.login === message.senderName ? myMessage.color : anotherMessage.color}
         >
           {message.senderName}
         </MessageSender>
         <MessageTimestamp>{getTimeSince(message.timestamp)}</MessageTimestamp>
       </MessageHeader>
       <MessageContent>
-        <p>{message.content}</p>
+        <Typography   variant='body2' >{message.content}</Typography>
       </MessageContent>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        {type === "my" && <DeleteIcon onClick={() => onDelete(message.id)} />}
+        {(user.login === message.senderName && message.content != 'Message has ben deleted') && <DeleteIcon onClick={() => onDelete(message.id)} />}
       </div>
     </MessageComponent>
   );

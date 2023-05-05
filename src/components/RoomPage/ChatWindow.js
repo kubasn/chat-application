@@ -19,7 +19,7 @@ import {
   Typography,
 } from '@mui/material'
 import Message from './Message';
-import { BottomNav, Chat, TextF } from './ChatWindow.module';
+import { BottomNav, Chat, TextF } from './ChatWindow.styles';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import { useDispatch, useSelector } from 'react-redux'
@@ -38,10 +38,10 @@ const initialMessage = {
   type:''
 }
 
-function addTagToMessages(history, specificId, type) {
+function addTagToMessages(history, specificId) {
   history = history.map((message) => {
     if (message.senderID === specificId) {
-      return Object.assign({}, message, { type });
+      return Object.assign({}, message);
     }
     return message; })
   return history
@@ -66,14 +66,14 @@ function ChatWindow({room}) {
 
   useEffect(()=>{
     let newHistory = chatHistory.messages
-    newHistory = addTagToMessages(newHistory,user.userID,'my')
+    newHistory = addTagToMessages(newHistory,user.userID)
     setMessages(newHistory)
   },[])
 
   //nie wiadomo do czego to służy, trza oi
   useEffect(()=>{
     let newHistory = chatHistory.messages
-    newHistory = addTagToMessages(newHistory,user.userID,'my')
+    newHistory = addTagToMessages(newHistory,user.userID)
 
     setMessages(newHistory)
   },[chatHistory])
@@ -85,7 +85,7 @@ setNewMessage({...newMessage,content:e.target.value})
 
 const onSubmit = () => {
   const  messagesList = messages;
-  let message = {...newMessage,id:Math.floor(Math.random()*10000),type:'my',senderID:user.userID,senderName:user.login,timestamp:date()}
+  let message = {...newMessage,id:Math.floor(Math.random()*10000),senderID:user.userID,senderName:user.login,timestamp:date()}
   setMessages([...messagesList,message])
   dispatch(sendMessage({message,roomId:room.roomID}))
   setNewMessage({...newMessage,content:''})
@@ -94,8 +94,17 @@ const onSubmit = () => {
 const onDelete = (id) => {
   const messagesList = messages;
   dispatch(deleteMessage({id:id,roomId:room.roomID}))
-  const filteredMessages = messagesList.filter((message)=>message.id !== id)
-  setMessages(filteredMessages);
+ const filteredMessages =  messagesList.map(message => {
+  if (message.id === id) {
+    return {
+      ...message,
+      content: 'Message has ben deleted',
+    };
+  }
+  return message;
+})
+console.log(filteredMessages)
+setMessages(filteredMessages);
 }
 
 
@@ -105,7 +114,7 @@ const onDelete = (id) => {
       <List>
         {messages.map(( message, index) => (
           <ListItem  button key={index}>
-           <Message onDelete={onDelete} message={message} type={message.type}/>
+           <Message onDelete={onDelete} message={message} user={user} />
           </ListItem>
         ))}
       </List>

@@ -4,12 +4,12 @@ import { ThemeProvider } from "styled-components";
 import { Page } from "./RoomPage.styles";
 import SideBar from "./SideBar";
 import RightBar from "./RightBar";
-import ChatWindow from "./ChatWindow";
 import { createTheme } from "@mui/material/styles";
 import { useSelector } from "react-redux";
 import { Topbar } from "./TopBar";
 import { themes } from "../mui/theme";
 import { styled } from "@mui/material/styles";
+import ChatWindow from "./ChatWindow";
 
 const StyledTopBar = styled(Toolbar)(({ theme }) => ({
   [theme.breakpoints.up("xs")]: {

@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {rooms, users } from "../../db";
+import { userJoinRoom } from "../../dbOperations/userJoinRoom";
 
 
 function findPrivateRoomByUsers(userIDs) {
-  console.log(userIDs,rooms)
   return rooms.find((room) => (
     room.users.length === userIDs.length &&
     room.hasOwnProperty('type') &&
@@ -16,7 +16,7 @@ function findPrivateRoomByUsers(userIDs) {
 rooms.forEach(room=>room.users = getUsersByIds(room.users));
 const initialState =   {
   roomID: '',
-  roomName: "CSS ",
+  roomName: " ",
   roomDescription: "",
   messageHistoryID: null,
   users: [],
@@ -47,22 +47,24 @@ const roomSlice = createSlice({
     },
 
     deleteRoom: (state, {payload}) => {
-        state.roomID = null
+        state.roomID = ''
         state.messageHistoryID = null
-        state.users = null
-        state.creationDate = null
-        state.roomName=null
-        state.roomDescription=null
+        state.users = []
+        state.creationDate = ''
+        state.roomName=''
+        state.roomDescription=''
+        state.messages = []
       },
       addUser: (state,{payload}) =>{
         const users = state.users;
         users.push(payload)
         state.users = users;
     },
+
+
     changeRoom:(state,{payload}) => {
       if(payload.type == 'private'){
 let message = findPrivateRoomByUsers(payload.id)
-console.log(rooms)
 if(typeof message != 'undefined'){
 state.roomID = message.roomID
     state.creationDate = message.creationDate
@@ -100,6 +102,13 @@ state.roomID = message.roomID
 
 
       }else{
+
+
+         if(payload.actType ==="JOIN"){
+          userJoinRoom(payload.user,payload.id)
+         }
+
+
     const roomId = payload.id;
     const id = rooms.findIndex(room => room.roomID === roomId);
 
@@ -114,11 +123,6 @@ state.roomID = message.roomID
     },
 
 
-      removeUser:(state,{payload}) => {
-        const users = state.users;
-        const filteredUsers = users.filter(obj => obj.userID !== payload);
-        state.users = filteredUsers;
-    },
 
   sendMessage: (state, {payload}) => {
       const messages = state.messages;
@@ -134,18 +138,34 @@ state.roomID = message.roomID
 const {id,roomId} = payload;
 const roomIndex = rooms.findIndex(room => room.roomID === roomId);
 
-rooms[roomIndex] = {...rooms[roomIndex],messages:[rooms[roomIndex].messages.filter(message=>message.id != id)]};
+let selectedRoom = rooms[roomIndex]
+let selectedMessage = selectedRoom.messages.find(message=>message.id == id)
+let selectedMessageIndex = selectedRoom.messages.findIndex(message=>message.id == id)
 
-const messages = state.messages;
-    const messageIndex = messages.findIndex(message => message.id === id);
 
-     if (messageIndex === -1) {
-      return state;
-    }
-  
-    // Remove the message with the specified id
-    state.messages.splice(messageIndex, 1);
-  
+
+let newRooms = rooms.map(room => {
+  if (room.roomID === roomId) {
+    return {
+      ...room,
+      messages: room.messages.map(message => {
+        if (message.id === id) {
+          return {
+            ...message,
+            content: 'Message has ben deleted',
+          };
+        }
+        return message;
+      }),
+    };
+  }
+  return room;
+});
+
+
+rooms[roomIndex] = newRooms[roomIndex]
+
+
   }
     
   },
