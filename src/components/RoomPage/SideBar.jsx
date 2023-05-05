@@ -24,6 +24,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useDispatch, useSelector } from "react-redux";
 import { changeRoom } from "../../store/reducers/roomSlice";
 import { useNavigate } from "react-router-dom";
+import UserSearch from "./UserSearch";
 
 const responsive = {
   superLargeDesktop: {
@@ -211,6 +212,7 @@ const SideBar = ({ users, rooms, currentRoom }) => {
             ))}
           </List>
         </List>
+      <UserSearch onUserClick={onUserClick}/>
       </Drawer>
     </Side>
   );
