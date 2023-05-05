@@ -9,6 +9,8 @@ import { Home } from "./components/Home/Home";
 import { NotFound } from "./components/utils/NotFound";
 import SelectRoom from "./components/SelectRoomPage/SelectRoom";
 import AdminPage from "./components/AdminPage/AdminPage";
+import UserRoute from "./components/ProtectedRoute/UserRoute";
+import AdminRoute from "./components/ProtectedRoute/AdminRoute";
 
 const App = () => {
   return (
@@ -18,10 +20,13 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
+        <Route element={<UserRoute />}>
         <Route path="/room" element={<RoomPage />} />
         <Route path="/selection" element={<SelectRoom />} />
+        </Route>
+        <Route element={<AdminRoute />}>
         <Route path="/admin" element={<AdminPage />} />
-
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
     </ThemeProvider>

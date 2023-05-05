@@ -1,7 +1,7 @@
 import { AppBar, CssBaseline, Toolbar, Typography } from "@mui/material";
 import React from "react";
 import { ThemeProvider } from "styled-components";
-import { Page } from "./RoomPage.module";
+import { Page } from "./RoomPage.styles";
 import SideBar from "./SideBar";
 import RightBar from "./RightBar";
 import ChatWindow from "./ChatWindow";

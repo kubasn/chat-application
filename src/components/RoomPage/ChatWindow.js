@@ -21,7 +21,6 @@ import {
 import Message from './Message';
 import { BottomNav, Chat, TextF } from './ChatWindow.module';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import './Chat.css'
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteMessage, sendMessage } from '../../store/reducers/roomSlice';

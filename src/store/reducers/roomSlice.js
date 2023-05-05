@@ -14,7 +14,15 @@ function findPrivateRoomByUsers(userIDs) {
 
 
 rooms.forEach(room=>room.users = getUsersByIds(room.users));
-const initialState = rooms[1]
+const initialState =   {
+  roomID: '',
+  roomName: "CSS ",
+  roomDescription: "",
+  messageHistoryID: null,
+  users: [],
+  creationDate: "",
+  messages: []
+}
 // initialState.users  = getUsersByIds(initialState.users)
 
 

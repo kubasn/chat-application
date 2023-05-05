@@ -1,14 +1,12 @@
 import React from "react";
-import { Button, Container, CssBaseline } from "@mui/material";
-import { StyledBigBox } from "../Home/Home.styles";
+import { Button } from "@mui/material";
 import { StyledSmallBox, StyledForm, StyledTypoSub } from "./Forms.styles";
-import { ThemeProvider } from "@mui/material/styles";
-import { themes } from "../mui/theme";
 import { useNavigate } from "react-router-dom";
 import { Welcome } from "../utils/Welcome";
 import { BasicInput } from "./BasicInput";
 import { PasswordInput } from "./PasswordInput";
 import { StyledButton } from "./StyledButton";
+import { StyledBackground } from "../utils/StyledBackground";
 
 import { useDispatch } from "react-redux";
 import { setUserRegisterDetails } from "../../store/reducers/userSlice";
@@ -60,37 +58,32 @@ export const RegisterForm = () => {
   };
 
   return (
-    <ThemeProvider theme={themes}>
-      <Container maxWidth="sm">
-        <CssBaseline />
-        <StyledBigBox>
-          <Welcome />
-          <StyledSmallBox>
-            <StyledForm
-              component="form"
-              noValidate
-              autoComplete="on"
-              onSubmit={handleSubmit}
-            >
-              <BasicInput inputType="email" inputName="email">
-                Email
-              </BasicInput>
-              <BasicInput inputType="text" inputName="login">
-                Login
-              </BasicInput>
-              <PasswordInput>Password</PasswordInput>
-              <StyledButton btnType="submit">REGISTER</StyledButton>
-            </StyledForm>
+    <StyledBackground>
+      <Welcome />
+      <StyledSmallBox>
+        <StyledForm
+          component="form"
+          noValidate
+          autoComplete="on"
+          onSubmit={handleSubmit}
+        >
+          <BasicInput inputType="email" inputName="email">
+            Email
+          </BasicInput>
+          <BasicInput inputType="text" inputName="login">
+            Login
+          </BasicInput>
+          <PasswordInput>Password</PasswordInput>
+          <StyledButton btnType="submit">REGISTER</StyledButton>
+        </StyledForm>
 
-            <StyledTypoSub variant="subtitle2" align="center">
-              Already have an acount?
-              <Button color="secondary" onClick={handleClick}>
-                Log in
-              </Button>
-            </StyledTypoSub>
-          </StyledSmallBox>
-        </StyledBigBox>
-      </Container>
-    </ThemeProvider>
+        <StyledTypoSub variant="subtitle2" align="center">
+          Already have an acount?
+          <Button color="secondary" onClick={handleClick}>
+            Log in
+          </Button>
+        </StyledTypoSub>
+      </StyledSmallBox>
+    </StyledBackground>
   );
 };
