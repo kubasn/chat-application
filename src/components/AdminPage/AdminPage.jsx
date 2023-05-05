@@ -21,9 +21,7 @@ import { Topbar } from "../RoomPage/TopBar";
 import { nanoid } from "@reduxjs/toolkit";
 
 const AdminPage = () => {
-
-
-  console.log('ello')
+  console.log("ello");
   const [text, setText] = useState("");
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -93,50 +91,50 @@ const AdminPage = () => {
     const newRooms = filterRooms();
     setFindRooms(newRooms);
 
-    console.log(rooms)
+    console.log(rooms);
   };
-    const onDeleteUser = (e, userID, roomID) => {
-      e.preventDefault();
-      let room = removeUserFromRoom(userID, roomID);
-      setClickedRoom(room);
-      let newRooms = findRooms;
-      let roomIndex = newRooms.findIndex((el) => el.roomID === room.roomID);
-      newRooms[roomIndex] = room;
+  const onDeleteUser = (e, userID, roomID) => {
+    e.preventDefault();
+    let room = removeUserFromRoom(userID, roomID);
+    setClickedRoom(room);
+    let newRooms = findRooms;
+    let roomIndex = newRooms.findIndex((el) => el.roomID === room.roomID);
+    newRooms[roomIndex] = room;
+  };
+
+  const handleAddRoom = (roomName, roomDescription) => {
+    // Add the new room to your rooms array or state here.
+    let newRoom = {
+      roomID: nanoid(),
+      creationDate: date(),
+      picture: "https://picsum.photos/200",
+      roomName: roomName,
+      roomDescription: roomDescription,
+      messageHistoryID: "",
+      messages: [],
+      users: [],
     };
+    rooms.push(newRoom);
+    console.log(rooms);
+  };
 
-    const handleAddRoom = (roomName, roomDescription) => {
-      // Add the new room to your rooms array or state here.
-      let newRoom = {
-        roomID: nanoid(),
-        creationDate: date(),
-        roomName: roomName,
-        roomDescription: roomDescription,
-        messageHistoryID: "",
-        messages: [],
-        users:[]
-      };
-      rooms.push(newRoom)
-      console.log(rooms)
-    };
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
 
-    const style = {
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      width: 400,
-      bgcolor: "background.paper",
-      border: "2px solid #000",
-      boxShadow: 24,
-      p: 4,
-    };
+  return (
+    <>
+      <Topbar />
 
-    return (
-<>
-      <Topbar/>
-
-      <StyledBackground
-      >
+      <StyledBackground>
         <Modal open={open} onClose={handleClose}>
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -299,8 +297,7 @@ const AdminPage = () => {
         )}
         <AddRoomForm onSubmit={handleAddRoom} />
       </StyledBackground>
-      </>
-    );
-  
+    </>
+  );
 };
 export default AdminPage;
