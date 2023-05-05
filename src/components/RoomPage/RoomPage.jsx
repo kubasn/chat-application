@@ -7,7 +7,7 @@ import ChatWindow from "./ChatWindow.jsx";
 import { useSelector } from "react-redux";
 import { Topbar } from "./TopBar";
 import { styled } from "@mui/material/styles";
-import ChatWindow from "./ChatWindow";
+//import ChatWindow from "./ChatWindow";
 
 const StyledTopBar = styled(Toolbar)(({ theme }) => ({
   [theme.breakpoints.up("xs")]: {
