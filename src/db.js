@@ -10,7 +10,7 @@ let users = [
     avatarID: `https://api.multiavatar.com/${avatar} Bond.png`,
     lastRoom: 2,
     status: "active",
-    rooms: [2],
+    rooms: [1,2],
   },
   {
     userID: 2,
