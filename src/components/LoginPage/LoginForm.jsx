@@ -30,7 +30,7 @@ export const LoginForm = () => {
     const isUserInDB = users.find(
       (user) => user.login === loginValue && user.password === passwordValue
     );
-
+console.log(isUserInDB)
     if (isUserInDB !== undefined) {
       dispatch(setUserIsLogged({ ...isUserInDB }));
       form.reset();
