@@ -12,6 +12,7 @@ import { changeRoom } from "../../store/reducers/roomSlice";
 import { useNavigate } from "react-router-dom";
 import { StyledBackground, StyledSmallBox } from "../utils/StyledBackground";
 import { BasicInput } from "../LoginPage/BasicInput";
+import { joinRoom } from "../../store/reducers/userSlice";
 
 const SelectRoom = () => {
   const [text, setText] = useState("");
@@ -35,7 +36,6 @@ const SelectRoom = () => {
   };
 
   const onCheckboxChange = (event) => {
-    console.log(`Checkbox clicked: ${event.target.checked}`);
     let myUserRooms = true;
     let myRooms = findRooms;
     const newRooms = rooms.filter((room) => {
@@ -44,7 +44,6 @@ const SelectRoom = () => {
         .includes(text.toLowerCase());
       const publicRooms = room.type != "private";
 
-      console.log(myUserRooms);
       if (event.target.checked === true) {
         myUserRooms = room.users.some(
           (obj) => obj.hasOwnProperty("userID") && obj.userID === user.userID
@@ -53,13 +52,21 @@ const SelectRoom = () => {
       }
       return roomNameMatches && publicRooms;
     });
-    console.log(newRooms);
     // do something else based on checkbox value
     setFindRooms(newRooms);
   };
 
-  const onRoomJoin = (roomID) => {
-    dispatch(changeRoom({ id: roomID, type: "public" }));
+  const onRoomJoin = (roomID, type) => {
+    if (type === "JOIN") {
+      dispatch(joinRoom({ roomID: roomID }));
+      dispatch(
+        changeRoom({ id: roomID, user: user, type: "public", actType: "JOIN" })
+      );
+    } else {
+      dispatch(
+        changeRoom({ id: roomID, user: user, type: "public", actType: "GOTO" })
+      );
+    }
     navigate("/room");
   };
 
@@ -138,7 +145,7 @@ const SelectRoom = () => {
                         obj.userID === user.userID
                     ) ? (
                       <Button
-                        onClick={() => onRoomJoin(room.roomID)}
+                        onClick={() => onRoomJoin(room.roomID, "GOTO")}
                         sx={{ marginBottom: "1rem" }}
                         variant="contained"
                         color="primary"
@@ -147,7 +154,7 @@ const SelectRoom = () => {
                       </Button>
                     ) : (
                       <Button
-                        onClick={() => onRoomJoin(room.roomID)}
+                        onClick={() => onRoomJoin(room.roomID, "JOIN")}
                         sx={{ marginBottom: "1rem" }}
                         variant="contained"
                         color="success"
