@@ -33,7 +33,7 @@ export const RegisterForm = () => {
 
     const isLoginInDB = users.find((user) => user.login === loginValue);
 
-    const isAdminIncluded = loginValue.toUpperCase().includes("admin");
+    const isAdminIncluded = loginValue.toUpperCase().includes("ADMIN");
 
     if (loginValue === "" || emailValue === "" || passwordValue === "") {
       alert("Please fill all the required fields");
