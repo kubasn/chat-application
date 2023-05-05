@@ -57,7 +57,7 @@ const SelectRoom = () => {
 
   const onRoomJoin = (roomID) => {
     dispatch(changeRoom({ id: roomID, type: "public" }));
-    navigate("/rooms");
+    navigate("/room");
   };
 
   return (

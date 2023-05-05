@@ -38,7 +38,7 @@ export const LoginForm = () => {
     if (isUserInDB !== undefined) {
       dispatch(setUserIsLogged({ ...isUserInDB }));
       form.reset();
-      navigate("/rooms");
+      navigate("/selection");
     } else {
       alert("Please fill all the required fields");
     }
