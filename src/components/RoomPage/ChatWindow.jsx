@@ -143,11 +143,7 @@ const ChatWindow = ({ room }) => {
             noValidate
             autoComplete="off"
           >
-            <AddReactionIcon
-              sx={{
-                color: "#F1F0F0",
-              }}
-            />
+        
             <TextField
               value={newMessage.content}
               id="outlined-multiline-flexible"
@@ -195,11 +191,7 @@ const ChatWindow = ({ room }) => {
               }}
             />
           </Box>
-          <BottomNavigationAction
-            label="Favorites"
-            style={{ color: "rgba(255,255,255,0.6)" }}
-            icon={<FavoriteIcon style={{ color: "rgba(255,255,255,0.6)" }} />}
-          />
+         
         </BottomNavigation>
       </Paper>
     </Box>

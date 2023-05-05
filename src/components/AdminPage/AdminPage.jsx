@@ -110,6 +110,7 @@ const AdminPage = () => {
         roomID: nanoid(),
         creationDate: date(),
         roomName: roomName,
+        picture:"https://picsum.photos/200",
         roomDescription: roomDescription,
         messageHistoryID: "",
         messages: [],
