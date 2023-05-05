@@ -3,7 +3,7 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
-  TextField,
+  Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +11,7 @@ import { rooms } from "../../db";
 import { changeRoom } from "../../store/reducers/roomSlice";
 import { useNavigate } from "react-router-dom";
 import { StyledBackground, StyledSmallBox } from "../utils/StyledBackground";
+import { BasicInput } from "../LoginPage/BasicInput";
 
 const SelectRoom = () => {
   const [text, setText] = useState("");
@@ -63,61 +64,36 @@ const SelectRoom = () => {
   };
 
   return (
-    // <Box
-    //   bgcolor="#1C1D22"
-    //   color="white"
-    //   p={10}
-    //   textAlign="center"
-    //   width="50%"
-    //   margin="auto"
-    //   marginTop="300px"
-    //   display="flex"
-    //   flexDirection="column"
-    //   alignItems="center"
-    //   justifyContent="center"
-    // >
     <StyledBackground>
-      <Box mb={2}>Fill below field to search for room</Box>
+      <Typography variant="h6">Fill below field to search for room</Typography>
       <StyledSmallBox>
-        <Box display="flex" alignItems="center">
-          <TextField
+        <Box
+          display="flex"
+          alignItems="center"
+          flexDirection="column"
+          gap="18px"
+        >
+          <BasicInput
+            inputType="text"
+            inputName="search"
             onChange={onTextChange}
-            sx={{
-              "& label.Mui-focused": {
-                color: "rgba(255,255,255,0.6)",
-              },
-              "& .MuiInput-underline:after": {
-                borderBottomColor: "rgba(255,255,255,0.6)",
-              },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "rgba(255,255,255,0.6)",
-                },
-                "&:hover fieldset": {
-                  borderColor: "rgba(255,255,255,0.6)",
-                },
-                "&:hover ": {
-                  borderColor: "rgba(255,255,255,0.6)",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "whirgba(255,255,255,0.6)te",
-                },
-              },
-            }}
-            label="Search"
-            variant="outlined"
-            size="small"
-          />
-          <Box ml={2} mr={2}>
-            <Button onClick={onSearch} variant="contained" color="primary">
-              Search
-            </Button>
-          </Box>
+          >
+            Search for rooms
+          </BasicInput>
+          <Button
+            onClick={onSearch}
+            variant="contained"
+            color="secondary"
+            fullWidth
+          >
+            Search
+          </Button>
+
           <FormControlLabel
             control={
               <Checkbox
                 name="moje-pokoje"
-                color="primary"
+                color="secondary"
                 onChange={onCheckboxChange}
               />
             }
@@ -133,23 +109,29 @@ const SelectRoom = () => {
             alignItems="center"
             justifyContent="center"
           >
-            <h2>Found rooms</h2>
-            <ul>
+            <Typography variant="h4" marginTop="25px">
+              Rooms found
+            </Typography>
+            <ul style={{ listStyleType: "none", paddingLeft: "0px" }}>
               {findRooms.map((room) => (
-                <li
-                  key={room.roomID}
-                  style={{ listStyleType: "none", marginBottom: "10px" }}
-                >
-                  <div
+                <li key={room.roomID} style={{ marginBottom: "10px" }}>
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    gap="10px"
+                    padding="10px"
                     style={{
-                      border: "1px solid #ccc",
-                      borderRadius: "5px",
-                      backgroundColor: "#37393C",
-                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                      background: "rgba( 255, 255, 255, 0.25 )",
+                      backdropFilter: "blur( 3.5px )",
+                      borderRadius: "10px",
+                      border: "1px solid rgba( 255, 255, 255, 0.18 )",
                     }}
                   >
-                    <h3>{room.roomName}</h3>
-                    <p>{room.roomDescription}</p>
+                    <Typography variant="h4">{room.roomName}</Typography>
+                    <Typography variant="body2">
+                      {room.roomDescription}
+                    </Typography>
                     {room.users.some(
                       (obj) =>
                         obj.hasOwnProperty("userID") &&
@@ -173,7 +155,7 @@ const SelectRoom = () => {
                         JOIN
                       </Button>
                     )}
-                  </div>
+                  </Box>
                 </li>
               ))}
             </ul>

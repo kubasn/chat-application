@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@mui/material";
-import { StyledSmallBox, StyledForm, StyledTypoSub } from "./Forms.styles";
+import { StyledForm, StyledTypoSub } from "./Forms.styles";
 import { useNavigate } from "react-router-dom";
 import { Welcome } from "../utils/Welcome";
 import { BasicInput } from "./BasicInput";
@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { setUserIsLogged } from "../../store/reducers/userSlice";
 import { users } from "../../db";
 
-import { StyledBackground } from "../utils/StyledBackground";
+import { StyledBackground, StyledSmallBox } from "../utils/StyledBackground";
 
 export const LoginForm = () => {
   const dispatch = useDispatch();

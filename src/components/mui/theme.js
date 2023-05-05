@@ -23,5 +23,12 @@ export const themes = createTheme({
         },
       },
     },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          color: "white",
+        },
+      },
+    },
   },
 });

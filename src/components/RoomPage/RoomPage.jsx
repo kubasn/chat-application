@@ -1,14 +1,11 @@
 import { AppBar, CssBaseline, Toolbar, Typography } from "@mui/material";
 import React from "react";
-import { ThemeProvider } from "styled-components";
 import { Page } from "./RoomPage.styles";
 import SideBar from "./SideBar";
 import RightBar from "./RightBar";
-import ChatWindow from "./ChatWindow";
-import { createTheme } from "@mui/material/styles";
+import ChatWindow from "./ChatWindow.jsx";
 import { useSelector } from "react-redux";
 import { Topbar } from "./TopBar";
-import { themes } from "../mui/theme";
 import { styled } from "@mui/material/styles";
 
 const StyledTopBar = styled(Toolbar)(({ theme }) => ({

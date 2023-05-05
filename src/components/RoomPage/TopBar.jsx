@@ -37,7 +37,12 @@ export const Topbar = () => {
           </Typography>
           <Avatar alt="User picture" src={avatar} />
 
-          <Button color="inherit" onClick={handleClick}>
+          <Button
+            variant="outlined"
+            color="inherit"
+            onClick={handleClick}
+            sx={{ marginLeft: "10px" }}
+          >
             LOG OUT
           </Button>
         </Toolbar>

@@ -1,27 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  AppBar,
-  Avatar,
   BottomNavigation,
   BottomNavigationAction,
   Box,
   CssBaseline,
-  FormControl,
-  IconButton,
-  InputBase,
   List,
   ListItem,
-  ListItemAvatar,
-  ListItemText,
   Paper,
   TextField,
-  Toolbar,
-  Typography,
 } from "@mui/material";
 import Message from "./Message";
-import { BottomNav, Chat, TextF } from "./ChatWindow.styles";
+import { TextF } from "./ChatWindow.styles";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import "./Chat.css";
 import AddReactionIcon from "@mui/icons-material/AddReaction";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteMessage, sendMessage } from "../../store/reducers/roomSlice";
@@ -45,7 +35,7 @@ function addTagToMessages(history, specificId, type) {
   return history;
 }
 
-function ChatWindow({ room }) {
+const ChatWindow = ({ room }) => {
   const [value, setValue] = useState(0);
   const ref = useRef(null);
   const [messages, setMessages] = useState([]);
@@ -65,7 +55,6 @@ function ChatWindow({ room }) {
     setMessages(newHistory);
   }, []);
 
-  //nie wiadomo do czego to służy, trza oi
   useEffect(() => {
     let newHistory = chatHistory.messages;
     newHistory = addTagToMessages(newHistory, user.userID, "my");
@@ -139,12 +128,20 @@ function ChatWindow({ room }) {
             component="form"
             sx={{
               "& .MuiTextField-root": { m: 1, width: "50ch" },
+              display: "flex",
+              gap: "10px",
+              alignItems: "center",
+              justifyContent: "center",
             }}
             noValidate
             autoComplete="off"
           >
-            <AddReactionIcon sx={{ color: "#F1F0F0", marginTop: "12px" }} />
-            <TextF
+            <AddReactionIcon
+              sx={{
+                color: "#F1F0F0",
+              }}
+            />
+            <TextField
               value={newMessage.content}
               id="outlined-multiline-flexible"
               label="Write a message"
@@ -158,13 +155,21 @@ function ChatWindow({ room }) {
               maxRows={4}
               InputLabelProps={{ className: "textfield__label" }}
               sx={{
+                "& label": {
+                  color: "white",
+                },
+                "& label.MuiFormLabel-root-MuiInputLabel-root": {
+                  color: "white",
+                },
                 "& label.Mui-focused": {
-                  color: "rgba(255,255,255,0.6)",
+                  color: "white",
                 },
                 "& .MuiInput-underline:after": {
                   borderBottomColor: "rgba(255,255,255,0.6)",
                 },
                 "& .MuiOutlinedInput-root": {
+                  color: "white",
+                  //width: "100%",
                   "& fieldset": {
                     borderColor: "rgba(255,255,255,0.6)",
                   },
@@ -175,6 +180,8 @@ function ChatWindow({ room }) {
                     borderColor: "rgba(255,255,255,0.6)",
                   },
                   "&.Mui-focused fieldset": {
+                    color: "white",
+
                     borderColor: "whirgba(255,255,255,0.6)te",
                   },
                 },
@@ -190,6 +197,6 @@ function ChatWindow({ room }) {
       </Paper>
     </Box>
   );
-}
+};
 
 export default ChatWindow;
