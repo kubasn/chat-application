@@ -15,10 +15,8 @@ const UserSearch = ({onUserClick}) => {
       };
     
       const onSearch = () => {
-        console.log(text)
         const newUsers = users.filter((user) => user.login.toLowerCase().includes(text.toLowerCase())
         );
-        console.log(newUsers)
         setFoundUsers(newUsers);
       };
 

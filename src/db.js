@@ -54,7 +54,7 @@ let rooms = [
     roomName: "CSS lovers",
     roomDescription: "Room made specialify for CSS lvoers group. Since 2023.",
     messageHistoryID: 1,
-    users: [2],
+    users: [1,2],
     creationDate: "2023-03-28T12:00",
     messages: [
       {
@@ -86,7 +86,7 @@ let rooms = [
         senderName: "kubasn",
         content: "vcvbg rwe we",
         timestamp: "2023-01-28T12:00",
-        id: 1,
+        id: 4,
       },
       {
         senderID: 1,
@@ -94,7 +94,7 @@ let rooms = [
 
         content: "qweery awdawd",
         timestamp: "2023-02-28T12:00",
-        id: 2,
+        id: 5,
       },
       {
         senderID: 1,
@@ -102,11 +102,11 @@ let rooms = [
 
         content: " bxsdfgsf ",
         timestamp: "2023-04-14T12:00",
-        id: 3,
+        id: 6,
       },
 
       {
-        id: 4,
+        id: 7,
         senderID: 1,
         senderName: "olgap",
 

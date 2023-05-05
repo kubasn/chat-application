@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { rooms, users } from '../../db'
 import { AdminInput } from './AdminInput'
-import { StyledBigBox } from '../Home/Home.styles'
 import AddRoomForm from './AddRoomForm'
 import date from '../utils/date'
 import removeUserFromRoom from '../../helpers/removeUserFromRoom'
+import { StyledBigBox } from '../utils/StyledBackground'
 
 const AdminPage = () => {
   const [text,setText] = useState('')
@@ -52,16 +52,13 @@ const filterRooms = () => {
 
 
 const onRoomDelete = (roomID) => {
-    console.log(roomID)
     // let arooms = rooms.filter(room => room.roomID !== roomID);
     // rooms = [...arooms]
     const id = rooms.findIndex((room) => room.roomID === roomID);
-    // console.log(id,rooms)
     // delete rooms[id]
     if (id !== -1) {
         rooms.splice(id, 1);
       }
-    console.log(rooms)
     const newRooms = filterRooms()
     setFindRooms(newRooms)
 
@@ -70,24 +67,18 @@ const onRoomDelete = (roomID) => {
 
 const onRoomEdit = (room) => {
     setClickedRoom(room)
-    console.log(room)
     handleOpen()
 }
 
 const onChange = (value,field) => {
-    console.log(value,field)
     let room = clickedRoom;
     room = { ...room, [field]: value};
-console.log(room)
 setClickedRoom(room)
 }
 
 const onSave = () => {
-    console.log(clickedRoom)
     const roomIndex = rooms.findIndex(room => room.roomID === clickedRoom.roomID);
-    console.log(roomIndex)
     rooms[roomIndex] = {...rooms[roomIndex],...clickedRoom};
-    console.log(rooms)
     const newRooms = filterRooms()
     setFindRooms(newRooms)
 
@@ -96,14 +87,10 @@ const onSave = () => {
 const onDeleteUser = (e,userID,roomID) => {
     e.preventDefault();
     let room = removeUserFromRoom(userID,roomID)
-    // console.log(room)
     setClickedRoom(room)
-    console.log()
     let newRooms = findRooms
     let roomIndex = newRooms.findIndex((el) => el.roomID === room.roomID);
-    console.log(roomIndex)
     newRooms[roomIndex] = room
-     console.log(newRooms)
 }
 
 const handleAddRoom = (roomName, roomDescription) => {
@@ -117,7 +104,6 @@ const handleAddRoom = (roomName, roomDescription) => {
     messages : []
     }
     rooms.push(newRoom)
-    console.log(rooms);
   };
 
 const style = {

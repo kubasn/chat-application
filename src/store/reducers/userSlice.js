@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { nanoid } from "@reduxjs/toolkit";
-import { users } from "../../db";
+import { users,rooms } from "../../db";
+import removeUserFromRoom from "../../helpers/removeUserFromRoom";
 const avatar = nanoid();
 const userInitialState = {
   userID: "",
@@ -73,13 +74,20 @@ const userSlice = createSlice({
     },
     joinRoom: (state, { payload }) => {
       const rooms = state.rooms;
-      rooms.push(payload);
+      let {roomID} = payload
+      rooms.push(roomID);
       state.rooms = rooms;
     },
-    leaveRoom: (state, { payload }) => {
-      const rooms = state.rooms;
-      const filteredRooms = rooms.filter((id) => id !== payload);
-      state.rooms = filteredRooms;
+    leaveRoom: (state, {payload}) => {
+      // const rooms = state.rooms;
+      const {roomID,userID} = payload
+      removeUserFromRoom(userID,roomID)
+      
+      let newRooms = state.rooms  
+      let indexInArray =newRooms.findIndex(id => id == roomID)
+      newRooms.splice(indexInArray,1)
+      state.rooms=newRooms
+  
     },
   },
 });

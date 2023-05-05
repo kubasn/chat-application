@@ -28,7 +28,8 @@ import { makeStyles } from "@mui/styles";
 import InfoIcon from "@mui/icons-material/Info";
 import { useDispatch } from "react-redux";
 import { leaveRoom } from "../../store/reducers/userSlice";
-import { removeUser } from "../../store/reducers/roomSlice";
+import { deleteRoom, removeUser } from "../../store/reducers/roomSlice";
+import { useNavigate } from "react-router-dom";
 
 const responsive = {
   superLargeDesktop: {
@@ -69,6 +70,7 @@ const RoomBox = (props) => {
 };
 
 const RightBar = (props) => {
+  const navigate = useNavigate();
   const drawerWidth = "50%";
   // const classes = useStyles();
   const dispatch = useDispatch();
@@ -93,8 +95,9 @@ const RightBar = (props) => {
   };
 
   const onLeave = () => {
-    dispatch(leaveRoom(props.roomID));
-    dispatch(removeUser(props.userID));
+    dispatch(leaveRoom({roomID:props.roomID,userID:props.userID}));
+    dispatch(deleteRoom());
+    navigate('/selection')
   };
 
   return (
@@ -176,21 +179,6 @@ const RightBar = (props) => {
             </>
           </List>
           <Box sx={{ display: "flex" }}>
-            <ButtonSettings
-              sx={{
-                borderColor: "white",
-                color: "white",
-                ":hover": { borderColor: "whitesmoke" },
-                gap: "5px",
-                mx: "auto",
-                display: "flex",
-                justifyContent: "center",
-              }}
-              variant="outlined"
-            >
-              <SettingsIcon />
-              Settings
-            </ButtonSettings>
             <ButtonSettings
               onClick={onLeave}
               sx={{
