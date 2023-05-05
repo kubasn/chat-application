@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { Side } from "./SideBar.module";
+import { Side } from "./SideBar.styles";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import ListItemDecorator from "@mui/joy/ListItemDecorator";
