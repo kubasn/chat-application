@@ -22,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 import UserSearch from "./UserSearch";
 import Avatar from "@mui/material/Avatar";
 import { selectAvatar } from "../../store/selectors";
+import returnRoomPicture from "../../helpers/returnRoomPicture";
 
 const responsive = {
   superLargeDesktop: {
@@ -87,7 +88,7 @@ const SideBar = ({ users, rooms, currentRoom }) => {
           alignItems: "center",
         }}
       >
-        {id}
+        <img src={returnRoomPicture(id)} width='100%'/>
       </div>
     );
   };
