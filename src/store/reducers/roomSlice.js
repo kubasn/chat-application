@@ -83,7 +83,7 @@ const roomSlice = createSlice({
             roomID: 4,
             creationDate: "",
             type: "private",
-            roomDescription: "Chat betwen users",
+            roomDescription: "Private chat",
             roomName: "Chat betwen users",
             users: getUsersByIds(payload.id),
             messages: [],
@@ -91,7 +91,7 @@ const roomSlice = createSlice({
           state.roomID = 4;
           state.creationDate = "";
           state.type = "private";
-          state.roomDescription = "Chat betwen users";
+          state.roomDescription = "Private chat";
           state.roomName = "Chat betwen users";
           state.users = getUsersByIds(payload.id);
           state.messages = [];
@@ -141,7 +141,8 @@ const roomSlice = createSlice({
       });
 
       rooms[roomIndex] = newRooms[roomIndex];
-    // state.messages[id].content = 'Message has been deleted'  
+      console.log(state)
+     state.messages = rooms[roomIndex].messages
     },
 
     sendMessage: (state, { payload }) => {

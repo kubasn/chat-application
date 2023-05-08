@@ -25,6 +25,7 @@ const messageDeletedContent = 'Message has been deleted'
     <MessageComponent
       left={ user.login === message.senderName ? currentUserMessage.left : anotherUserMessage.left}
       color={message.content === messageDeletedContent ? "transparent"  : user.login === message.senderName ? currentUserMessage.bgColor : anotherUserMessage.bgColor}
+      style= {{ border:message.content === messageDeletedContent && '1px solid #ededed'}}
     >
       <MessageHeader>
         <MessageSender
