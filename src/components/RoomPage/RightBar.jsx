@@ -15,51 +15,15 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import InfoIcon from "@mui/icons-material/Info";
 import { useDispatch } from "react-redux";
 import { leaveRoom } from "../../store/reducers/userSlice";
-import { deleteRoom, removeUser } from "../../store/reducers/roomSlice";
+import { deleteRoom } from "../../store/reducers/roomSlice";
 import { useNavigate } from "react-router-dom";
 
-const responsive = {
-  superLargeDesktop: {
-    // the naming can be any, depends on you.
-    breakpoint: { max: 4000, min: 3000 },
-    items: 5,
-  },
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 3,
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 2,
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1,
-  },
-};
-const rooms = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
 
-const RoomBox = (props) => {
-  return (
-    <div
-      style={{
-        background: "#D9D9D9",
-        height: "4rem",
-        width: "4rem",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      {props.id}
-    </div>
-  );
-};
 
 const RightBar = (props) => {
+  console.log(props)
   const navigate = useNavigate();
-  const drawerWidth = "50%";
-  // const classes = useStyles();
+  const drawerWidth = "30%";
   const dispatch = useDispatch();
   let anchor = "right";
 
@@ -132,7 +96,7 @@ const RightBar = (props) => {
                 marginTop: "1rem",
               }}
             >
-              <div
+              {/* <div
                 style={{
                   background: "#D9D9D9",
                   height: "8rem",
@@ -141,7 +105,8 @@ const RightBar = (props) => {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
-              ></div>
+              ></div> */}
+              <img width='160rem' height='160rem' src={props.picture}/>
               <Typography variant="h5" color="inherit" noWrap>
                 {props.roomName}
               </Typography>

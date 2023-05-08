@@ -38,7 +38,7 @@ export const LoginForm = () => {
       if (isUserInDB.role !== "admin") navigate("/selection");
       else if (isUserInDB.role === "admin") navigate("/admin");
     } else {
-      Notify.failure("Please fill all the required fields");
+      Notify.failure("User not found in DB");
     }
   };
   return (

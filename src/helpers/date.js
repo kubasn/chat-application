@@ -1,6 +1,3 @@
-
-
-
 const date = () => {
 
 const now = new Date();
