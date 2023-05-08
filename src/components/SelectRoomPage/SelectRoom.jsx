@@ -11,7 +11,6 @@ import { rooms } from "../../db";
 import { changeRoom } from "../../store/reducers/roomSlice";
 import { useNavigate } from "react-router-dom";
 import { StyledBackground, StyledSmallBox } from "../utils/StyledBackground";
-import { BasicInput } from "../LoginPage/BasicInput";
 import { joinRoom } from "../../store/reducers/userSlice";
 import { SearchInput } from "../utils/SearchInput";
 
@@ -21,32 +20,26 @@ const SelectRoom = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   let navigate = useNavigate();
-
-
-
-  useEffect(()=> {
-    
+  useEffect(() => {
     let newRooms = rooms.filter((room) => {
       return room.type != "private";
-      
     });
-    newRooms = newRooms.splice(0,5)
-    console.log(newRooms)
-    setFindRooms(newRooms)
-    console.log(findRooms)
-
-  },[])
-
+    newRooms = newRooms.splice(0, 5);
+    console.log(newRooms);
+    setFindRooms(newRooms);
+    console.log(findRooms);
+  }, []);
 
   const onTextChange = (e) => {
-
     const newRooms = rooms.filter((room) => {
-      const newRooms = room.roomName.toLowerCase().includes(e.target.value.toLowerCase());
+      const newRooms = room.roomName
+        .toLowerCase()
+        .includes(e.target.value.toLowerCase());
       const publicRooms = room.type != "private";
       return newRooms && publicRooms;
     });
     setFindRooms(newRooms);
-    console.log(newRooms,text)
+    console.log(newRooms, text);
   };
 
   const onCheckboxChange = (event) => {
@@ -101,14 +94,6 @@ const SelectRoom = () => {
           >
             Search for rooms
           </SearchInput>
-          {/* <Button
-            onClick={onSearch}
-            variant="contained"
-            color="secondary"
-            fullWidth
-          >
-            Search
-          </Button> */}
 
           <FormControlLabel
             control={
@@ -134,52 +119,52 @@ const SelectRoom = () => {
               Rooms found
             </Typography>
             <ul style={{ listStyleType: "none", paddingLeft: "0px" }}>
-              {findRooms && findRooms.map((room) => (
-                <li style={{ marginBottom: "10px" }}>
-                  <Box
-                    display="flex"
-                    flexDirection="column"
-                    alignItems="center"
-                    gap="10px"
-                    padding="10px"
-                    style={{
-                      background: "rgba( 255, 255, 255, 0.25 )",
-                      backdropFilter: "blur( 3.5px )",
-                      borderRadius: "10px",
-                      border: "1px solid rgba( 255, 255, 255, 0.18 )",
-                    }}
-                  >
-                    <Typography variant="h4">{room.roomName}</Typography>
-                    <Typography variant="body2">
-                      {room.roomDescription}
-                    </Typography>
-                    {room.users.some(
-                      (obj) =>
-                        obj.hasOwnProperty("userID") &&
-                        obj.userID === user.userID
-                    ) ? (
-                      <Button
-                        onClick={() => onRoomJoin(room.roomID, "GOTO")}
-                        sx={{ marginBottom: "1rem" }}
-                        variant="contained"
-                        color="primary"
-                      >
-                        GO TO
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() => onRoomJoin(room.roomID, "JOIN")}
-                        sx={{ marginBottom: "1rem" }}
-                        variant="contained"
-                        color="success"
-                      >
-                        JOIN
-                      </Button>
-                    )}
-                  </Box>
-                </li>
-              )
-              )}
+              {findRooms &&
+                findRooms.map((room) => (
+                  <li style={{ marginBottom: "10px" }}>
+                    <Box
+                      display="flex"
+                      flexDirection="column"
+                      alignItems="center"
+                      gap="10px"
+                      padding="10px"
+                      style={{
+                        background: "rgba( 255, 255, 255, 0.25 )",
+                        backdropFilter: "blur( 3.5px )",
+                        borderRadius: "10px",
+                        border: "1px solid rgba( 255, 255, 255, 0.18 )",
+                      }}
+                    >
+                      <Typography variant="h4">{room.roomName}</Typography>
+                      <Typography variant="body2">
+                        {room.roomDescription}
+                      </Typography>
+                      {room.users.some(
+                        (obj) =>
+                          obj.hasOwnProperty("userID") &&
+                          obj.userID === user.userID
+                      ) ? (
+                        <Button
+                          onClick={() => onRoomJoin(room.roomID, "GOTO")}
+                          sx={{ marginBottom: "1rem" }}
+                          variant="contained"
+                          color="primary"
+                        >
+                          GO TO
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={() => onRoomJoin(room.roomID, "JOIN")}
+                          sx={{ marginBottom: "1rem" }}
+                          variant="contained"
+                          color="success"
+                        >
+                          JOIN
+                        </Button>
+                      )}
+                    </Box>
+                  </li>
+                ))}
             </ul>
           </Box>
         )}

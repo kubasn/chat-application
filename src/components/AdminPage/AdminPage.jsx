@@ -11,21 +11,26 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { rooms, users } from "../../db";
+import { rooms } from "../../db";
 import { AdminInput } from "./AdminInput";
 import AddRoomForm from "./AddRoomForm";
 import date from "../utils/date";
 import removeUserFromRoom from "../../helpers/removeUserFromRoom";
-import { StyledBackground, StyledBigBox } from "../utils/StyledBackground";
+import { StyledBackground, StyledSmallBox } from "../utils/StyledBackground";
 import { Topbar } from "../RoomPage/TopBar";
 import { nanoid } from "@reduxjs/toolkit";
+import { SearchInput } from "../utils/SearchInput";
 
 const AdminPage = () => {
-  console.log("ello");
   const [text, setText] = useState("");
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [addNewRoomOpen, setaddNewRoomOpen] = useState(false);
+  const handleaddNewRoomOpen = () => setaddNewRoomOpen(true);
+  const handleaddNewRoomClose = () => setaddNewRoomOpen(false);
+
   const [findRooms, setFindRooms] = useState([]);
   const [clickedRoom, setClickedRoom] = useState({});
 
@@ -42,18 +47,15 @@ const AdminPage = () => {
     return newRooms;
   };
 
-  const onSearch = () => {
+  const onTextChange = (e) => {
     const newRooms = rooms.filter((room) => {
-      const newRooms = room.roomName.toLowerCase().includes(text.toLowerCase());
+      const newRooms = room.roomName
+        .toLowerCase()
+        .includes(e.target.value.toLowerCase());
       const publicRooms = room.type != "private";
       return newRooms && publicRooms;
     });
     setFindRooms(newRooms);
-  };
-
-  const onTextChange = (e) => {
-    setFindRooms([]);
-    setText(e.target.value);
   };
 
   //   useEffect(setFindRooms(),[clickedRoom])
@@ -75,6 +77,11 @@ const AdminPage = () => {
   const onRoomEdit = (room) => {
     setClickedRoom(room);
     handleOpen();
+  };
+
+  const openAddNewRoom = () => {
+    console.log("New Room form open");
+    handleaddNewRoomOpen();
   };
 
   const onChange = (value, field) => {
@@ -102,7 +109,6 @@ const AdminPage = () => {
     newRooms[roomIndex] = room;
   };
 
-
   const handleAddRoom = (roomName, roomDescription) => {
     // Add the new room to your rooms array or state here.
     let newRoom = {
@@ -125,10 +131,13 @@ const AdminPage = () => {
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: 400,
-    bgcolor: "background.paper",
+    backgroundColor: "white",
     border: "2px solid #000",
     boxShadow: 24,
     p: 4,
+    color: "black",
+    //display: "flex",
+    //flexDirection: "column",
   };
 
   return (
@@ -138,7 +147,11 @@ const AdminPage = () => {
       <StyledBackground>
         <Modal open={open} onClose={handleClose}>
           <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
+            <Typography
+              id="modal-modal-title"
+              variant="h4"
+              sx={{ color: "black" }}
+            >
               Edit room
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
@@ -163,29 +176,42 @@ const AdminPage = () => {
             </Typography>
             <Button
               onClick={onSave}
-              sx={{ marginBottom: "1rem" }}
+              sx={{
+                marginBottom: "1rem",
+                marginTop: "1rem",
+                width: "100%",
+              }}
               variant="contained"
               color="success"
             >
               SAVE
             </Button>
             <Box>
-              <Typography variant="h4" gutterBottom>
+              <Typography
+                variant="h4"
+                sx={{
+                  color: "black",
+                  marginTop: "30px",
+                }}
+              >
                 Users
               </Typography>
               <List>
-                {clickedRoom.users &&
+                {clickedRoom.users.length > 0 ? (
                   clickedRoom.users.map((user) => (
                     <ListItem sx={{ display: "flex", gap: "5px" }} key={user}>
                       <Avatar src={user.avatarID} />
-                      <ListItemText
-                        sx={{ textAlign: "center" }}
-                        primary={`ID: ${user.userID}`}
-                      />
-                      <ListItemText
-                        sx={{ textAlign: "center" }}
-                        primary={`login: ${user.login}`}
-                      />
+                      <Typography
+                        sx={{
+                          color: "black",
+                          textAlign: "center",
+                          width: "70%",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {user.login}
+                      </Typography>
+
                       <Button
                         onClick={(e) =>
                           onDeleteUser(e, user.userID, clickedRoom.roomID)
@@ -196,107 +222,120 @@ const AdminPage = () => {
                         DELETE
                       </Button>
                     </ListItem>
-                  ))}
+                  ))
+                ) : (
+                  <p>There is no users</p>
+                )}
               </List>
             </Box>
           </Box>
         </Modal>
-        <Typography variant="h1" mb={4}>
+
+        <Typography
+          variant="h2"
+          align="center"
+          sx={{
+            paddingBottom: "25px",
+          }}
+        >
           Admin panel
         </Typography>
-        <Box mb={2}>Fill below field to search for room</Box>
-        <Box display="flex" alignItems="center">
-          <TextField
-            onChange={onTextChange}
-            sx={{
-              "& label.Mui-focused": {
-                color: "rgba(255,255,255,0.6)",
-              },
-              "& .MuiInput-underline:after": {
-                borderBottomColor: "rgba(255,255,255,0.6)",
-              },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "rgba(255,255,255,0.6)",
-                },
-                "&:hover fieldset": {
-                  borderColor: "rgba(255,255,255,0.6)",
-                },
-                "&:hover ": {
-                  borderColor: "rgba(255,255,255,0.6)",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "whirgba(255,255,255,0.6)te",
-                },
-              },
-            }}
-            label="Search"
-            variant="outlined"
-            size="small"
-          />
-          <Box ml={2} mr={2}>
-            <Button onClick={onSearch} variant="contained" color="primary">
-              Search
-            </Button>
-          </Box>
-        </Box>
-        {findRooms.length != 0 && (
+        <Typography variant="h6">
+          Fill below field to search for room
+        </Typography>
+
+        <StyledSmallBox>
           <Box
-            mb={2}
             display="flex"
-            flexDirection="column"
             alignItems="center"
-            justifyContent="center"
+            flexDirection="column"
+            gap="18px"
           >
-            <h2>Found rooms</h2>
-            <ul>
-              {findRooms.map((room) => (
-                <li
-                  key={room.roomID}
-                  style={{ listStyleType: "none", marginBottom: "10px" }}
-                >
-                  <div
-                    style={{
-                      border: "1px solid #ccc",
-                      borderRadius: "5px",
-                      backgroundColor: "#37393C",
-                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                    }}
-                  >
-                    <h3>{room.roomName}</h3>
-                    <p>{room.roomDescription}</p>
-                    <div
+            <SearchInput
+              inputType="text"
+              inputName="search"
+              onChange={onTextChange}
+            >
+              Search for rooms
+            </SearchInput>
+          </Box>
+
+          {findRooms.length != 0 && (
+            <Box
+              mb={2}
+              marginTop={4}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography variant="h6">Found rooms</Typography>
+              <ul style={{ listStyleType: "none", paddingLeft: "0px" }}>
+                {findRooms.map((room) => (
+                  <li key={room.roomID} style={{ marginBottom: "10px" }}>
+                    <Box
+                      display="flex"
+                      flexDirection="column"
+                      alignItems="center"
+                      gap="10px"
+                      padding="10px"
                       style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        gap: "1rem",
+                        background: "rgba( 255, 255, 255, 0.25 )",
+                        backdropFilter: "blur( 3.5px )",
+                        borderRadius: "10px",
+                        border: "1px solid rgba( 255, 255, 255, 0.18 )",
                       }}
                     >
-                      <Button
-                        onClick={() => onRoomEdit(room)}
-                        sx={{ marginBottom: "1rem" }}
-                        variant="contained"
-                        color="warning"
+                      <Typography variant="h4">{room.roomName}</Typography>
+                      <Typography variant="body2">
+                        {room.roomDescription}
+                      </Typography>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          gap: "1rem",
+                        }}
                       >
-                        EDIT
-                      </Button>
-                      <Button
-                        onClick={() => onRoomDelete(room.roomID)}
-                        sx={{ marginBottom: "1rem" }}
-                        variant="contained"
-                        color="error"
-                      >
-                        DELETE
-                      </Button>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <Box></Box>
-          </Box>
-        )}
-        <AddRoomForm onSubmit={handleAddRoom} />
+                        <Button
+                          onClick={() => onRoomEdit(room)}
+                          sx={{ marginBottom: "1rem" }}
+                          variant="contained"
+                          color="warning"
+                        >
+                          EDIT
+                        </Button>
+                        <Button
+                          onClick={() => onRoomDelete(room.roomID)}
+                          sx={{ marginBottom: "1rem" }}
+                          variant="contained"
+                          color="error"
+                        >
+                          DELETE
+                        </Button>
+                      </div>
+                    </Box>
+                  </li>
+                ))}
+              </ul>
+              <Box></Box>
+            </Box>
+          )}
+
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={openAddNewRoom}
+            sx={{ width: "100%", marginTop: "30px" }}
+          >
+            Add new room
+          </Button>
+          <AddRoomForm
+            open={addNewRoomOpen}
+            onClose={handleaddNewRoomClose}
+            onSubmit={handleAddRoom}
+          />
+        </StyledSmallBox>
       </StyledBackground>
     </>
   );

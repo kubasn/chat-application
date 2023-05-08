@@ -1,7 +1,19 @@
 import React from "react";
-import { FormControl, FilledInput, InputLabel, Typography } from "@mui/material";
+import {
+  FormControl,
+  FilledInput,
+  InputLabel,
+  Typography,
+} from "@mui/material";
 
-export const AdminInput = ({ children, inputName, inputType,value,onChange,field }) => {
+export const AdminInput = ({
+  children,
+  inputName,
+  inputType,
+  value,
+  onChange,
+  field,
+}) => {
   return (
     <FormControl
       variant="filled"
@@ -15,12 +27,11 @@ export const AdminInput = ({ children, inputName, inputType,value,onChange,field
       {/* <InputLabel htmlFor="filled-adornment-password" color="secondary">
         {children}
       </InputLabel> */}
-      <Typography>
-        {children}
-      </Typography>
+      <Typography>{children}</Typography>
       <FilledInput
+        multiline
         required
-        onChange={e=>onChange(e.target.value,field)}
+        onChange={(e) => onChange(e.target.value, field)}
         color="secondary"
         fullWidth
         value={value}
