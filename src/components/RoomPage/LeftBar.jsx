@@ -45,7 +45,7 @@ const responsive = {
 };
 
 const LeftBar = ({ users, rooms, currentRoom }) => {
-  //const avatar = useSelector(selectAvatar);
+
   const drawerWidth = "20%";
   let anchor = "left";
   const dispatch = useDispatch();
