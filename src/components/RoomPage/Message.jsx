@@ -32,7 +32,7 @@ const Message = ({ user, message, onDelete }) => {
         <MessageTimestamp>{getTimeSince(message.timestamp)}</MessageTimestamp>
       </MessageHeader>
       <MessageContent>
-        <Typography   variant='body2' >{message.content}</Typography>
+        <Typography sx={{color:'black'}}   variant='body2' >{message.content}</Typography>
       </MessageContent>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         {(user.login === message.senderName && message.content != 'Message has ben deleted') && <DeleteIcon onClick={() => onDelete(message.id)} />}

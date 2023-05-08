@@ -13,3 +13,5 @@ export const Chat = styled.div`
 export const BottomNav = styled(BottomNavigation)`
   width: 10px;
 `;
+
+

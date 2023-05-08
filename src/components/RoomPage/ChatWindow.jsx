@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteMessage, sendMessage } from "../../store/reducers/roomSlice";
 import date from "../utils/date";
 import sortByDate from "../utils/sortByDate";
+import { sportsResults } from "../../sportsResults";
 
 const initialMessage = {
   id: "",
@@ -24,6 +25,7 @@ const initialMessage = {
   timestamp: "",
   type: "",
 };
+
 
 function addTagToMessages(history, specificId) {
   history = history.map((message) => {
@@ -35,6 +37,8 @@ function addTagToMessages(history, specificId) {
   return history;
 }
 
+
+
 const ChatWindow = ({ room }) => {
   const [value, setValue] = useState(0);
   const ref = useRef(null);
@@ -45,6 +49,25 @@ const ChatWindow = ({ room }) => {
   const chatHistory = useSelector((state) => state.room);
   const user = useSelector((state) => state.user);
 
+
+  async function fetchData(league,round) {
+    const sport = 'Soccer'; // You can use any sport supported by the API, e.g., 'Soccer', 'Basketball', 'Baseball', etc.
+    // const date = '2023-05-07'; // Format: 'YYYY-MM-DD'
+    const data = await sportsResults(league,round);
+    
+    let message = {
+      ...newMessage,
+      id: Math.floor(Math.random() * 10000),
+      senderID: 0,
+      senderName: 'Sportsbook bot',
+      timestamp: date(),
+      content:data
+    };
+    setMessages([...messages, message]);
+    dispatch(sendMessage({ message, roomId: room.roomID }));
+  
+  }
+
   useEffect(() => {
     ref.current.ownerDocument.body.scrollTop = 0;
   }, [value, setMessages]);
@@ -52,11 +75,10 @@ const ChatWindow = ({ room }) => {
   useEffect(() => {
     let newHistory = chatHistory.messages;
     newHistory = sortByDate(newHistory)
-    console.log(newHistory)
     let sortedMessages = addTagToMessages(newHistory, user.userID);
-    console.log(sortedMessages)
     setMessages(sortedMessages);
   }, []);
+
 
   useEffect(() => {
     let newHistory = chatHistory.messages;
@@ -80,8 +102,17 @@ const ChatWindow = ({ room }) => {
       senderName: user.login,
       timestamp: date(),
     };
+    console.log(message.content)
+    if (!message.content.includes('#results')){
     setMessages([...messagesList, message]);
     dispatch(sendMessage({ message, roomId: room.roomID }));
+    } else{
+      const resultArray = message.content.split('/');
+      resultArray[2] = resultArray[2].replace(/(\r\n|\n|\r)/gm, "");
+      const league = resultArray[1]
+      const round = resultArray[2]
+      fetchData(league,round)
+    }
     setNewMessage({ ...newMessage, content: "" });
   };
 
@@ -97,7 +128,6 @@ const ChatWindow = ({ room }) => {
       }
       return message;
     });
-    console.log(filteredMessages);
     setMessages(filteredMessages);
   };
 
