@@ -1,4 +1,5 @@
 import React from "react";
+import { Notify } from "notiflix/build/notiflix-notify-aio";
 import { Button } from "@mui/material";
 import { StyledForm, StyledTypoSub } from "./Forms.styles";
 import { useNavigate } from "react-router-dom";
@@ -26,18 +27,18 @@ export const LoginForm = () => {
     const form = e.currentTarget;
     const loginValue = form.elements.login.value;
     const passwordValue = form.elements.password.value;
-
     const isUserInDB = users.find(
       (user) => user.login === loginValue && user.password === passwordValue
     );
-console.log(isUserInDB)
+
     if (isUserInDB !== undefined) {
       dispatch(setUserIsLogged({ ...isUserInDB }));
       form.reset();
-      if(isUserInDB.role !== 'admin') navigate("/selection");
-      else if(isUserInDB.role === 'admin') navigate("/admin")
+      Notify.success(`Hello, ${loginValue}`);
+      if (isUserInDB.role !== "admin") navigate("/selection");
+      else if (isUserInDB.role === "admin") navigate("/admin");
     } else {
-      alert("Please fill all the required fields");
+      Notify.failure("Please fill all the required fields");
     }
   };
   return (

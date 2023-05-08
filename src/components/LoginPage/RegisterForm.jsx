@@ -1,4 +1,5 @@
 import React from "react";
+import { Notify } from "notiflix/build/notiflix-notify-aio";
 import { Button } from "@mui/material";
 import { StyledForm, StyledTypoSub } from "./Forms.styles";
 import { useNavigate } from "react-router-dom";
@@ -28,24 +29,23 @@ export const RegisterForm = () => {
     const loginValue = form.elements.login.value;
     const emailValue = form.elements.email.value;
     const passwordValue = form.elements.password.value;
-
     const isMailInDB = users.find((user) => user.email === emailValue);
-
     const isLoginInDB = users.find((user) => user.login === loginValue);
-
     const isAdminIncluded = loginValue.toUpperCase().includes("ADMIN");
 
     if (loginValue === "" || emailValue === "" || passwordValue === "") {
-      alert("Please fill all the required fields");
+      Notify.failure("Please fill all the required fields");
     } else if (isMailInDB) {
-      alert(
+      Notify.failure(
         `${emailValue} is already in base. Please use another email adress.`
       );
     } else if (isLoginInDB || isAdminIncluded) {
-      alert(`${loginValue} is already in base. Please use another login`);
+      Notify.failure(
+        `${loginValue} is already in base. Please use another login`
+      );
     } else {
       form.reset();
-      alert("Congratulations! Welcome");
+      Notify.success("Congratulations! Welcome");
       navigate("/selection");
       dispatch(
         setUserRegisterDetails({

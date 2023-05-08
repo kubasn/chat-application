@@ -12,7 +12,7 @@ export const StyledSmallBox = styled(Box)`
 
 export const StyledBigBox = styled(Box)`
   background-color: rgba(28, 29, 34, 0.95);
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
