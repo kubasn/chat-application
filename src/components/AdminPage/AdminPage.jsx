@@ -20,6 +20,7 @@ import { StyledBackground, StyledSmallBox } from "../utils/StyledBackground";
 import { Topbar } from "../RoomPage/TopBar";
 import { nanoid } from "@reduxjs/toolkit";
 import { SearchInput } from "../utils/SearchInput";
+import { Notify } from "notiflix";
 
 const AdminPage = () => {
   const [text, setText] = useState("");
@@ -70,7 +71,7 @@ const AdminPage = () => {
     }
     const newRooms = filterRooms();
     setFindRooms(newRooms);
-
+    Notify.success("Your changes has been saved");
     // rooms
   };
 
@@ -97,16 +98,18 @@ const AdminPage = () => {
     rooms[roomIndex] = { ...rooms[roomIndex], ...clickedRoom };
     const newRooms = filterRooms();
     setFindRooms(newRooms);
-
+    handleClose();
+    Notify.success("Your changes has been saved");
     console.log(rooms);
   };
-  const onDeleteUser = (e, userID, roomID) => {
+  const onDeleteUser = (e, userID, roomID, login) => {
     e.preventDefault();
     let room = removeUserFromRoom(userID, roomID);
     setClickedRoom(room);
     let newRooms = findRooms;
     let roomIndex = newRooms.findIndex((el) => el.roomID === room.roomID);
     newRooms[roomIndex] = room;
+    Notify.success(`${login} has been deleted`);
   };
 
   const handleAddRoom = (roomName, roomDescription) => {
@@ -174,18 +177,7 @@ const AdminPage = () => {
                 Room description
               </AdminInput>
             </Typography>
-            <Button
-              onClick={onSave}
-              sx={{
-                marginBottom: "1rem",
-                marginTop: "1rem",
-                width: "100%",
-              }}
-              variant="contained"
-              color="success"
-            >
-              SAVE
-            </Button>
+
             <Box>
               <Typography
                 variant="h4"
@@ -197,7 +189,7 @@ const AdminPage = () => {
                 Users
               </Typography>
               <List>
-                {clickedRoom.users.length > 0 ? (
+                {clickedRoom.users && clickedRoom.users.length > 0 ? (
                   clickedRoom.users.map((user) => (
                     <ListItem sx={{ display: "flex", gap: "5px" }} key={user}>
                       <Avatar src={user.avatarID} />
@@ -214,7 +206,12 @@ const AdminPage = () => {
 
                       <Button
                         onClick={(e) =>
-                          onDeleteUser(e, user.userID, clickedRoom.roomID)
+                          onDeleteUser(
+                            e,
+                            user.userID,
+                            clickedRoom.roomID,
+                            user.login
+                          )
                         }
                         variant="contained"
                         color="error"
@@ -227,6 +224,18 @@ const AdminPage = () => {
                   <p>There is no users</p>
                 )}
               </List>
+              <Button
+                onClick={onSave}
+                sx={{
+                  marginBottom: "1rem",
+                  marginTop: "1rem",
+                  width: "100%",
+                }}
+                variant="contained"
+                color="success"
+              >
+                SAVE
+              </Button>
             </Box>
           </Box>
         </Modal>
