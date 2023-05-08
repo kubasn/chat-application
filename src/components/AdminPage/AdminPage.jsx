@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { rooms } from "../../db";
 import { AdminInput } from "./AdminInput";
 import AddRoomForm from "./AddRoomForm";
-import date from "../utils/date";
+import date from "../../helpers/date";
 import removeUserFromRoom from "../../helpers/removeUserFromRoom";
 import { StyledBackground, StyledSmallBox } from "../utils/StyledBackground";
 import { Topbar } from "../RoomPage/TopBar";

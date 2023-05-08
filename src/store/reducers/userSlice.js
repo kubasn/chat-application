@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { nanoid } from "@reduxjs/toolkit";
-import { users,rooms } from "../../db";
+import { users } from "../../db";
 import removeUserFromRoom from "../../helpers/removeUserFromRoom";
+
 const avatar = nanoid();
 const userInitialState = {
   userID: "",
@@ -22,9 +23,7 @@ const userSlice = createSlice({
   name: "user",
   initialState: userInitialState,
   reducers: {
-    //kiedy uzytkownik loguje się -> zapamiętaj poniższe rzeczy
     setUserIsLogged: (state, { payload }) => {
-      //state.push(action.payload);
       state.userID = payload.userID;
       state.login = payload.login;
       state.email = payload.email;
@@ -57,7 +56,7 @@ const userSlice = createSlice({
         role: payload.role,
       });
     },
-    //kiedy użytkownik wylogowuje się -> zapomnij
+
     setSignOut: (state) => {
       state.userID = null;
       state.login = null;
@@ -104,3 +103,5 @@ export const {
 } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;
+
+

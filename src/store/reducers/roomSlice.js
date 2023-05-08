@@ -2,6 +2,20 @@ import { createSlice } from "@reduxjs/toolkit";
 import { rooms, users } from "../../db";
 import { userJoinRoom } from "../../dbOperations/userJoinRoom";
 
+
+
+const initialState = {
+  roomID: "",
+  roomName: " ",
+  picture: "",
+  roomDescription: "",
+  users: [],
+  creationDate: "",
+  messages: [],
+};
+
+
+
 function findPrivateRoomByUsers(userIDs) {
   return rooms.find(
     (room) =>
@@ -12,36 +26,25 @@ function findPrivateRoomByUsers(userIDs) {
   );
 }
 
+// zamiana id usersów na obiekty
 rooms.forEach((room) => (room.users = getUsersByIds(room.users)));
-const initialState = {
-  roomID: "",
-  roomName: " ",
-  picture: "https://picsum.photos/200",
-  roomDescription: "",
-  messageHistoryID: null,
-  users: [],
-  creationDate: "",
-  messages: [],
-};
-// initialState.users  = getUsersByIds(initialState.users)
+
+
 
 function getUsersByIds(ids) {
   return users.filter((user) => ids.includes(user.userID));
 }
 
-//kiedy aplikacja rozpoczyna swoje działanie, wszystko jest jeszcze puste
 
 const roomSlice = createSlice({
   name: "room",
   initialState,
   reducers: {
-    //kiedy uzytkownik loguje się -> zapamiętaj poniższe rzeczy
     createRoom: (state, { payload }) => {
       state.roomID = payload.roomID;
       state.roomName = payload.roomName;
       state.picture = payload.picture;
       state.roomDescription = payload.roomDescription;
-      state.messageHistoryID = payload.messageHistoryID;
       state.users = [];
       state.creationDate = payload.creationDate;
       state.messages = [];
@@ -52,7 +55,6 @@ const roomSlice = createSlice({
       state.roomName = "";
       state.picture = "";
       state.roomDescription = "";
-      state.messageHistoryID = null;
       state.users = [];
       state.creationDate = "";
       state.messages = [];
@@ -63,6 +65,7 @@ const roomSlice = createSlice({
       state.users = users;
     },
 
+
     changeRoom: (state, { payload }) => {
       if (payload.type === "private") {
         let message = findPrivateRoomByUsers(payload.id);
@@ -71,7 +74,6 @@ const roomSlice = createSlice({
           state.roomName = message.roomName;
           state.picture = message.picture;
           state.roomDescription = message.roomDescription;
-          state.messageHistoryID = message.messageHistoryID;
           state.league = message.league;
           state.users = message.users;
           state.creationDate = message.creationDate;
@@ -80,7 +82,6 @@ const roomSlice = createSlice({
           rooms.push({
             roomID: 4,
             creationDate: "",
-            messageHistoryID: "",
             type: "private",
             roomDescription: "Chat betwen users",
             roomName: "Chat betwen users",
@@ -89,7 +90,6 @@ const roomSlice = createSlice({
           });
           state.roomID = 4;
           state.creationDate = "";
-          state.messageHistoryID = "";
           state.type = "private";
           state.roomDescription = "Chat betwen users";
           state.roomName = "Chat betwen users";
@@ -106,13 +106,42 @@ const roomSlice = createSlice({
 
         state.roomID = rooms[id].roomID;
         state.creationDate = rooms[id].creationDate;
-        state.messageHistoryID = rooms[id].messageHistoryID;
         state.roomDescription = rooms[id].roomDescription;
         state.roomName = rooms[id].roomName;
+        state.picture = rooms[id].picture;
         state.league = rooms[id].league;
         state.users = rooms[id].users;
         state.messages = rooms[id].messages;
       }
+    },
+
+    deleteMessage: (state, { payload }) => {
+      //id - message id, roomId - roomId
+      const { messageId, roomId } = payload;
+      const roomIndex = rooms.findIndex((room) => room.roomID === roomId);
+
+      let selectedRoom = rooms[roomIndex];
+
+      let newRooms = rooms.map((room) => {
+        if (room.roomID === roomId) {
+          return {
+            ...room,
+            messages: room.messages.map((message) => {
+              if (message.id === messageId) {
+                return {
+                  ...message,
+                  content: "Message has been deleted",
+                };
+              }
+              return message;
+            }),
+          };
+        }
+        return room;
+      });
+
+      rooms[roomIndex] = newRooms[roomIndex];
+    // state.messages[id].content = 'Message has been deleted'  
     },
 
     sendMessage: (state, { payload }) => {
@@ -128,38 +157,8 @@ const roomSlice = createSlice({
       state.messages = messages;
     },
 
-    deleteMessage: (state, { payload }) => {
-      const { id, roomId } = payload;
-      const roomIndex = rooms.findIndex((room) => room.roomID === roomId);
 
-      let selectedRoom = rooms[roomIndex];
-      let selectedMessage = selectedRoom.messages.find(
-        (message) => message.id == id
-      );
-      let selectedMessageIndex = selectedRoom.messages.findIndex(
-        (message) => message.id == id
-      );
 
-      let newRooms = rooms.map((room) => {
-        if (room.roomID === roomId) {
-          return {
-            ...room,
-            messages: room.messages.map((message) => {
-              if (message.id === id) {
-                return {
-                  ...message,
-                  content: "Message has ben deleted",
-                };
-              }
-              return message;
-            }),
-          };
-        }
-        return room;
-      });
-
-      rooms[roomIndex] = newRooms[roomIndex];
-    },
   },
 });
 
@@ -167,12 +166,11 @@ export const {
   createRoom,
   deleteRoom,
   addUser,
-  removeUser,
   changeRoom,
-  createHistory,
-  cleanHistory,
-  sendMessage,
   deleteMessage,
+  sendMessage,
 } = roomSlice.actions;
 
-export default roomSlice.reducer;
+export const roomReducer = roomSlice.reducer;
+
+

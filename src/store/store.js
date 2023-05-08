@@ -1,13 +1,10 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { userReducer } from "./reducers/userSlice";
-import roomSlice from "./reducers/roomSlice";
-import messageHistory from "./reducers/messageHistory";
+import { roomReducer } from "./reducers/roomSlice";
 
 const reducer = combineReducers({
   user: userReducer,
-  room: roomSlice,
-  messages: messageHistory,
-  // Add other reducers as needed
+  room: roomReducer,
 });
 
 const store = configureStore({

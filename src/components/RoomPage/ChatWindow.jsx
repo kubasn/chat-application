@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   BottomNavigation,
-  BottomNavigationAction,
   Box,
   CssBaseline,
   List,
@@ -10,13 +9,12 @@ import {
   TextField,
 } from "@mui/material";
 import Message from "./Message";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import AddReactionIcon from "@mui/icons-material/AddReaction";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteMessage, sendMessage } from "../../store/reducers/roomSlice";
-import date from "../utils/date";
-import sortByDate from "../utils/sortByDate";
+import date from "../../helpers/date";
+import sortByDate from "../../helpers/sortByDate";
 import { sportsResults } from "../../sportsResults";
+import splitCommandInfo from "../../helpers/splitCommandInfo";
 
 const initialMessage = {
   id: "",
@@ -51,11 +49,10 @@ const ChatWindow = ({ room }) => {
 
 
   async function fetchData(league,round) {
-    const sport = 'Soccer'; // You can use any sport supported by the API, e.g., 'Soccer', 'Basketball', 'Baseball', etc.
-    // const date = '2023-05-07'; // Format: 'YYYY-MM-DD'
+  
     const data = await sportsResults(league,round);
     
-    let message = {
+    const message = {
       ...newMessage,
       id: Math.floor(Math.random() * 10000),
       senderID: 0,
@@ -75,7 +72,7 @@ const ChatWindow = ({ room }) => {
   useEffect(() => {
     let newHistory = chatHistory.messages;
     newHistory = sortByDate(newHistory)
-    let sortedMessages = addTagToMessages(newHistory, user.userID);
+    const sortedMessages = addTagToMessages(newHistory, user.userID);
     setMessages(sortedMessages);
   }, []);
 
@@ -84,8 +81,7 @@ const ChatWindow = ({ room }) => {
     let newHistory = chatHistory.messages;
     newHistory = sortByDate(newHistory)
 
-    let sortedMessages = addTagToMessages(newHistory, user.userID);
-    console.log(sortedMessages)
+    const sortedMessages = addTagToMessages(newHistory, user.userID);
     setMessages(sortedMessages);
   }, [chatHistory]);
 
@@ -107,10 +103,9 @@ const ChatWindow = ({ room }) => {
     setMessages([...messagesList, message]);
     dispatch(sendMessage({ message, roomId: room.roomID }));
     } else{
-      const resultArray = message.content.split('/');
-      resultArray[2] = resultArray[2].replace(/(\r\n|\n|\r)/gm, "");
-      const league = resultArray[1]
-      const round = resultArray[2]
+  
+      const {league,round} = splitCommandInfo(message.content)
+
       fetchData(league,round)
     }
     setNewMessage({ ...newMessage, content: "" });
@@ -118,12 +113,12 @@ const ChatWindow = ({ room }) => {
 
   const onDelete = (id) => {
     const messagesList = messages;
-    dispatch(deleteMessage({ id: id, roomId: room.roomID }));
+    dispatch(deleteMessage({ messageId: id, roomId: room.roomID }));
     const filteredMessages = messagesList.map((message) => {
       if (message.id === id) {
         return {
           ...message,
-          content: "Message has ben deleted",
+          content: "Message has been deleted",
         };
       }
       return message;
@@ -136,7 +131,7 @@ const ChatWindow = ({ room }) => {
       <CssBaseline />
       <List>
         {messages.map((message, index) => (
-          <ListItem button key={index}>
+          <ListItem  key={index}>
             <Message onDelete={onDelete} message={message} user={user} />
           </ListItem>
         ))}
@@ -202,7 +197,6 @@ const ChatWindow = ({ room }) => {
                 },
                 "& .MuiOutlinedInput-root": {
                   color: "white",
-                  //width: "100%",
                   "& fieldset": {
                     borderColor: "rgba(255,255,255,0.6)",
                   },

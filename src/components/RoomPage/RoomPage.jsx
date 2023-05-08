@@ -21,9 +21,8 @@ const StyledTopBar = styled(Toolbar)(({ theme }) => ({
 }));
 
 const RoomPage = () => {
-  const user = useSelector((state) => state.user);
-  const room = useSelector((state) => state.room);
 
+  const {user,room} = useSelector((state)=>state)
   return (
     <Page>
       <CssBaseline />
