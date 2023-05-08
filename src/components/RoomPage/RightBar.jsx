@@ -182,7 +182,26 @@ const RightBar = (props) => {
               <SettingsIcon />
               Leave room
             </ButtonSettings>
+            
           </Box>
+          <Box marginLeft={2}>
+          <Typography  variant="h5" color="inherit" noWrap>
+                Commands:
+              </Typography>
+              <Typography variant="h6" color="inherit" noWrap>
+                Display results of football matches:
+              </Typography>
+              <Typography variant="p" color="inherit" noWrap>
+                #results/'league'/'round' <br/>
+              </Typography>
+              <Typography variant="p" color="inherit" noWrap>
+              <b>league</b> - What football league results do you want to display?. <br/> Currently supported: ekstraklasa,bundesliga, laliga, seriaA, premierleague
+              </Typography>
+              <br/>
+              <Typography variant="p" color="inherit" noWrap>
+              <b>round</b> - Which round results do you want to display?.
+              </Typography>
+              </Box>
         </List>
       </Drawer>
     </Side>

@@ -72,6 +72,7 @@ const roomSlice = createSlice({
           state.picture = message.picture;
           state.roomDescription = message.roomDescription;
           state.messageHistoryID = message.messageHistoryID;
+          state.league = message.league;
           state.users = message.users;
           state.creationDate = message.creationDate;
           state.messages = message.messages;
@@ -108,6 +109,7 @@ const roomSlice = createSlice({
         state.messageHistoryID = rooms[id].messageHistoryID;
         state.roomDescription = rooms[id].roomDescription;
         state.roomName = rooms[id].roomName;
+        state.league = rooms[id].league;
         state.users = rooms[id].users;
         state.messages = rooms[id].messages;
       }
