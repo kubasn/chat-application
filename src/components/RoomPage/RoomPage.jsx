@@ -1,7 +1,7 @@
 import { AppBar, CssBaseline, Toolbar, Typography } from "@mui/material";
 import React from "react";
 import { Page } from "./RoomPage.styles";
-import SideBar from "./LeftBar";
+import LeftBar from "./LeftBar";
 import RightBar from "./RightBar";
 import ChatWindow from "./ChatWindow.jsx";
 import { useSelector } from "react-redux";
@@ -46,7 +46,7 @@ const RoomPage = () => {
           justifyContent: "space-between",
         }}
       >
-        <SideBar currentRoom={room} rooms={user.rooms} users={room.users} />
+        <LeftBar currentRoom={room} rooms={user.rooms} users={room.users} />
         <ChatWindow room={room} />
         <RightBar {...room} {...user} />
       </div>

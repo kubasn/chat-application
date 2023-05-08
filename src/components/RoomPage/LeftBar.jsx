@@ -44,11 +44,11 @@ const responsive = {
   },
 };
 
-const SideBar = ({ users, rooms, currentRoom }) => {
+const LeftBar = ({ users, rooms, currentRoom }) => {
+
   const drawerWidth = "20%";
   let anchor = "left";
   const dispatch = useDispatch();
-  const [currentUser, setCurrentUser] = useState("");
   const current = useSelector((state) => state.user);
 
   const [state, setState] = useState({
@@ -150,13 +150,6 @@ const SideBar = ({ users, rooms, currentRoom }) => {
             }}
           >
             <Carousel
-              style={
-                {
-                  //display: "flex",
-                  //justifyContent: "center",
-                  //alignItems: "center",
-                }
-              }
               swipeable={false}
               draggable={true}
               responsive={responsive}
@@ -222,4 +215,4 @@ const SideBar = ({ users, rooms, currentRoom }) => {
   );
 };
 
-export default SideBar;
+export default LeftBar;
