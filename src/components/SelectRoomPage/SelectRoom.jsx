@@ -103,13 +103,13 @@ const SelectRoom = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  name="moje-pokoje"
+                  name="my-rooms"
                   color="secondary"
                   onChange={onCheckboxChange}
                 />
               }
               labelPlacement="end"
-              label="Moje pokoje"
+              label="My rooms"
             />
           </Box>
           {findRooms.length != 0 && (

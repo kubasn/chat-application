@@ -46,7 +46,7 @@ const responsive = {
 
 const SideBar = ({ users, rooms, currentRoom }) => {
   //const avatar = useSelector(selectAvatar);
-  const drawerWidth = "40%";
+  const drawerWidth = "20%";
   let anchor = "left";
   const dispatch = useDispatch();
   const [currentUser, setCurrentUser] = useState("");
@@ -70,7 +70,7 @@ const SideBar = ({ users, rooms, currentRoom }) => {
     );
   };
 
-  const RoomBox = ({ id, currentRoomId, picture }) => {
+  const RoomBox = ({ id, currentRoomId }) => {
     return (
       <div
         onClick={() =>
@@ -121,8 +121,9 @@ const SideBar = ({ users, rooms, currentRoom }) => {
         sx={{
           width: drawerWidth,
           flexShrink: 0,
-          overflow: "hidden",
           "& .MuiDrawer-paper": {
+            overflowX: "hidden",
+            overflowY: "auto",
             width: drawerWidth,
             boxSizing: "border-box",
             background: "#1C1D22",
@@ -137,12 +138,10 @@ const SideBar = ({ users, rooms, currentRoom }) => {
         <Toolbar />
         <List>
           <Typography
-            sx={{ marginLeft: "2vw" }}
-            align="left"
+            sx={{ marginLeft: "2vw", color: "secondary.main" }}
             variant="h5"
-            noWrap
           >
-            Rooms
+            ROOMS
           </Typography>
           <div
             style={{
@@ -152,11 +151,13 @@ const SideBar = ({ users, rooms, currentRoom }) => {
             }}
           >
             <Carousel
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+              style={
+                {
+                  //display: "flex",
+                  //justifyContent: "center",
+                  //alignItems: "center",
+                }
+              }
               swipeable={false}
               draggable={true}
               responsive={responsive}
@@ -171,29 +172,24 @@ const SideBar = ({ users, rooms, currentRoom }) => {
             >
               <RoomBox id="+" />
               {rooms.map((room) => (
-                <RoomBox
-                  id={room}
-                  currentRoomId={currentRoom.roomID}
-                  picture={room.picture}
-                >
-                  {" "}
-                </RoomBox>
+                <RoomBox id={room} currentRoomId={currentRoom.roomID}></RoomBox>
               ))}
             </Carousel>
           </div>
         </List>
-        <List></List>
+
         <Divider sx={{ background: "#37393C" }} />
 
         <List>
           <Typography
-            sx={{ marginLeft: "2vw", marginBottom: "1rem" }}
-            align="left"
+            sx={{
+              marginLeft: "2vw",
+              marginBottom: "1rem",
+              color: "secondary.main",
+            }}
             variant="h5"
-            color="inherit"
-            noWrap
           >
-            Users in room
+            USERS IN ROOM
           </Typography>
           <List>
             {users.map((user, index) => (
@@ -205,14 +201,6 @@ const SideBar = ({ users, rooms, currentRoom }) => {
               >
                 <ListItemDecorator style={{}}>
                   <Avatar alt="User picture" src={user.avatarID} />
-                  {/* <img
-                    style={{
-                      width: "4rem",
-                      height: "4rem",
-                      borderRadius: "100%",
-                    }}
-                    src="https://picsum.photos/200/300"
-                  /> */}
                 </ListItemDecorator>
                 <ListItemButton>
                   <Hidden mdDown>
@@ -226,6 +214,9 @@ const SideBar = ({ users, rooms, currentRoom }) => {
             ))}
           </List>
         </List>
+
+        <Divider sx={{ background: "#37393C" }} />
+
         <UserSearch onUserClick={onUserClick} />
       </Drawer>
     </Side>
