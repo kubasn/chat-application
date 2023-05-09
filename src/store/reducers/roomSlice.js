@@ -108,8 +108,8 @@ const roomSlice = createSlice({
       //id - message id, roomId - roomId
       const { messageId, roomId } = payload;
       const roomIndex = rooms.findIndex((room) => room.roomID === roomId);
-
       let selectedRoom = rooms[roomIndex];
+      console.log(messageId,roomId,selectedRoom)
 
       let newRooms = rooms.map((room) => {
         if (room.roomID === roomId) {

@@ -7,8 +7,9 @@ import {
   Modal,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import { rooms } from "../../db";
+import React, { useEffect, useState } from "react";
+import { rooms, users } from "../../db";
+
 import { AdminInput } from "./AdminInput";
 import AddRoomForm from "./AddRoomForm";
 import date from "../../helpers/date";
@@ -18,6 +19,7 @@ import { Topbar } from "../RoomPage/TopBar";
 import { nanoid } from "@reduxjs/toolkit";
 import { SearchInput } from "../utils/SearchInput";
 import { Notify } from "notiflix";
+import { leaveRoom } from "../../store/reducers/userSlice";
 
 const AdminPage = () => {
   //const [text, setText] = useState("");
@@ -32,13 +34,10 @@ const AdminPage = () => {
   const [findRooms, setFindRooms] = useState([]);
   const [clickedRoom, setClickedRoom] = useState({});
 
-  //const user = useSelector((state) => state.user);
 
   const filterRooms = () => {
     const newRooms = rooms.filter((room) => {
-      // console.log(text);
       const newRooms = room.roomName.toLowerCase();
-      //.includes(text.toLowerCase());
       console.log(newRooms);
       const publicRooms = room.type !== "private";
       return newRooms && publicRooms;
@@ -57,11 +56,25 @@ const AdminPage = () => {
     setFindRooms(newRooms);
   };
 
+
   const onRoomDelete = (roomID) => {
     const id = rooms.findIndex((room) => room.roomID === roomID);
+     delete rooms[id]
+
+    users.forEach(user => {
+      user.rooms = user.rooms.filter(room => room !== roomID);
+    });
+
+    console.log(rooms,users)
+
+
     if (id !== -1) {
       rooms.splice(id, 1);
     }
+
+
+
+
     const newRooms = filterRooms();
     setFindRooms(newRooms);
     Notify.success("Your changes has been saved");
