@@ -10,7 +10,6 @@ import { StyledButton } from "./StyledButton";
 import { useDispatch } from "react-redux";
 import { setUserIsLogged } from "../../store/reducers/userSlice";
 import { users } from "../../db";
-
 import { StyledBackground, StyledSmallBox } from "../utils/StyledBackground";
 
 export const LoginForm = () => {

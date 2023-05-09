@@ -18,10 +18,7 @@ import { leaveRoom } from "../../store/reducers/userSlice";
 import { deleteRoom } from "../../store/reducers/roomSlice";
 import { useNavigate } from "react-router-dom";
 
-
-
 const RightBar = (props) => {
-  console.log(props)
   const navigate = useNavigate();
   const drawerWidth = "30%";
   const dispatch = useDispatch();
@@ -96,17 +93,12 @@ const RightBar = (props) => {
                 marginTop: "1rem",
               }}
             >
-              {/* <div
-                style={{
-                  background: "#D9D9D9",
-                  height: "8rem",
-                  width: "8rem",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              ></div> */}
-              <img width='160rem' height='160rem' src={props.picture}/>
+              <img
+                width="160rem"
+                height="160rem"
+                src={props.picture}
+                alt="Room avatar"
+              />
               <Typography variant="h5" color="inherit" noWrap>
                 {props.roomName}
               </Typography>
@@ -147,26 +139,27 @@ const RightBar = (props) => {
               <SettingsIcon />
               Leave room
             </ButtonSettings>
-            
           </Box>
           <Box marginLeft={2}>
-          <Typography  variant="h5" color="inherit" noWrap>
-                Commands:
-              </Typography>
-              <Typography variant="h6" color="inherit" noWrap>
-                Display results of football matches:
-              </Typography>
-              <Typography variant="p" color="inherit" noWrap>
-                #results/'league'/'round' <br/>
-              </Typography>
-              <Typography variant="p" color="inherit" noWrap>
-              <b>league</b> - What football league results do you want to display?. <br/> Currently supported: ekstraklasa,bundesliga, laliga, seriaA, premierleague
-              </Typography>
-              <br/>
-              <Typography variant="p" color="inherit" noWrap>
+            <Typography variant="h5" color="inherit" noWrap>
+              Commands:
+            </Typography>
+            <Typography variant="h6" color="inherit" noWrap>
+              Display results of football matches:
+            </Typography>
+            <Typography variant="p" color="inherit" noWrap>
+              #results/'league'/'round' <br />
+            </Typography>
+            <Typography variant="p" color="inherit" noWrap>
+              <b>league</b> - What football league results do you want to
+              display?. <br /> Currently supported: ekstraklasa,bundesliga,
+              laliga, seriaA, premierleague
+            </Typography>
+            <br />
+            <Typography variant="p" color="inherit" noWrap>
               <b>round</b> - Which round results do you want to display?.
-              </Typography>
-              </Box>
+            </Typography>
+          </Box>
         </List>
       </Drawer>
     </Side>

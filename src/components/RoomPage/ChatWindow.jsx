@@ -24,7 +24,6 @@ const initialMessage = {
   type: "",
 };
 
-
 function addTagToMessages(history, specificId) {
   history = history.map((message) => {
     if (message.senderID === specificId) {
@@ -35,34 +34,26 @@ function addTagToMessages(history, specificId) {
   return history;
 }
 
-
-
 const ChatWindow = ({ room }) => {
   const [value, setValue] = useState(0);
   const ref = useRef(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState(initialMessage);
   const dispatch = useDispatch();
-
   const chatHistory = useSelector((state) => state.room);
   const user = useSelector((state) => state.user);
-
-
-  async function fetchData(league,round) {
-  
-    const data = await sportsResults(league,round);
-    
+  async function fetchData(league, round) {
+    const data = await sportsResults(league, round);
     const message = {
       ...newMessage,
       id: Math.floor(Math.random() * 10000),
       senderID: 0,
-      senderName: 'Sportsbook bot',
+      senderName: "Sportsbook bot",
       timestamp: date(),
-      content:data
+      content: data,
     };
     setMessages([...messages, message]);
     dispatch(sendMessage({ message, roomId: room.roomID }));
-  
   }
 
   useEffect(() => {
@@ -71,16 +62,14 @@ const ChatWindow = ({ room }) => {
 
   useEffect(() => {
     let newHistory = chatHistory.messages;
-    newHistory = sortByDate(newHistory)
+    newHistory = sortByDate(newHistory);
     const sortedMessages = addTagToMessages(newHistory, user.userID);
     setMessages(sortedMessages);
   }, []);
 
-
   useEffect(() => {
     let newHistory = chatHistory.messages;
-    newHistory = sortByDate(newHistory)
-
+    newHistory = sortByDate(newHistory);
     const sortedMessages = addTagToMessages(newHistory, user.userID);
     setMessages(sortedMessages);
   }, [chatHistory]);
@@ -98,15 +87,13 @@ const ChatWindow = ({ room }) => {
       senderName: user.login,
       timestamp: date(),
     };
-    console.log(message.content)
-    if (!message.content.includes('#results')){
-    setMessages([...messagesList, message]);
-    dispatch(sendMessage({ message, roomId: room.roomID }));
-    } else{
-  
-      const {league,round} = splitCommandInfo(message.content)
+    if (!message.content.includes("#results")) {
+      setMessages([...messagesList, message]);
+      dispatch(sendMessage({ message, roomId: room.roomID }));
+    } else {
+      const { league, round } = splitCommandInfo(message.content);
 
-      fetchData(league,round)
+      fetchData(league, round);
     }
     setNewMessage({ ...newMessage, content: "" });
   };
@@ -131,7 +118,7 @@ const ChatWindow = ({ room }) => {
       <CssBaseline />
       <List>
         {messages.map((message, index) => (
-          <ListItem  key={index}>
+          <ListItem key={index}>
             <Message onDelete={onDelete} message={message} user={user} />
           </ListItem>
         ))}
@@ -168,13 +155,12 @@ const ChatWindow = ({ room }) => {
             noValidate
             autoComplete="off"
           >
-        
             <TextField
               value={newMessage.content}
               id="outlined-multiline-flexible"
               label="Write a message"
               onKeyUp={(event) => {
-                if (event.key == "Enter") onSubmit();
+                if (event.key === "Enter") onSubmit();
               }}
               onChange={onWriteMessage}
               size="small"
@@ -215,7 +201,6 @@ const ChatWindow = ({ room }) => {
               }}
             />
           </Box>
-         
         </BottomNavigation>
       </Paper>
     </Box>

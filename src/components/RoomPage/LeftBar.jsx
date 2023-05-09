@@ -26,7 +26,6 @@ import returnRoomPicture from "../../helpers/returnRoomPicture";
 
 const responsive = {
   superLargeDesktop: {
-    // the naming can be any, depends on you.
     breakpoint: { max: 4000, min: 3000 },
     items: 5,
   },
@@ -45,12 +44,10 @@ const responsive = {
 };
 
 const LeftBar = ({ users, rooms, currentRoom }) => {
-
   const drawerWidth = "20%";
   let anchor = "left";
   const dispatch = useDispatch();
   const current = useSelector((state) => state.user);
-
   const [state, setState] = useState({
     top: false,
     left: false,

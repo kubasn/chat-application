@@ -16,19 +16,16 @@ import { SearchInput } from "../utils/SearchInput";
 import { Topbar } from "../RoomPage/TopBar";
 
 const SelectRoom = () => {
-  const [text, setText] = useState("");
   const [findRooms, setFindRooms] = useState([]);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   let navigate = useNavigate();
   useEffect(() => {
     let newRooms = rooms.filter((room) => {
-      return room.type != "private";
+      return room.type !== "private";
     });
     newRooms = newRooms.splice(0, 5);
-    console.log(newRooms);
     setFindRooms(newRooms);
-    console.log(findRooms);
   }, []);
 
   const onTextChange = (e) => {
@@ -36,21 +33,17 @@ const SelectRoom = () => {
       const newRooms = room.roomName
         .toLowerCase()
         .includes(e.target.value.toLowerCase());
-      const publicRooms = room.type != "private";
+      const publicRooms = room.type !== "private";
       return newRooms && publicRooms;
     });
     setFindRooms(newRooms);
-    console.log(newRooms, text);
   };
 
   const onCheckboxChange = (event) => {
     let myUserRooms = true;
-    let myRooms = findRooms;
     const newRooms = rooms.filter((room) => {
-      const roomNameMatches = room.roomName
-        .toLowerCase()
-        .includes(text.toLowerCase());
-      const publicRooms = room.type != "private";
+      const roomNameMatches = room.roomName.toLowerCase();
+      const publicRooms = room.type !== "private";
 
       if (event.target.checked === true) {
         myUserRooms = room.users.some(
@@ -60,7 +53,6 @@ const SelectRoom = () => {
       }
       return roomNameMatches && publicRooms;
     });
-    // do something else based on checkbox value
     setFindRooms(newRooms);
   };
 
@@ -112,7 +104,7 @@ const SelectRoom = () => {
               label="My rooms"
             />
           </Box>
-          {findRooms.length != 0 && (
+          {findRooms.length !== 0 && (
             <Box
               mb={2}
               display="flex"
