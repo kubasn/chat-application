@@ -74,7 +74,6 @@ const roomSlice = createSlice({
           state.roomName = message.roomName;
           state.picture = message.picture;
           state.roomDescription = message.roomDescription;
-          state.league = message.league;
           state.users = message.users;
           state.creationDate = message.creationDate;
           state.messages = message.messages;
@@ -109,7 +108,6 @@ const roomSlice = createSlice({
         state.roomDescription = rooms[id].roomDescription;
         state.roomName = rooms[id].roomName;
         state.picture = rooms[id].picture;
-        state.league = rooms[id].league;
         state.users = rooms[id].users;
         state.messages = rooms[id].messages;
       }
@@ -119,8 +117,8 @@ const roomSlice = createSlice({
       //id - message id, roomId - roomId
       const { messageId, roomId } = payload;
       const roomIndex = rooms.findIndex((room) => room.roomID === roomId);
-
       let selectedRoom = rooms[roomIndex];
+      console.log(messageId,roomId,selectedRoom)
 
       let newRooms = rooms.map((room) => {
         if (room.roomID === roomId) {

@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { rooms } from "../../db";
+import { rooms, users } from "../../db";
 import { AdminInput } from "./AdminInput";
 import AddRoomForm from "./AddRoomForm";
 import date from "../../helpers/date";
@@ -21,6 +21,7 @@ import { Topbar } from "../RoomPage/TopBar";
 import { nanoid } from "@reduxjs/toolkit";
 import { SearchInput } from "../utils/SearchInput";
 import { Notify } from "notiflix";
+import { leaveRoom } from "../../store/reducers/userSlice";
 
 const AdminPage = () => {
   const [text, setText] = useState("");
@@ -59,20 +60,27 @@ const AdminPage = () => {
     setFindRooms(newRooms);
   };
 
-  //   useEffect(setFindRooms(),[clickedRoom])
 
   const onRoomDelete = (roomID) => {
-    // let arooms = rooms.filter(room => room.roomID !== roomID);
-    // rooms = [...arooms]
     const id = rooms.findIndex((room) => room.roomID === roomID);
-    // delete rooms[id]
+     delete rooms[id]
+
+    users.forEach(user => {
+      user.rooms = user.rooms.filter(room => room !== roomID);
+    });
+
+    console.log(rooms,users)
+
     if (id !== -1) {
       rooms.splice(id, 1);
     }
+
+
+
+
     const newRooms = filterRooms();
     setFindRooms(newRooms);
     Notify.success("Your changes has been saved");
-    // rooms
   };
 
   const onRoomEdit = (room) => {
