@@ -1,6 +1,5 @@
 import React from "react";
-import { CssBaseline, Container } from "@mui/material";
-import { StyledBigBox, StyledBox } from "./Home.styles";
+import { StyledBox } from "./Home.styles";
 import { Link } from "react-router-dom";
 import { StyledButton } from "../LoginPage/StyledButton";
 import { Welcome } from "../utils/Welcome";

@@ -2,8 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { rooms, users } from "../../db";
 import { userJoinRoom } from "../../dbOperations/userJoinRoom";
 
-
-
 const initialState = {
   roomID: "",
   roomName: " ",
@@ -13,8 +11,6 @@ const initialState = {
   creationDate: "",
   messages: [],
 };
-
-
 
 function findPrivateRoomByUsers(userIDs) {
   return rooms.find(
@@ -26,15 +22,11 @@ function findPrivateRoomByUsers(userIDs) {
   );
 }
 
-// zamiana id usersów na obiekty
 rooms.forEach((room) => (room.users = getUsersByIds(room.users)));
-
-
 
 function getUsersByIds(ids) {
   return users.filter((user) => ids.includes(user.userID));
 }
-
 
 const roomSlice = createSlice({
   name: "room",
@@ -65,7 +57,6 @@ const roomSlice = createSlice({
       state.users = users;
     },
 
-
     changeRoom: (state, { payload }) => {
       if (payload.type === "private") {
         let message = findPrivateRoomByUsers(payload.id);
@@ -74,7 +65,6 @@ const roomSlice = createSlice({
           state.roomName = message.roomName;
           state.picture = message.picture;
           state.roomDescription = message.roomDescription;
-          state.league = message.league;
           state.users = message.users;
           state.creationDate = message.creationDate;
           state.messages = message.messages;
@@ -109,7 +99,6 @@ const roomSlice = createSlice({
         state.roomDescription = rooms[id].roomDescription;
         state.roomName = rooms[id].roomName;
         state.picture = rooms[id].picture;
-        state.league = rooms[id].league;
         state.users = rooms[id].users;
         state.messages = rooms[id].messages;
       }
@@ -141,8 +130,8 @@ const roomSlice = createSlice({
       });
 
       rooms[roomIndex] = newRooms[roomIndex];
-      console.log(state)
-     state.messages = rooms[roomIndex].messages
+      console.log(state);
+      state.messages = rooms[roomIndex].messages;
     },
 
     sendMessage: (state, { payload }) => {
@@ -157,9 +146,6 @@ const roomSlice = createSlice({
       };
       state.messages = messages;
     },
-
-
-
   },
 });
 
@@ -173,5 +159,3 @@ export const {
 } = roomSlice.actions;
 
 export const roomReducer = roomSlice.reducer;
-
-

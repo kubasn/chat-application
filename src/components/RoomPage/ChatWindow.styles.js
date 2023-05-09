@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { BottomNavigation, TextField } from "@mui/material";
+import { BottomNavigation } from "@mui/material";
 
 export const Chat = styled.div`
   margin-top: 2rem;
@@ -13,5 +13,3 @@ export const Chat = styled.div`
 export const BottomNav = styled(BottomNavigation)`
   width: 10px;
 `;
-
-

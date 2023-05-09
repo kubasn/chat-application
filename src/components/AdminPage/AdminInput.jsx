@@ -1,19 +1,7 @@
 import React from "react";
-import {
-  FormControl,
-  FilledInput,
-  InputLabel,
-  Typography,
-} from "@mui/material";
+import { FormControl, FilledInput, Typography } from "@mui/material";
 
-export const AdminInput = ({
-  children,
-  inputName,
-  inputType,
-  value,
-  onChange,
-  field,
-}) => {
+export const AdminInput = ({ children, inputType, value, onChange, field }) => {
   return (
     <FormControl
       variant="filled"
@@ -24,9 +12,6 @@ export const AdminInput = ({
         borderRadius: "8px",
       }}
     >
-      {/* <InputLabel htmlFor="filled-adornment-password" color="secondary">
-        {children}
-      </InputLabel> */}
       <Typography>{children}</Typography>
       <FilledInput
         multiline
