@@ -1,3 +1,5 @@
+//count how much time passed since 'timestampString'
+
 function getTimeSince(timestampString) {
   const timestamp = new Date(Date.parse(timestampString.replace(/\//g, "-"))); 
   const now = new Date();

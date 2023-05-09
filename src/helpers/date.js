@@ -1,3 +1,6 @@
+
+//get current date format it and return as a string
+
 const date = () => {
   const now = new Date();
   const year = now.getFullYear();
