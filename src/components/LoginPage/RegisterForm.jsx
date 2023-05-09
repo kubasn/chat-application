@@ -8,11 +8,32 @@ import { BasicInput } from "./BasicInput";
 import { PasswordInput } from "./PasswordInput";
 import { StyledButton } from "./StyledButton";
 import { StyledBackground, StyledSmallBox } from "../utils/StyledBackground";
-
 import { useDispatch } from "react-redux";
 import { setUserRegisterDetails } from "../../store/reducers/userSlice";
-
 import { users } from "../../db";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  login: yup
+    .string()
+    .required("Login is required")
+    .min(4, "Login must be at least 8 characters long")
+    .max(20, "Login cannot be longer than 20 characters"),
+  email: yup
+    .string()
+    .email("Incorrect e-mail address")
+    .required("E-mail is required"),
+  password: yup
+    .string()
+    .min(8, "Password must be at least 8 characters long")
+    .max(20, "Password cannot be longer than 20 characters")
+    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .matches(
+      /[!@#$%^&*(),.?":{}|<>]/,
+      "Password must contain at least one special character"
+    )
+    .required("Password is required"),
+});
 
 export const RegisterForm = () => {
   const dispatch = useDispatch();
@@ -32,29 +53,39 @@ export const RegisterForm = () => {
     const isMailInDB = users.find((user) => user.email === emailValue);
     const isLoginInDB = users.find((user) => user.login === loginValue);
     const isAdminIncluded = loginValue.toUpperCase().includes("ADMIN");
+    const newUser = {
+      login: loginValue,
+      email: emailValue,
+      password: passwordValue,
+    };
 
-    if (loginValue === "" || emailValue === "" || passwordValue === "") {
-      Notify.failure("Please fill all the required fields");
-    } else if (isMailInDB) {
-      Notify.failure(
-        `${emailValue} is already in base. Please use another email adress.`
-      );
-    } else if (isLoginInDB || isAdminIncluded) {
-      Notify.failure(
-        `${loginValue} is already in base. Please use another login`
-      );
-    } else {
-      form.reset();
-      Notify.success("Congratulations! Welcome");
-      navigate("/selection");
-      dispatch(
-        setUserRegisterDetails({
-          login: loginValue,
-          email: emailValue,
-          password: passwordValue,
-        })
-      );
-    }
+    schema
+      .validate(newUser)
+      .then(() => {
+        if (loginValue === "" || emailValue === "" || passwordValue === "") {
+          Notify.failure("Please fill all the required fields");
+        } else if (isMailInDB) {
+          Notify.failure(
+            `${emailValue} is already in base. Please use another email adress.`
+          );
+        } else if (isLoginInDB || isAdminIncluded) {
+          Notify.failure(
+            `${loginValue} is already in base. Please use another login`
+          );
+        } else {
+          form.reset();
+          Notify.success("Congratulations! Welcome");
+          navigate("/selection");
+          dispatch(
+            setUserRegisterDetails({
+              login: loginValue,
+              email: emailValue,
+              password: passwordValue,
+            })
+          );
+        }
+      })
+      .catch((errors) => Notify.failure(`${errors}`));
   };
 
   return (

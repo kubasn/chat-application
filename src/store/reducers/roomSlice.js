@@ -2,8 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { rooms, users } from "../../db";
 import { userJoinRoom } from "../../dbOperations/userJoinRoom";
 
-
-
 const initialState = {
   roomID: "",
   roomName: " ",
@@ -13,8 +11,6 @@ const initialState = {
   creationDate: "",
   messages: [],
 };
-
-
 
 function findPrivateRoomByUsers(userIDs) {
   return rooms.find(
@@ -26,15 +22,11 @@ function findPrivateRoomByUsers(userIDs) {
   );
 }
 
-// zamiana id usersów na obiekty
 rooms.forEach((room) => (room.users = getUsersByIds(room.users)));
-
-
 
 function getUsersByIds(ids) {
   return users.filter((user) => ids.includes(user.userID));
 }
-
 
 const roomSlice = createSlice({
   name: "room",
@@ -64,7 +56,6 @@ const roomSlice = createSlice({
       users.push(payload);
       state.users = users;
     },
-
 
     changeRoom: (state, { payload }) => {
       if (payload.type === "private") {
@@ -139,8 +130,8 @@ const roomSlice = createSlice({
       });
 
       rooms[roomIndex] = newRooms[roomIndex];
-      console.log(state)
-     state.messages = rooms[roomIndex].messages
+      console.log(state);
+      state.messages = rooms[roomIndex].messages;
     },
 
     sendMessage: (state, { payload }) => {
@@ -155,9 +146,6 @@ const roomSlice = createSlice({
       };
       state.messages = messages;
     },
-
-
-
   },
 });
 
@@ -171,5 +159,3 @@ export const {
 } = roomSlice.actions;
 
 export const roomReducer = roomSlice.reducer;
-
-

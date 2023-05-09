@@ -35,7 +35,7 @@ const userSlice = createSlice({
       state.role = payload.role;
     },
     setUserRegisterDetails: (state, { payload }) => {
-      let id = nanoid()
+      let id = nanoid();
       state.userID = id;
       state.login = payload.login;
       state.email = payload.email;
@@ -65,6 +65,7 @@ const userSlice = createSlice({
       state.avatarID = null;
       state.lastRoom = null;
       state.status = null;
+      state.rooms = [];
     },
     updateUserData: (state, { payload }) => {
       state = { ...state, payload };
@@ -74,20 +75,19 @@ const userSlice = createSlice({
     },
     joinRoom: (state, { payload }) => {
       const rooms = state.rooms;
-      let {roomID} = payload
+      let { roomID } = payload;
       rooms.push(roomID);
       state.rooms = rooms;
     },
-    leaveRoom: (state, {payload}) => {
+    leaveRoom: (state, { payload }) => {
       // const rooms = state.rooms;
-      const {roomID,userID} = payload
-      removeUserFromRoom(userID,roomID)
-      
-      let newRooms = state.rooms  
-      let indexInArray =newRooms.findIndex(id => id == roomID)
-      newRooms.splice(indexInArray,1)
-      state.rooms=newRooms
-  
+      const { roomID, userID } = payload;
+      removeUserFromRoom(userID, roomID);
+
+      let newRooms = state.rooms;
+      let indexInArray = newRooms.findIndex((id) => id == roomID);
+      newRooms.splice(indexInArray, 1);
+      state.rooms = newRooms;
     },
   },
 });
@@ -103,5 +103,3 @@ export const {
 } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;
-
-

@@ -10,7 +10,6 @@ import { StyledButton } from "./StyledButton";
 import { useDispatch } from "react-redux";
 import { setUserIsLogged } from "../../store/reducers/userSlice";
 import { users } from "../../db";
-
 import { StyledBackground, StyledSmallBox } from "../utils/StyledBackground";
 
 export const LoginForm = () => {
@@ -38,7 +37,7 @@ export const LoginForm = () => {
       if (isUserInDB.role !== "admin") navigate("/selection");
       else if (isUserInDB.role === "admin") navigate("/admin");
     } else {
-      Notify.failure("User not found in DB");
+      Notify.failure("User not found. Please try again");
     }
   };
   return (

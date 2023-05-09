@@ -4,14 +4,12 @@ import {
   Button,
   List,
   ListItem,
-  ListItemText,
   Modal,
-  TextField,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { rooms, users } from "../../db";
+
 import { AdminInput } from "./AdminInput";
 import AddRoomForm from "./AddRoomForm";
 import date from "../../helpers/date";
@@ -24,7 +22,7 @@ import { Notify } from "notiflix";
 import { leaveRoom } from "../../store/reducers/userSlice";
 
 const AdminPage = () => {
-  const [text, setText] = useState("");
+  //const [text, setText] = useState("");
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -36,14 +34,12 @@ const AdminPage = () => {
   const [findRooms, setFindRooms] = useState([]);
   const [clickedRoom, setClickedRoom] = useState({});
 
-  const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
 
-  //filter rooms public
   const filterRooms = () => {
     const newRooms = rooms.filter((room) => {
-      const newRooms = room.roomName.toLowerCase().includes(text.toLowerCase());
-      const publicRooms = room.type != "private";
+      const newRooms = room.roomName.toLowerCase();
+      console.log(newRooms);
+      const publicRooms = room.type !== "private";
       return newRooms && publicRooms;
     });
     return newRooms;
@@ -54,7 +50,7 @@ const AdminPage = () => {
       const newRooms = room.roomName
         .toLowerCase()
         .includes(e.target.value.toLowerCase());
-      const publicRooms = room.type != "private";
+      const publicRooms = room.type !== "private";
       return newRooms && publicRooms;
     });
     setFindRooms(newRooms);
@@ -70,6 +66,7 @@ const AdminPage = () => {
     });
 
     console.log(rooms,users)
+
 
     if (id !== -1) {
       rooms.splice(id, 1);
@@ -89,7 +86,6 @@ const AdminPage = () => {
   };
 
   const openAddNewRoom = () => {
-    console.log("New Room form open");
     handleaddNewRoomOpen();
   };
 
@@ -108,8 +104,8 @@ const AdminPage = () => {
     setFindRooms(newRooms);
     handleClose();
     Notify.success("Your changes has been saved");
-    console.log(rooms);
   };
+
   const onDeleteUser = (e, userID, roomID, login) => {
     e.preventDefault();
     let room = removeUserFromRoom(userID, roomID);
@@ -121,7 +117,6 @@ const AdminPage = () => {
   };
 
   const handleAddRoom = (roomName, roomDescription) => {
-    // Add the new room to your rooms array or state here.
     let newRoom = {
       roomID: nanoid(),
       creationDate: date(),
@@ -133,7 +128,6 @@ const AdminPage = () => {
       users: [],
     };
     rooms.push(newRoom);
-    console.log(rooms);
   };
 
   const style = {
@@ -147,8 +141,6 @@ const AdminPage = () => {
     boxShadow: 24,
     p: 4,
     color: "black",
-    //display: "flex",
-    //flexDirection: "column",
   };
 
   return (
@@ -277,7 +269,7 @@ const AdminPage = () => {
             </SearchInput>
           </Box>
 
-          {findRooms.length != 0 && (
+          {findRooms.length !== 0 && (
             <Box
               mb={2}
               marginTop={4}
