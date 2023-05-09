@@ -7,7 +7,7 @@ import {
   Modal,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { rooms, users } from "../../db";
 
 import { AdminInput } from "./AdminInput";
@@ -21,7 +21,6 @@ import { SearchInput } from "../utils/SearchInput";
 import { Notify } from "notiflix";
 
 const AdminPage = () => {
-  //const [text, setText] = useState("");
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -32,7 +31,6 @@ const AdminPage = () => {
 
   const [findRooms, setFindRooms] = useState([]);
   const [clickedRoom, setClickedRoom] = useState({});
-
 
   const filterRooms = () => {
     const newRooms = rooms.filter((room) => {
@@ -55,31 +53,26 @@ const AdminPage = () => {
     setFindRooms(newRooms);
   };
 
-
   const onRoomDelete = (roomID) => {
-    console.log(rooms)
+    console.log(rooms);
     const id = rooms.findIndex((room) => room && room.roomID === roomID);
-    console.log(id)
-     delete rooms[id]
+    console.log(id);
+    delete rooms[id];
 
-    //in users table, for each user delete specific room[roomId] from rooms array 
-    users.map(user => {
+    //in users table, for each user delete specific room[roomId] from rooms array
+    users.map((user) => {
       const newUser = { ...user };
       if (newUser.rooms.includes(roomID)) {
-        newUser.rooms = newUser.rooms.filter(room => room !== roomID);
+        newUser.rooms = newUser.rooms.filter((room) => room !== roomID);
       }
       return newUser;
     });
 
-    console.log(rooms,users)
-
+    console.log(rooms, users);
 
     if (id !== -1) {
       rooms.splice(id, 1);
     }
-
-
-
 
     const newRooms = filterRooms();
     setFindRooms(newRooms);
