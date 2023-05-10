@@ -68,14 +68,7 @@ const ChatWindow = ({ room }) => {
     newHistory = sortByDate(newHistory);
     const sortedMessages = addTagToMessages(newHistory, user.userID);
     setMessages(sortedMessages);
-  }, []);
-
-  useEffect(() => {
-    let newHistory = chatHistory.messages;
-    newHistory = sortByDate(newHistory);
-    const sortedMessages = addTagToMessages(newHistory, user.userID);
-    setMessages(sortedMessages);
-  }, [chatHistory]);
+  }, [chatHistory, user.userID]);
 
   const onWriteMessage = (e) => {
     setNewMessage({ ...newMessage, content: e.target.value });

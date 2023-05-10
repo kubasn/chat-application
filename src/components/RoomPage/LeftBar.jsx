@@ -72,7 +72,6 @@ const LeftBar = ({ users, rooms, currentRoom }) => {
         onClick={() =>
           id === "+" ? navigate("/selection") : onClickHandler(id)
         }
-        onChange
         style={{
           border: "2px solid",
           borderColor: currentRoomId === id ? "red" : "#D9D9D9",

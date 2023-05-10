@@ -55,7 +55,7 @@ const userSlice = createSlice({
         rooms: [],
         role: payload.role,
       });
-      console.log(users)
+      console.log(users);
     },
 
     setSignOut: (state) => {
@@ -80,7 +80,7 @@ const userSlice = createSlice({
       removeUserFromRoom(userID, roomID);
 
       let newRooms = state.rooms;
-      let indexInArray = newRooms.findIndex((id) => id == roomID);
+      let indexInArray = newRooms.findIndex((id) => id === roomID);
       newRooms.splice(indexInArray, 1);
       state.rooms = newRooms;
     },

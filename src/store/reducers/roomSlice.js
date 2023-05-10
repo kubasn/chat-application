@@ -1,7 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { rooms, users } from "../../db";
+import { rooms } from "../../db";
 import { userJoinRoom } from "../../dbOperations/userJoinRoom";
-import { allSame, createPrivateRoom, findPrivateRoomByUsers, getUsersByIds, setRoomState } from "../helpers/roomHelpers";
+import {
+  allSame,
+  createPrivateRoom,
+  findPrivateRoomByUsers,
+  getUsersByIds,
+  setRoomState,
+} from "../helpers/roomHelpers";
 
 const initialState = {
   roomID: "",
@@ -13,9 +19,7 @@ const initialState = {
   messages: [],
 };
 
-
 rooms.forEach((room) => (room.users = getUsersByIds(room.users)));
-
 
 const roomSlice = createSlice({
   name: "room",
@@ -47,39 +51,36 @@ const roomSlice = createSlice({
     },
 
     changeRoom: (state, { payload }) => {
-      console.log(payload);
-      
       const { id: usersId, type: roomType, actType } = payload;
-      
+
       if (roomType === "private") {
-        const roomId = usersId.join('');
-        
+        const roomId = usersId.join("");
+
         // If we are chatting with ourselves, remove one user ID from the array [1, 1]
         if (allSame(usersId)) {
           usersId.pop();
         }
-        
+
         const privateRoom = findPrivateRoomByUsers(usersId);
-        
+
         if (privateRoom) {
           setRoomState(state, privateRoom);
         } else {
           const newPrivateRoom = createPrivateRoom(usersId, roomId);
+
           setRoomState(state, newPrivateRoom);
         }
       } else if (roomType === "public") {
         if (actType === "JOIN") {
           userJoinRoom(payload.user, usersId);
         }
-    
-        const room = rooms.find(room => room.roomID === usersId);
-    
+
+        const room = rooms.find((room) => room.roomID === usersId);
+
         if (room) {
           setRoomState(state, room);
         }
       }
-      
-      console.log(state);
     },
 
     deleteMessage: (state, { payload }) => {
