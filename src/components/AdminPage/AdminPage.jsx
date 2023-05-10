@@ -21,6 +21,7 @@ import { SearchInput } from "../utils/SearchInput";
 import { Notify } from "notiflix";
 
 const AdminPage = () => {
+  //const [text, setText] = useState("");
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -35,7 +36,6 @@ const AdminPage = () => {
   const filterRooms = () => {
     const newRooms = rooms.filter((room) => {
       const newRooms = room.roomName.toLowerCase();
-      console.log(newRooms);
       const publicRooms = room.type !== "private";
       return newRooms && publicRooms;
     });
@@ -54,21 +54,19 @@ const AdminPage = () => {
   };
 
   const onRoomDelete = (roomID) => {
-    console.log(rooms);
     const id = rooms.findIndex((room) => room && room.roomID === roomID);
-    console.log(id);
     delete rooms[id];
 
     //in users table, for each user delete specific room[roomId] from rooms array
-    users.map((user) => {
+    users.map((user, key) => {
       const newUser = { ...user };
+
       if (newUser.rooms.includes(roomID)) {
         newUser.rooms = newUser.rooms.filter((room) => room !== roomID);
       }
-      return newUser;
-    });
 
-    console.log(rooms, users);
+      return (users[key] = newUser);
+    });
 
     if (id !== -1) {
       rooms.splice(id, 1);
