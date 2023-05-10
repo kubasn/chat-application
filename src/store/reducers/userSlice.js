@@ -55,6 +55,7 @@ const userSlice = createSlice({
         rooms: [],
         role: payload.role,
       });
+      console.log(users)
     },
 
     setSignOut: (state) => {
@@ -66,12 +67,6 @@ const userSlice = createSlice({
       state.lastRoom = null;
       state.status = null;
       state.rooms = [];
-    },
-    updateUserData: (state, { payload }) => {
-      state = { ...state, payload };
-    },
-    setStatus: (state, { payload }) => {
-      state.status = payload;
     },
     joinRoom: (state, { payload }) => {
       const rooms = state.rooms;
@@ -96,8 +91,6 @@ export const {
   setUserIsLogged,
   setUserRegisterDetails,
   setSignOut,
-  updateUserData,
-  setStatus,
   joinRoom,
   leaveRoom,
 } = userSlice.actions;

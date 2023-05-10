@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { rooms, users } from "../../db";
 import { userJoinRoom } from "../../dbOperations/userJoinRoom";
+import { allSame, createPrivateRoom, findPrivateRoomByUsers, getUsersByIds, setRoomState } from "../helpers/roomHelpers";
 
 const initialState = {
   roomID: "",
@@ -12,21 +13,9 @@ const initialState = {
   messages: [],
 };
 
-function findPrivateRoomByUsers(userIDs) {
-  return rooms.find(
-    (room) =>
-      room.users.length === userIDs.length &&
-      room.hasOwnProperty("type") &&
-      room.type === "private" &&
-      room.users.every((user) => userIDs.includes(user.userID))
-  );
-}
 
 rooms.forEach((room) => (room.users = getUsersByIds(room.users)));
 
-function getUsersByIds(ids) {
-  return users.filter((user) => ids.includes(user.userID));
-}
 
 const roomSlice = createSlice({
   name: "room",
@@ -42,7 +31,7 @@ const roomSlice = createSlice({
       state.messages = [];
     },
 
-    deleteRoom: (state, { payload }) => {
+    removeRoom: (state, { payload }) => {
       state.roomID = "";
       state.roomName = "";
       state.picture = "";
@@ -58,60 +47,46 @@ const roomSlice = createSlice({
     },
 
     changeRoom: (state, { payload }) => {
-      if (payload.type === "private") {
-        let message = findPrivateRoomByUsers(payload.id);
-        if (typeof message !== "undefined") {
-          state.roomID = message.roomID;
-          state.roomName = message.roomName;
-          state.picture = message.picture;
-          state.roomDescription = message.roomDescription;
-          state.users = message.users;
-          state.creationDate = message.creationDate;
-          state.messages = message.messages;
+      console.log(payload);
+      
+      const { id: usersId, type: roomType, actType } = payload;
+      
+      if (roomType === "private") {
+        const roomId = usersId.join('');
+        
+        // If we are chatting with ourselves, remove one user ID from the array [1, 1]
+        if (allSame(usersId)) {
+          usersId.pop();
+        }
+        
+        const privateRoom = findPrivateRoomByUsers(usersId);
+        
+        if (privateRoom) {
+          setRoomState(state, privateRoom);
         } else {
-          rooms.push({
-            roomID: 4,
-            creationDate: "",
-            type: "private",
-            roomDescription: "Private chat",
-            roomName: "Chat betwen users",
-            users: getUsersByIds(payload.id),
-            messages: [],
-          });
-          state.roomID = 4;
-          state.creationDate = "";
-          state.type = "private";
-          state.roomDescription = "Private chat";
-          state.roomName = "Chat betwen users";
-          state.users = getUsersByIds(payload.id);
-          state.messages = [];
+          const newPrivateRoom = createPrivateRoom(usersId, roomId);
+          setRoomState(state, newPrivateRoom);
         }
-      } else {
-        if (payload.actType === "JOIN") {
-          userJoinRoom(payload.user, payload.id);
+      } else if (roomType === "public") {
+        if (actType === "JOIN") {
+          userJoinRoom(payload.user, usersId);
         }
-
-        const roomId = payload.id;
-        const id = rooms.findIndex((room) => room.roomID === roomId);
-
-        state.roomID = rooms[id].roomID;
-        state.creationDate = rooms[id].creationDate;
-        state.roomDescription = rooms[id].roomDescription;
-        state.roomName = rooms[id].roomName;
-        state.picture = rooms[id].picture;
-        state.users = rooms[id].users;
-        state.messages = rooms[id].messages;
+    
+        const room = rooms.find(room => room.roomID === usersId);
+    
+        if (room) {
+          setRoomState(state, room);
+        }
       }
+      
+      console.log(state);
     },
 
     deleteMessage: (state, { payload }) => {
-      //id - message id, roomId - roomId
       const { messageId, roomId } = payload;
       const roomIndex = rooms.findIndex((room) => room.roomID === roomId);
-      let selectedRoom = rooms[roomIndex];
-      console.log(messageId,roomId,selectedRoom)
 
-      let newRooms = rooms.map((room) => {
+      const newRooms = rooms.map((room) => {
         if (room.roomID === roomId) {
           return {
             ...room,
@@ -130,7 +105,6 @@ const roomSlice = createSlice({
       });
 
       rooms[roomIndex] = newRooms[roomIndex];
-      console.log(state);
       state.messages = rooms[roomIndex].messages;
     },
 
@@ -151,7 +125,7 @@ const roomSlice = createSlice({
 
 export const {
   createRoom,
-  deleteRoom,
+  removeRoom,
   addUser,
   changeRoom,
   deleteMessage,

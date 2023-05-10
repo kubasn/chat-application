@@ -19,7 +19,6 @@ import { Topbar } from "../RoomPage/TopBar";
 import { nanoid } from "@reduxjs/toolkit";
 import { SearchInput } from "../utils/SearchInput";
 import { Notify } from "notiflix";
-import { leaveRoom } from "../../store/reducers/userSlice";
 
 const AdminPage = () => {
   //const [text, setText] = useState("");
@@ -58,11 +57,18 @@ const AdminPage = () => {
 
 
   const onRoomDelete = (roomID) => {
-    const id = rooms.findIndex((room) => room.roomID === roomID);
+    console.log(rooms)
+    const id = rooms.findIndex((room) => room && room.roomID === roomID);
+    console.log(id)
      delete rooms[id]
 
-    users.forEach(user => {
-      user.rooms = user.rooms.filter(room => room !== roomID);
+    //in users table, for each user delete specific room[roomId] from rooms array 
+    users.map(user => {
+      const newUser = { ...user };
+      if (newUser.rooms.includes(roomID)) {
+        newUser.rooms = newUser.rooms.filter(room => room !== roomID);
+      }
+      return newUser;
     });
 
     console.log(rooms,users)

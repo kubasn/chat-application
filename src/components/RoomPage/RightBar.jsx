@@ -15,7 +15,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import InfoIcon from "@mui/icons-material/Info";
 import { useDispatch } from "react-redux";
 import { leaveRoom } from "../../store/reducers/userSlice";
-import { deleteRoom } from "../../store/reducers/roomSlice";
+import { removeRoom } from "../../store/reducers/roomSlice";
 import { useNavigate } from "react-router-dom";
 
 const RightBar = (props) => {
@@ -44,7 +44,7 @@ const RightBar = (props) => {
 
   const onLeave = () => {
     dispatch(leaveRoom({ roomID: props.roomID, userID: props.userID }));
-    dispatch(deleteRoom());
+    dispatch(removeRoom());
     navigate("/selection");
   };
 
