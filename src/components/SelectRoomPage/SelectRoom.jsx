@@ -118,7 +118,7 @@ const SelectRoom = () => {
               <ul style={{ listStyleType: "none", paddingLeft: "0px" }}>
                 {findRooms &&
                   findRooms.map((room) => (
-                    <li style={{ marginBottom: "10px" }}>
+                    <li style={{ marginBottom: "10px" }} key={room.roomID}>
                       <Box
                         display="flex"
                         flexDirection="column"

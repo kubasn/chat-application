@@ -9,7 +9,9 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import getTimeSince from "../../helpers/getTimeSince";
 import { Typography } from "@mui/material";
-const Message = ({ user, message, onDelete }) => {
+import { forwardRef } from "react";
+
+const Message = forwardRef(({ user, message, onDelete }, ref) => {
   const currentUserMessage = {
     bgColor: "#BDD2B6",
     color: "#ffff",
@@ -26,6 +28,7 @@ const Message = ({ user, message, onDelete }) => {
 
   return (
     <MessageComponent
+      ref={ref}
       left={
         user.login === message.senderName
           ? currentUserMessage.left
@@ -71,6 +74,6 @@ const Message = ({ user, message, onDelete }) => {
       </div>
     </MessageComponent>
   );
-};
+});
 
 export default Message;

@@ -162,7 +162,11 @@ const LeftBar = ({ users, rooms, currentRoom }) => {
             >
               <RoomBox id="+" />
               {rooms.map((room) => (
-                <RoomBox id={room} currentRoomId={currentRoom.roomID}></RoomBox>
+                <RoomBox
+                  key={room}
+                  id={room}
+                  currentRoomId={currentRoom.roomID}
+                ></RoomBox>
               ))}
             </Carousel>
           </div>
