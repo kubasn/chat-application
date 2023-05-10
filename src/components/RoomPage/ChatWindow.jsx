@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  BottomNavigation,
   Box,
   CssBaseline,
   List,
@@ -35,8 +34,8 @@ function addTagToMessages(history, specificId) {
 }
 
 const ChatWindow = ({ room }) => {
-  const [value, setValue] = useState(0);
-  const ref = useRef(null);
+  const messagesEndRef = useRef(null);
+  //console.log("ref", ref.current);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState(initialMessage);
   const dispatch = useDispatch();
@@ -56,9 +55,13 @@ const ChatWindow = ({ room }) => {
     dispatch(sendMessage({ message, roomId: room.roomID }));
   }
 
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   useEffect(() => {
-    ref.current.ownerDocument.body.scrollTop = 0;
-  }, [value, setMessages]);
+    scrollToBottom();
+  }, [messages]);
 
   useEffect(() => {
     let newHistory = chatHistory.messages;
@@ -114,12 +117,17 @@ const ChatWindow = ({ room }) => {
   };
 
   return (
-    <Box sx={{ pb: 7, background: "#141416" }} ref={ref}>
+    <Box sx={{ pb: 7, background: "#141416" }}>
       <CssBaseline />
       <List>
         {messages.map((message, index) => (
           <ListItem key={index}>
-            <Message onDelete={onDelete} message={message} user={user} />
+            <Message
+              onDelete={onDelete}
+              message={message}
+              user={user}
+              ref={messagesEndRef}
+            />
           </ListItem>
         ))}
       </List>
@@ -135,73 +143,64 @@ const ChatWindow = ({ room }) => {
         }}
         elevation={3}
       >
-        <BottomNavigation
-          showLabels
-          sx={{ backgroundColor: "#1C1D22" }}
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
+        <Box
+          component="form"
+          sx={{
+            "& .MuiTextField-root": { m: 1, width: "50ch" },
+            display: "flex",
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
           }}
+          noValidate
+          autoComplete="off"
         >
-          <Box
-            component="form"
-            sx={{
-              "& .MuiTextField-root": { m: 1, width: "50ch" },
-              display: "flex",
-              gap: "10px",
-              alignItems: "center",
-              justifyContent: "center",
+          <TextField
+            value={newMessage.content}
+            id="outlined-multiline-flexible"
+            label="Write a message"
+            onKeyUp={(event) => {
+              if (event.key === "Enter") onSubmit();
             }}
-            noValidate
-            autoComplete="off"
-          >
-            <TextField
-              value={newMessage.content}
-              id="outlined-multiline-flexible"
-              label="Write a message"
-              onKeyUp={(event) => {
-                if (event.key === "Enter") onSubmit();
-              }}
-              onChange={onWriteMessage}
-              size="small"
-              multiline
-              className="textfield"
-              maxRows={4}
-              InputLabelProps={{ className: "textfield__label" }}
-              sx={{
-                "& label": {
-                  color: "white",
+            onChange={onWriteMessage}
+            size="small"
+            multiline
+            className="textfield"
+            maxRows={4}
+            InputLabelProps={{ className: "textfield__label" }}
+            sx={{
+              "& label": {
+                color: "white",
+              },
+              "& label.MuiFormLabel-root-MuiInputLabel-root": {
+                color: "white",
+              },
+              "& label.Mui-focused": {
+                color: "white",
+              },
+              "& .MuiInput-underline:after": {
+                borderBottomColor: "rgba(255,255,255,0.6)",
+              },
+              "& .MuiOutlinedInput-root": {
+                color: "white",
+                "& fieldset": {
+                  borderColor: "rgba(255,255,255,0.6)",
                 },
-                "& label.MuiFormLabel-root-MuiInputLabel-root": {
-                  color: "white",
+                "&:hover fieldset": {
+                  borderColor: "rgba(255,255,255,0.6)",
                 },
-                "& label.Mui-focused": {
-                  color: "white",
+                "&:hover ": {
+                  borderColor: "rgba(255,255,255,0.6)",
                 },
-                "& .MuiInput-underline:after": {
-                  borderBottomColor: "rgba(255,255,255,0.6)",
-                },
-                "& .MuiOutlinedInput-root": {
+                "&.Mui-focused fieldset": {
                   color: "white",
-                  "& fieldset": {
-                    borderColor: "rgba(255,255,255,0.6)",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: "rgba(255,255,255,0.6)",
-                  },
-                  "&:hover ": {
-                    borderColor: "rgba(255,255,255,0.6)",
-                  },
-                  "&.Mui-focused fieldset": {
-                    color: "white",
 
-                    borderColor: "whirgba(255,255,255,0.6)te",
-                  },
+                  borderColor: "whirgba(255,255,255,0.6)te",
                 },
-              }}
-            />
-          </Box>
-        </BottomNavigation>
+              },
+            }}
+          />
+        </Box>
       </Paper>
     </Box>
   );

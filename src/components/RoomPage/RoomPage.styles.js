@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
 export const Page = styled.div`
-background: #141416;
-color:white;
-min-height:100vh
+  background: #141416;
+  color: white;
+  min-height: 100vh;
+  padding-bottom: 2rem;
 `;
-
-

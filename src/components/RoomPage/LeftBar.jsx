@@ -91,6 +91,7 @@ const LeftBar = ({ users, rooms, currentRoom }) => {
             width="100%"
             height="100%"
             style={{ objectFit: "fill" }}
+            alt="Room avatar"
           />
         )}
       </div>
@@ -161,7 +162,11 @@ const LeftBar = ({ users, rooms, currentRoom }) => {
             >
               <RoomBox id="+" />
               {rooms.map((room) => (
-                <RoomBox id={room} currentRoomId={currentRoom.roomID}></RoomBox>
+                <RoomBox
+                  key={room}
+                  id={room}
+                  currentRoomId={currentRoom.roomID}
+                ></RoomBox>
               ))}
             </Carousel>
           </div>
