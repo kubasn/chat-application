@@ -9,7 +9,7 @@ import { PasswordInput } from "./PasswordInput";
 import { StyledButton } from "./StyledButton";
 import { StyledBackground, StyledSmallBox } from "../utils/StyledBackground";
 import { useDispatch } from "react-redux";
-import { setUserRegisterDetails } from "../../store/reducers/userSlice";
+import { setUserRegisterDetails } from "../../store/users/userSlice";
 import { users } from "../../db";
 import * as yup from "yup";
 

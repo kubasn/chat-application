@@ -8,7 +8,7 @@ import { BasicInput } from "./BasicInput";
 import { PasswordInput } from "./PasswordInput";
 import { StyledButton } from "./StyledButton";
 import { useDispatch } from "react-redux";
-import { setUserIsLogged } from "../../store/reducers/userSlice";
+import { setUserIsLogged } from "../../store/users/userSlice";
 import { users } from "../../db";
 import { StyledBackground, StyledSmallBox } from "../utils/StyledBackground";
 
