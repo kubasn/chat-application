@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { userReducer } from "./reducers/userSlice";
-import { roomReducer } from "./reducers/roomSlice";
+import { userReducer } from "./users/userSlice";
+import { roomReducer } from "./rooms/roomSlice";
 
 const reducer = combineReducers({
   user: userReducer,

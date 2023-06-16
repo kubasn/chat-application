@@ -14,8 +14,8 @@ import { ButtonSettings, PrimaryText, SecondaryText } from "./RightBar.styles";
 import SettingsIcon from "@mui/icons-material/Settings";
 import InfoIcon from "@mui/icons-material/Info";
 import { useDispatch } from "react-redux";
-import { leaveRoom } from "../../store/reducers/userSlice";
-import { removeRoom } from "../../store/reducers/roomSlice";
+import { leaveRoom } from "../../store/users/userSlice";
+import { removeRoom } from "../../store/rooms/roomSlice";
 import { useNavigate } from "react-router-dom";
 
 const RightBar = (props) => {

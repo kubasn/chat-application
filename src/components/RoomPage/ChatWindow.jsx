@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import Message from "./Message";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteMessage, sendMessage } from "../../store/reducers/roomSlice";
+import { deleteMessage, sendMessage } from "../../store/rooms/roomSlice";
 import date from "../../helpers/date";
 import sortByDate from "../../helpers/sortByDate";
 import { sportsResults } from "../../sportsResults";

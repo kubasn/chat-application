@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { selectAvatar } from "../../store/selectors";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setSignOut } from "../../store/reducers/userSlice";
+import { setSignOut } from "../../store/users/userSlice";
 
 export const Topbar = () => {
   const dispatch = useDispatch();

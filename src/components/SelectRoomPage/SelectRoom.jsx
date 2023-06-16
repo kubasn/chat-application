@@ -8,10 +8,10 @@ import {
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { rooms } from "../../db";
-import { changeRoom } from "../../store/reducers/roomSlice";
+import { changeRoom } from "../../store/rooms/roomSlice";
 import { useNavigate } from "react-router-dom";
 import { StyledBackground, StyledSmallBox } from "../utils/StyledBackground";
-import { joinRoom } from "../../store/reducers/userSlice";
+import { joinRoom } from "../../store/users/userSlice";
 import { SearchInput } from "../utils/SearchInput";
 import { Topbar } from "../RoomPage/TopBar";
 
